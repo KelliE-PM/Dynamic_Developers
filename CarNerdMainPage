@@ -20,6 +20,10 @@ import java.awt.TextArea;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+
  
 public class Cant extends JPanel {
     public Cant() {
@@ -55,11 +59,13 @@ public class Cant extends JPanel {
         tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
         
         JComponent panel6 = makeTextPanel("Panel #6");
+
         panel6.setLayout(new FlowLayout());
         tabbedPane.addTab("Documents", icon, panel6,
                 "Still does nothing");
         tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
         
+
         JButton btnInsurance = new JButton("Insurance");
         btnInsurance.setFont(new Font("Tahoma", Font.BOLD, 13));
         btnInsurance.setForeground(new Color(0, 0, 205));
@@ -88,10 +94,16 @@ public class Cant extends JPanel {
                 "Still does nothing");
         tabbedPane.setMnemonicAt(7, KeyEvent.VK_8);
         
+
         //Add the tabbed pane to this panel.
         add(tabbedPane);
          
         //The following line enables to use scrolling tabs.
+
+
+        add(tabbedPane);
+         
+
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
     }
      
@@ -104,7 +116,9 @@ public class Cant extends JPanel {
         return panel;
     }
      
+
     /** Returns an ImageIcon, or null if the path was invalid. */
+
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = Cant.class.getResource(path);
         if (imgURL != null) {
@@ -115,6 +129,7 @@ public class Cant extends JPanel {
         }
     }
      
+
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from
@@ -129,6 +144,14 @@ public class Cant extends JPanel {
         frame.add(new Cant(), BorderLayout.CENTER);
          
         //Display the window.
+
+
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("CarNerd");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.add(new Cant(), BorderLayout.CENTER);
+
         frame.pack();
         frame.setVisible(true);
     }
@@ -139,6 +162,9 @@ public class Cant extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 //Turn off metal's use of bold fonts
+
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         createAndShowGUI();
             }
