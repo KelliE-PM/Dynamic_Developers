@@ -1,137 +1,174 @@
 package car_nerds_ui_stage1;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.CoolBar;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.RowLayout;
+import javax.swing.JTabbedPane;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JComponent;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
+import java.awt.Panel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+ 
+public class LogPage extends JPanel {
+	private JTextField txtTitle;
+	private JTextField txtEvent;
+	private JTextField txtRemindDate;
+    public LogPage() {
+        super(new GridLayout(1, 6));
+         
+        JTabbedPane tabbedPane = new JTabbedPane();
+//        ImageIcon icon = createImageIcon("");
+//         
+        JComponent panel1 = makeTextPanel("Panel #1");
+        tabbedPane.addTab("Car", null, panel1,
+                "Does nothing");
+        panel1.setPreferredSize(new Dimension(1000,1000));
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+         
+        JComponent panel2 = makeTextPanel("Panel #2");
+        tabbedPane.addTab("Info", null, panel2,
+                "Does twice as much nothing");
+        tabbedPane.setMnemonicAt(6, KeyEvent.VK_2);
+         
+        JComponent panel3 = makeTextPanel("Panel #3");
+        tabbedPane.addTab("Log", null, panel3,
+                "Still does nothing");
+        tabbedPane.setMnemonicAt(7, KeyEvent.VK_3);
+         
+        JComponent panel4 = makeTextPanel("Panel 4");
+        tabbedPane.addTab("Mileage", null, panel4,
+                "Does nothing at all");
+        tabbedPane.setMnemonicAt(8, KeyEvent.VK_4);
+         
+        JComponent panel5 = makeTextPanel("Panel #5");
+        tabbedPane.addTab("Reminder", null, panel5,
+                "Still does nothing");
+        tabbedPane.setMnemonicAt(9, KeyEvent.VK_5);
+        
+        JComponent panel6 = makeTextPanel("Panel #6");
+        tabbedPane.addTab("Documents", null, panel6,
+                "Still does nothing");
+        tabbedPane.setMnemonicAt(10, KeyEvent.VK_6);
+        
+        JComponent panel7 = makeTextPanel("Panel #7");
+        tabbedPane.addTab("Settings", null, panel7,
+                "Still does nothing");
+        tabbedPane.setMnemonicAt(11, KeyEvent.VK_7);
+        
+        JComponent panel8 = makeTextPanel("Panel #8");
+        tabbedPane.addTab("Quit", null, panel8,
+                "Still does nothing");
+        tabbedPane.setMnemonicAt(12, KeyEvent.VK_8);
+        
 
-public class LogPage {
+        add(tabbedPane);
+         
 
-	protected Shell shell;
-	private Text txtTypeInNotes;
-	private Text txtTitle;
-	private Text txtEvent;
-	private Text txtDate;
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        
+        Panel panel = new Panel();
+        tabbedPane.addTab("Log", null, panel, null);
+        panel.setLayout(null);
+        
+        JLabel lblNewLabel = new JLabel("NAME:");
+        lblNewLabel.setBounds(55, 11, 46, 14);
+        panel.add(lblNewLabel);
+        
+        JLabel lblMake = new JLabel("MAKE:");
+        lblMake.setBounds(196, 11, 46, 14);
+        panel.add(lblMake);
+        
+        JLabel lblModel = new JLabel("MODEL:");
+        lblModel.setBounds(372, 11, 38, 14);
+        panel.add(lblModel);
+        
+        JLabel lblYear = new JLabel("YEAR:");
+        lblYear.setBounds(544, 11, 46, 14);
+        panel.add(lblYear);
+        
+        JLabel lblTrim = new JLabel("TRIM:");
+        lblTrim.setBounds(725, 11, 46, 14);
+        panel.add(lblTrim);
+        
+        JTextArea txtrEnterTextHere = new JTextArea();
+        txtrEnterTextHere.setText("Enter text here");
+        txtrEnterTextHere.setBounds(222, 97, 407, 241);
+        panel.add(txtrEnterTextHere);
+        
+        txtTitle = new JTextField();
+        txtTitle.setText("Title");
+        txtTitle.setBounds(196, 66, 86, 20);
+        panel.add(txtTitle);
+        txtTitle.setColumns(10);
+        
+        txtEvent = new JTextField();
+        txtEvent.setText("Event");
+        txtEvent.setColumns(10);
+        txtEvent.setBounds(379, 66, 86, 20);
+        panel.add(txtEvent);
+        
+        txtRemindDate = new JTextField();
+        txtRemindDate.setText("Remind Date");
+        txtRemindDate.setColumns(10);
+        txtRemindDate.setBounds(569, 66, 86, 20);
+        panel.add(txtRemindDate);
+        
+        JButton btnNewButton = new JButton("SAVE");
+        btnNewButton.setBounds(268, 349, 89, 45);
+        panel.add(btnNewButton);
+        
+        JButton btnCancel = new JButton("CANCEL");
+        btnCancel.setBounds(501, 349, 89, 45);
+        panel.add(btnCancel);
+    }
+     
+    protected JComponent makeTextPanel(String text) {
+        JPanel panel = new JPanel(false);
+        JLabel filler = new JLabel(text);
+        filler.setHorizontalAlignment(JLabel.CENTER);
+        panel.setLayout(new GridLayout(1, 1));
+        panel.add(filler);
+        return panel;
+    }
+     
 
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		try {
-			LogPage window = new LogPage();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//    protected static ImageIcon createImageIcon(String path) {
+//        java.net.URL imgURL = test.class.getResource(path);
+//        if (imgURL != null) {
+//            return new ImageIcon(imgURL);
+//        } else {
+//            System.err.println("Couldn't find file: " + path);
+//            return null;
+//        }
+//    }
+     
 
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("CarNerd");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         
 
-	/**
-	 * Create contents of the window.
-	 */
-	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(921, 533);
-		shell.setLayout(null);
-		
-		txtTitle = new Text(shell, SWT.BORDER);
-		txtTitle.setBounds(250, 82, 117, 21);
-		txtTitle.setText("Title");
-		
-		txtEvent = new Text(shell, SWT.BORDER);
-		txtEvent.setBounds(408, 82, 108, 21);
-		txtEvent.setText("Event");
-		
-		txtDate = new Text(shell, SWT.BORDER);
-		txtDate.setBounds(551, 82, 101, 21);
-		txtDate.setText("Date");
-		
-		txtTypeInNotes = new Text(shell, SWT.BORDER);
-		txtTypeInNotes.setBounds(234, 113, 425, 200);
-		txtTypeInNotes.setText("Type in notes here.");
-		
-		Button btnNewButton = new Button(shell, SWT.NONE);
-		btnNewButton.setBounds(278, 340, 117, 30);
-		btnNewButton.setText("Save");
-		
-		Button btnNewButton_1 = new Button(shell, SWT.NONE);
-		btnNewButton_1.setBounds(497, 342, 122, 27);
-		btnNewButton_1.setText("Cancel");
-		
-		Button btnNewButton_2 = new Button(shell, SWT.NONE);
-		btnNewButton_2.setBounds(10, 443, 108, 41);
-		btnNewButton_2.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-			}
-		});
-		btnNewButton_2.setText("CAR");
-		
-		Button btnNewButton_2_2 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2.setText("LOG");
-		btnNewButton_2_2.setBounds(132, 443, 108, 41);
-		
-		Button btnNewButton_2_2_1 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2_1.setText("INFO");
-		btnNewButton_2_2_1.setBounds(259, 443, 108, 41);
-		
-		Button btnNewButton_2_2_2 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2_2.setText("MILEAGE");
-		btnNewButton_2_2_2.setBounds(384, 443, 108, 41);
-		
-		Button btnNewButton_2_2_3 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2_3.setText("REMIND");
-		btnNewButton_2_2_3.setBounds(515, 443, 108, 41);
-		
-		Button btnNewButton_2_2_4 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2_4.setText("DOCS");
-		btnNewButton_2_2_4.setBounds(644, 443, 108, 41);
-		
-		Button btnNewButton_2_2_5 = new Button(shell, SWT.NONE);
-		btnNewButton_2_2_5.setText("SETTINGS");
-		btnNewButton_2_2_5.setBounds(774, 443, 108, 41);
-		
-		Label lblName = new Label(shell, SWT.NONE);
-		lblName.setText("Name");
-		lblName.setBounds(97, 10, 55, 15);
-		
-		Label lblMake = new Label(shell, SWT.NONE);
-		lblMake.setText("Make");
-		lblMake.setBounds(644, 10, 55, 15);
-		
-		Label lblModel = new Label(shell, SWT.NONE);
-		lblModel.setText("Model");
-		lblModel.setBounds(752, 10, 55, 15);
-		
-		Label lblYear = new Label(shell, SWT.NONE);
-		lblYear.setText("Year");
-		lblYear.setBounds(480, 10, 55, 15);
-		
-		Label lblTrim = new Label(shell, SWT.NONE);
-		lblTrim.setText("Trim");
-		lblTrim.setBounds(250, 10, 55, 15);
+        frame.getContentPane().add(new LogPage(), BorderLayout.CENTER);
+         
 
-	}
+        frame.pack();
+        frame.setVisible(true);
+    }
+     
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        createAndShowGUI();
+            }
+        });
+    }
 }

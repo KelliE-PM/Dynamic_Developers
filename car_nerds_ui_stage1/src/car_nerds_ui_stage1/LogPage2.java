@@ -92,31 +92,31 @@ public class LogPage2 extends JFrame {
 		contentPane.add(txtpnEnterNotesHere);
 		
 		JButton btnNewButton = new JButton("Save");
-		btnNewButton.setBounds(312, 369, 89, 23);
+		btnNewButton.setBounds(312, 358, 89, 34);
 		contentPane.add(btnNewButton);
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(488, 369, 89, 23);
+		btnCancel.setBounds(488, 358, 89, 34);
 		contentPane.add(btnCancel);
 		
 		JButton btnNewButton_1 = new JButton("CAR");
-		btnNewButton_1.setBounds(20, 449, 89, 23);
+		btnNewButton_1.setBounds(20, 434, 89, 38);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_1_1 = new JButton("LOG");
-		btnNewButton_1_1.setBounds(142, 449, 89, 23);
+		btnNewButton_1_1.setBounds(142, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1);
 		
 		JButton btnNewButton_1_1_1 = new JButton("INFO");
-		btnNewButton_1_1_1.setBounds(270, 449, 89, 23);
+		btnNewButton_1_1_1.setBounds(270, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1_1);
 		
 		JButton btnNewButton_1_1_2 = new JButton("MILEAGE");
-		btnNewButton_1_1_2.setBounds(392, 449, 89, 23);
+		btnNewButton_1_1_2.setBounds(392, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1_2);
 		
 		JButton btnNewButton_1_1_3 = new JButton("REMIND");
-		btnNewButton_1_1_3.setBounds(515, 449, 89, 23);
+		btnNewButton_1_1_3.setBounds(515, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1_3);
 		
 		JButton btnNewButton_1_1_4 = new JButton("DOCS");
@@ -124,11 +124,11 @@ public class LogPage2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1_1_4.setBounds(639, 449, 89, 23);
+		btnNewButton_1_1_4.setBounds(639, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1_4);
 		
 		JButton btnNewButton_1_1_5 = new JButton("SETTINGS");
-		btnNewButton_1_1_5.setBounds(769, 449, 89, 23);
+		btnNewButton_1_1_5.setBounds(769, 434, 89, 38);
 		contentPane.add(btnNewButton_1_1_5);
 	}
 }
