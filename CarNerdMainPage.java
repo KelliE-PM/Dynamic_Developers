@@ -71,15 +71,25 @@ public class Cant extends JPanel {
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 
         JComponent panel5 = makeTextPanel("Panel #5");
-        tabbedPane.addTab("Reminder", icon, panel5,
-                "Still does nothing");
-        //tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+        String[] reminders = {"Reminder1", "Reminder2", "Reminder3", "Reminder4", "Reminder5", "Reminder6", "Reminder7"};
+        tabbedPane.addTab("Reminders", icon, panel5,
+                "Reminders");
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+	panel5.setLayout(new BorderLayout());	
+		JList list = new JList(reminders);
+		JScrollPane scrollPane = new JScrollPane(list);
+		panel5.add(scrollPane, BorderLayout.WEST);
+		scrollPane.setPreferredSize(new Dimension(250, 80));
+		scrollPane.setMaximumSize(new Dimension(360, 120));
+		scrollPane.setSize(new Dimension(250, 80));
+		scrollPane.revalidate();
 
+        
         JComponent panel6 = makeTextPanel("Panel #6");
         tabbedPane.addTab("Documents", icon, panel6,
                 "Still does nothing");
-        //tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
-
+        tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
+        
         JComponent panel7 = makeTextPanel("Panel #7");
         tabbedPane.addTab("Settings", icon, panel7,
                 "Still does nothing");
@@ -89,7 +99,6 @@ public class Cant extends JPanel {
         tabbedPane.addTab("Quit", icon, panel8,
                 "Still does nothing");
         tabbedPane.setMnemonicAt(7, KeyEvent.VK_8);
-
 
         add(tabbedPane);
     }
@@ -102,7 +111,6 @@ public class Cant extends JPanel {
         panel.add(filler);
         return panel;
     }
-
 
     protected static ImageIcon createImageIcon(String path) {
         java.net.URL imgURL = Cant.class.getResource(path);
@@ -118,9 +126,8 @@ public class Cant extends JPanel {
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("CarNerd");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        frame.getContentPane().add(new Cant(), BorderLayout.CENTER);
 
+        frame.getContentPane().add(new Cant(), BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
