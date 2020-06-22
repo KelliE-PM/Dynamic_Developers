@@ -42,9 +42,19 @@ public class Cant extends JPanel {
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
          
         JComponent panel5 = makeTextPanel("Panel #5");
-        tabbedPane.addTab("Reminder", icon, panel5,
-                "Still does nothing");
+        String[] reminders = {"Reminder1", "Reminder2", "Reminder3", "Reminder4", "Reminder5", "Reminder6", "Reminder7"};
+        tabbedPane.addTab("Reminders", icon, panel5,
+                "Reminders");
         tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
+	panel5.setLayout(new BorderLayout());	
+		JList list = new JList(reminders);
+		JScrollPane scrollPane = new JScrollPane(list);
+		panel5.add(scrollPane, BorderLayout.WEST);
+		scrollPane.setPreferredSize(new Dimension(250, 80));
+		scrollPane.setMaximumSize(new Dimension(360, 120));
+		scrollPane.setSize(new Dimension(250, 80));
+		scrollPane.revalidate();
+
         
         JComponent panel6 = makeTextPanel("Panel #6");
         tabbedPane.addTab("Documents", icon, panel6,
