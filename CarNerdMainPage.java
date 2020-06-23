@@ -70,6 +70,8 @@ public class Cant extends JPanel {
         tabbedPane.addTab("Mileage", icon, panel4,"Does nothing at all");
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
 	    
+	 /*
+	    
 	public class swingMileage extends JFrame {
 
 	private JPanel contentPane;
@@ -86,9 +88,6 @@ public class Cant extends JPanel {
 	private JLabel lblNewLabel_5;
 	private JCheckBox chckbxNewCheckBox;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -101,10 +100,6 @@ public class Cant extends JPanel {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	
 	public swingMileage() {
 		
@@ -246,7 +241,8 @@ public class Cant extends JPanel {
 		
 	}
 }
-
+*/
+	    
         JComponent panel5 = makeTextPanel("Panel #5");
         String[] reminders = {"Reminder1", "Reminder2", "Reminder3", "Reminder4", "Reminder5", "Reminder6", "Reminder7"};
         tabbedPane.addTab("Reminders", icon, panel5,
