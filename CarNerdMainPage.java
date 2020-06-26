@@ -25,7 +25,7 @@ import java.awt.Panel;
 import java.awt.event.KeyEvent;
 
 @SuppressWarnings("serial")
-public class CarNerdMainPage extends JPanel {
+public class testing extends JPanel {
     public testing() {
     	super(new GridLayout(1, 1));
 
