@@ -198,7 +198,7 @@ public class CarNerdMainPage extends JPanel {
     }
 
     protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = CarNerdMainPage2.class.getResource(path);
+        java.net.URL imgURL = CarNerdMainPage.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
@@ -212,7 +212,7 @@ public class CarNerdMainPage extends JPanel {
         JFrame frame = new JFrame("CarNerd");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.getContentPane().add(new CarNerdMainPage2(), BorderLayout.CENTER);
+        frame.getContentPane().add(new CarNerdMainPage(), BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
