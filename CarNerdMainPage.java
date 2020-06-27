@@ -1,279 +1,251 @@
 package CarNerd;
 
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JFrame;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class Cant extends JPanel {
-    public Cant() {
+@SuppressWarnings("serial")
+public class CarNerdMainPage extends JPanel {
+    public CarNerdMainPage() throws ParseException {
     	super(new GridLayout(1, 1));
-        
+
 
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         ImageIcon icon = createImageIcon("");
-
+// ****BACKGROUND COLORS FOR TABS******        
+        int r = 191, g = 136, b = 255;
+// ****SIZE OF MAIN WINDOW******       
+        int x = 700, y = 700;
+        
+// ******CAR TAB******
+        JComponent panel0 = makeTextPanel("Panel #0");
+        tabbedPane.addTab("Car", icon, panel0, null);
+        panel0.setBackground(new Color(r, g, b));
+        panel0.setLayout(null);
+       
+        String[] cars = {"Miata", "F150", "Jeep", "Mazda 3", "350z"};
+        
+        JButton btnAddCar = new JButton("Add Car");
+        JComboBox<String> spChooseCar = new JComboBox<String>(cars);
+        
+        JLabel lblCarSelected0 = new JLabel("Mira, 2000 Mazda MX-5/LS");
+        lblCarSelected0.setBounds(55, 15, 500, 14);
+        panel0.add(lblCarSelected0);
+        
+        btnAddCar.setBounds((x / 2) - (100 / 2), (y / 2) - 30 / 2, 100, 30);
+        spChooseCar.setBounds((x / 2) - (150 + 30) / 2, (y / 2) - (20 + 30) , 150, 20);
+        
+        panel0.add(btnAddCar);
+        panel0.add(spChooseCar);
+        
+        panel0.setPreferredSize(new Dimension(x, y));
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
+        
+        
+// ******INFO TAB****** - ALYSSA
         JComponent panel1 = makeTextPanel("Panel #1");
-        tabbedPane.addTab("Car", icon, panel1,
-                "Does nothing");
-        panel1.setPreferredSize(new Dimension(300,300));
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+        tabbedPane.addTab("Info", null, panel1, null);
+        panel1.setBackground(new Color(r, g, b));
+        panel1.setLayout(null);
         
-    // INFO TAB - ALYSSA
+        
+        
+        JLabel lblCarName = new JLabel("Name");
+        JLabel lblCarYear = new JLabel("Year");
+		JLabel lblCarMake = new JLabel("Make");
+        JLabel lblCarModel = new JLabel("Model");
+        JLabel lblCarTrim = new JLabel("Trim if Applicable");
+		JLabel lblCarVIN = new JLabel("VIN");
+        JLabel lblPlateNum = new JLabel("Plate Number");
+        JButton btnEdit = new JButton("Edit");
+       
+        
+        lblCarName.setBounds(300, 200, 100, 20);
+		lblCarYear.setBounds(130, 230, 100, 20);
+        lblCarMake.setBounds(230, 230, 100, 20);
+        lblCarModel.setBounds(330, 230, 100, 20);
+		lblCarTrim.setBounds(430, 230, 100, 20);
+        lblCarVIN.setBounds(250, 260, 100, 20);
+        lblPlateNum.setBounds(350, 260, 100, 20);
+        btnEdit.setBounds(275, 390, 150, 30);
+        
+        panel1.add(lblCarName);
+		panel1.add(lblCarYear);
+        panel1.add(lblCarMake);
+        panel1.add(lblCarModel);
+        panel1.add(lblCarTrim);
+        panel1.add(lblCarVIN);
+        panel1.add(lblPlateNum);
+        panel1.add(btnEdit);
+        
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_1);
+
+// ******LOG TAB******
         JComponent panel2 = makeTextPanel("Panel #2");
-        // Makes it that it doesn't take up the entire area.  Still adjusting
-        panel2.setLayout(new FlowLayout());
-        tabbedPane.addTab("Info", icon, panel2,
-                "Does twice as much nothing");
+        tabbedPane.addTab("Log", null, panel2, null);
+        panel2.setLayout(null);
+        panel2.setBackground(new Color(r, g, b));
         
-        JComponent tbCarName = new JTextField("Enter Name");
-        panel2.add(tbCarName);
-        tbCarName.setSize(200, 20);
-        JComponent tbCarYear = new JTextField("Enter Year");
-        panel2.add(tbCarYear);
+        JLabel lblCarSelected2 = new JLabel("NAME, YEAR MAKE MODEL: CURRENT CAR");
+        lblCarSelected2.setBounds(55, 15, 500, 14);
+        panel2.add(lblCarSelected2);
         
-        JComponent tbCarMake = new JTextField("Enter Make");
-        panel2.add(tbCarMake);
+        JTextArea txtrEnterTextHere = new JTextArea();
+        txtrEnterTextHere.setText("Enter text here");
+        txtrEnterTextHere.setBounds(222, 97, 407, 241);
+        panel2.add(txtrEnterTextHere);
         
-        JComponent tbCarModel = new JTextField("Enter Model");
-        panel2.add(tbCarModel);
+        JTextField txtTitle = new JTextField();
+        txtTitle.setText("Title");
+        txtTitle.setBounds(196, 66, 86, 20);
+        panel2.add(txtTitle);
+        txtTitle.setColumns(10);
         
-        JComponent tbCarTrim = new JTextField("Enter Trim if Applicable");
-        panel2.add(tbCarTrim);
+        JTextField txtEvent = new JTextField();
+        txtEvent.setText("Event");
+        txtEvent.setColumns(10);
+        txtEvent.setBounds(379, 66, 86, 20);
+        panel2.add(txtEvent);
         
-        JComponent tbCarVIN = new JTextField("Enter VIN");
-        panel2.add(tbCarVIN);
+        JTextField txtRemindDate = new JTextField();
+        txtRemindDate.setText("Remind Date");
+        txtRemindDate.setColumns(10);
+        txtRemindDate.setBounds(569, 66, 86, 20);
+        panel2.add(txtRemindDate);
         
-        JComponent carPlateNum = new JTextField("Enter Plate Number");
-        panel2.add(carPlateNum);
+        JButton btnSave = new JButton("SAVE");
+        btnSave.setBounds(268, 349, 89, 45);
+        panel2.add(btnSave);
         
-        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
-        JComponent panel3 = makeTextPanel("Panel #3");
-        tabbedPane.addTab("Log", icon, panel3,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-
-        JComponent panel4 = makeTextPanel("Panel 4");
-        tabbedPane.addTab("Mileage", icon, panel4,"Does nothing at all");
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-	    
-	 /*
-	    
-	public class swingMileage extends JFrame {
-
-	private JPanel contentPane;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
-	private JLabel lblNewLabel_5;
-	private JCheckBox chckbxNewCheckBox;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					swingMileage frame = new swingMileage();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	public swingMileage() {
-		
-		int startMileage = -1;
-		int currentMileage = 0;
-		int lastOilChange = 0;
-		int nextChangeMileage = 0;
-		boolean synthetic;
-		boolean changeDue;
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{121, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{14, 14, 0, 0, 0, 0, 0, 0, 14, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
-		
-		JLabel lblNewLabel = new JLabel("Starting Mileage: " + startMileage);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		contentPane.add(lblNewLabel, gbc_lblNewLabel);
-		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.anchor = GridBagConstraints.EAST;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 0;
-		contentPane.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
-		
-		btnNewButton = new JButton("Update");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton.gridx = 2;
-		gbc_btnNewButton.gridy = 0;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
-		
-		lblNewLabel_1 = new JLabel("Current Mileage: " + currentMileage);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 1;
-		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.anchor = GridBagConstraints.EAST;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 1;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
-		
-		btnNewButton_1 = new JButton("Update");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridx = 2;
-		gbc_btnNewButton_1.gridy = 1;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
-		
-		lblNewLabel_4 = new JLabel(" ");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.gridwidth = 3;
-		gbc_lblNewLabel_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_4.gridx = 0;
-		gbc_lblNewLabel_4.gridy = 2;
-		contentPane.add(lblNewLabel_4, gbc_lblNewLabel_4);
-		
-		lblNewLabel_2 = new JLabel("Last oil change was at Mileage: " + lastOilChange);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 3;
-		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.anchor = GridBagConstraints.EAST;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 3;
-		contentPane.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
-		
-		btnNewButton_2 = new JButton("Update");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_2.gridx = 2;
-		gbc_btnNewButton_2.gridy = 3;
-		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
-		
-		lblNewLabel_5 = new JLabel("Did you use synthetic oil?");
-		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.anchor = GridBagConstraints.WEST;
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 4;
-		contentPane.add(lblNewLabel_5, gbc_lblNewLabel_5);
-		
-		chckbxNewCheckBox = new JCheckBox("");
-		GridBagConstraints gbc_chckbxNewCheckBox = new GridBagConstraints();
-		gbc_chckbxNewCheckBox.anchor = GridBagConstraints.WEST;
-		gbc_chckbxNewCheckBox.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxNewCheckBox.gridx = 1;
-		gbc_chckbxNewCheckBox.gridy = 4;
-		contentPane.add(chckbxNewCheckBox, gbc_chckbxNewCheckBox);
-		
-		lblNewLabel_3 = new JLabel("Next oil change is due at mileage: " + (lastOilChange + 3000));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.gridwidth = 2;
-		gbc_lblNewLabel_3.anchor = GridBagConstraints.SOUTH;
-		gbc_lblNewLabel_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 5;
-		contentPane.add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
-		
-	}
-}
-*/
-	    
-        JComponent panel5 = makeTextPanel("Panel #5");
-        String[] reminders = {"Reminder1", "Reminder2", "Reminder3", "Reminder4", "Reminder5", "Reminder6", "Reminder7"};
-        tabbedPane.addTab("Reminders", icon, panel5,
-                "Reminders");
-        tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
-	panel5.setLayout(new BorderLayout());	
-		JList list = new JList(reminders);
+        JButton btnClear = new JButton("CLEAR");
+        btnClear.setBounds(501, 349, 89, 45);
+        panel2.add(btnClear);
+              
+ 
+        String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
+        JList list = new JList(reminders);
 		JScrollPane scrollPane = new JScrollPane(list);
-		panel5.add(scrollPane, BorderLayout.WEST);
-		scrollPane.setPreferredSize(new Dimension(250, 80));
-		scrollPane.setMaximumSize(new Dimension(360, 120));
-		scrollPane.setSize(new Dimension(250, 80));
-		scrollPane.revalidate();
-
+		panel2.add(scrollPane, BorderLayout.WEST);
+		scrollPane.setBounds(10, 40, 170, 400);
+		
+		
+        JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
+        lblNote.setBounds(10, 450, 700, 20);
+        panel2.add(lblNote);
+		
+		
+		tabbedPane.setMnemonicAt(2, KeyEvent.VK_2);  
+		
+		
+// ******MILEAGE TAB******        
+        JComponent panel3 = makeTextPanel("Panel #3");
+        tabbedPane.addTab("Mileage", icon, panel3, null);
+        tabbedPane.setMnemonicAt(3, KeyEvent.VK_3);      
+        panel3.setBackground(new Color(r, g, b));
+        panel3.setLayout(null);
         
-        JComponent panel6 = makeTextPanel("Panel #6");
-        tabbedPane.addTab("Documents", icon, panel6,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
+        JLabel lblCarSelected3 = new JLabel("NAME, YEAR MAKE MODEL: CURRENT CAR");
+        lblCarSelected3.setBounds(55, 15, 500, 14);
+        panel3.add(lblCarSelected3);
         
-        JComponent panel7 = makeTextPanel("Panel #7");
-        tabbedPane.addTab("Settings", icon, panel7,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(6, KeyEvent.VK_7);
-
-        JComponent panel8 = makeTextPanel("Panel #8");
-        tabbedPane.addTab("Quit", icon, panel8,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(7, KeyEvent.VK_8);
-
+        int lastOilMile = 157249;
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        Date lastOilDate = (dateFormat.parse("04/29/2020"));
+        int lastMile = 155924;
+        Date lastMileDate = (dateFormat.parse("06/04/2020"));
+        
+        
+        
+        JLabel lblLastMile = new JLabel("Last Reported Mileage: " + lastMile);
+        JLabel lblLastMileDate = new JLabel("Reported on: 06/04/2020"); 
+		JLabel lblLastOilMile = new JLabel("Last Reported Oil Change Mileage: " + (lastOilMile));
+        JLabel lblLastOilDate = new JLabel("Reported on: 04/29/2020");
+        JLabel lblNextOilMile = new JLabel("Next Oil Change Mileage: " + String.valueOf(lastOilMile + 3000));
+		JLabel lblNextOilDate = new JLabel("Suggested Next Oil Change Date: 10/26/2020");
+        JButton btnAddMile = new JButton("Add Mileage");
+        
+        
+        lblLastMile.setBounds(175, 200, 350, 20);
+		lblLastMileDate.setBounds(175, 230, 350, 20);
+        lblLastOilMile.setBounds(175, 260, 350, 20);
+        lblLastOilDate.setBounds(175, 290, 350, 20);
+		lblNextOilMile.setBounds(175, 320, 350, 20);
+        lblNextOilDate.setBounds(175, 350, 350, 20);
+        btnAddMile.setBounds(275, 380, 150, 30);
+        
+        panel3.add(lblLastMile);
+		panel3.add(lblLastMileDate);
+        panel3.add(lblLastOilMile);
+        panel3.add(lblLastOilDate);
+        panel3.add(lblNextOilMile);
+        panel3.add(lblNextOilDate);
+        panel3.add(btnAddMile);
+        
+        
+        
+        
+// ******SETTINGS TAB******        
+        JComponent panel4 = makeTextPanel("Panel #4");
+        tabbedPane.addTab("Settings", icon, panel4, null);
+        panel4.setBackground(new Color(r, g, b));
+        panel4.setLayout(null);
+        
+        JLabel lblCarSelected4 = new JLabel("NAME, YEAR MAKE MODEL: CURRENT CAR");
+        lblCarSelected4.setBounds(55, 15, 500, 14);
+        panel4.add(lblCarSelected4);
+        
+        JButton btnExportMile = new JButton("Export Mileage");
+        JButton btnLogout = new JButton("Logout");
+        JButton btnExit = new JButton("Exit");
+        
+        btnExportMile.setBounds(275, 200, 150, 30);
+        btnLogout.setBounds(275, 300, 150, 30);
+        btnExit.setBounds(275, 400 , 150, 30);
+        
+        panel4.add(btnExportMile);
+        panel4.add(btnLogout);
+        panel4.add(btnExit);
+        
+        panel0.setPreferredSize(new Dimension(x, y));
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
+        
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
+        
+        
+// ******EXTRA TAB - FOR DEVELOPMENT******
+      /*         
+        JComponent panel6 = makeTextPanel("Panel #4");
+        tabbedPane.addTab("Settings", icon, panel6, null);
+        
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
+        
+        */        
+// ******APPLIES TO ENTIRE WINDOW******
         add(tabbedPane);
+        
     }
 
     protected JComponent makeTextPanel(String text) {
@@ -286,7 +258,7 @@ public class Cant extends JPanel {
     }
 
     protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = Cant.class.getResource(path);
+        java.net.URL imgURL = CarNerdMainPage.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
@@ -296,11 +268,11 @@ public class Cant extends JPanel {
     }
 
 
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws ParseException {
         JFrame frame = new JFrame("CarNerd");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.getContentPane().add(new Cant(), BorderLayout.CENTER);
+        frame.getContentPane().add(new CarNerdMainPage(), BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
@@ -310,7 +282,12 @@ public class Cant extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
         UIManager.put("swing.boldMetal", Boolean.FALSE);
-        createAndShowGUI();
+        try {
+			createAndShowGUI();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
             }
         });
     }
