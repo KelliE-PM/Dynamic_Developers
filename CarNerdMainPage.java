@@ -36,18 +36,22 @@ public class CarNerdMainPage extends JPanel {
         panel0.setLayout(null);
         
         CarUI.selectCar(panel0);
+        CarUI.loadCarInfo(panel0);
+        CarUI.loadNotes(panel0);
+        CarUI.loadSettings(panel0);
+        
         
         panel0.setPreferredSize(new Dimension(x, y));
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
         
-        
+/*        
 // ******INFO TAB****** - ALYSSA
         JComponent panel1 = makeTextPanel("Panel #1");
         tabbedPane.addTab("Info", null, panel1, null);
         panel1.setBackground(new Color(r, g, b));
         panel1.setLayout(null);
         
-        CarUI.loadCarInfo(panel0);
+        
         
         
         tabbedPane.setMnemonicAt(1, KeyEvent.VK_1);
@@ -61,7 +65,7 @@ public class CarNerdMainPage extends JPanel {
         panel2.setLayout(null);
         panel2.setBackground(new Color(r, g, b));
         
-        CarUI.loadNotes(panel0);
+        
 		
 		tabbedPane.setMnemonicAt(2, KeyEvent.VK_2);  
 		
@@ -79,19 +83,20 @@ public class CarNerdMainPage extends JPanel {
         panel4.setBackground(new Color(r, g, b));
         panel4.setLayout(null);
         
-        CarUI.loadSettings(panel0);
+       
         
         tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
         
 // ******EXTRA TAB - FOR DEVELOPMENT******
-      /*         
+ 
         JComponent panel6 = makeTextPanel("Panel #4");
         tabbedPane.addTab("Settings", icon, panel6, null);
         
         tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
         
-        */        
+   
 // ******APPLIES TO ENTIRE WINDOW******
+*/
         add(tabbedPane);
         
     }
