@@ -39,7 +39,7 @@ public class CarNerdMainPage extends JPanel {
         CarUI.loadCarInfo(panel0);
         CarUI.loadNotes(panel0);
         CarUI.loadSettings(panel0);
-        
+        CarUI.loadMileage(panel0);
         
         panel0.setPreferredSize(new Dimension(x, y));
         tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
@@ -75,7 +75,7 @@ public class CarNerdMainPage extends JPanel {
         tabbedPane.setMnemonicAt(3, KeyEvent.VK_3);      
         panel3.setBackground(new Color(r, g, b));
         panel3.setLayout(null);
-        CarUI.loadMileage(panel0);
+        
         
 // ******SETTINGS TAB******        
         JComponent panel4 = makeTextPanel("Panel #4");
