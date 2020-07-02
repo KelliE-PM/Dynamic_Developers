@@ -1,7 +1,5 @@
-package CarNerd;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,88 +8,96 @@ import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 
-public class Cant extends JPanel {
-    public Cant() {
+@SuppressWarnings("serial")
+public class CarNerdMainPage extends JPanel {
+    public CarNerdMainPage() throws ParseException {
     	super(new GridLayout(1, 1));
-        
-
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         ImageIcon icon = createImageIcon("");
-
+        
+// ****BACKGROUND COLORS FOR TABS******        
+        int r = 191, g = 136, b = 255;
+// ****SIZE OF MAIN WINDOW******       
+        int x = 700, y = 700;
+        
+// ******CAR TAB******
+        JComponent panel0 = makeTextPanel("Panel #0");
+        tabbedPane.addTab("Car", icon, panel0, null);
+        panel0.setBackground(new Color(r, g, b));
+        panel0.setLayout(null);
+        
+        CarUI.selectCar(panel0);
+        CarUI.loadCarInfo(panel0);
+        //CarUI.loadNotes(panel0);
+        CarUI.loadSettings(panel0);
+        CarUI.loadMileage(panel0);
+        
+        panel0.setPreferredSize(new Dimension(x, y));
+        tabbedPane.setMnemonicAt(0, KeyEvent.VK_0);
+        
+/*        
+// ******INFO TAB****** - ALYSSA
         JComponent panel1 = makeTextPanel("Panel #1");
-        tabbedPane.addTab("Car", icon, panel1,
-                "Does nothing");
-        panel1.setPreferredSize(new Dimension(300,300));
-        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+        tabbedPane.addTab("Info", null, panel1, null);
+        panel1.setBackground(new Color(r, g, b));
+        panel1.setLayout(null);
         
-    // INFO TAB - ALYSSA
+        
+        
+        
+        tabbedPane.setMnemonicAt(1, KeyEvent.VK_1);
+
+        // pretend code UI for alert
+        // TODO call delete
+        // pretend code "This is where the note would be deleted."
+// ******LOG TAB******
         JComponent panel2 = makeTextPanel("Panel #2");
-        // Makes it that it doesn't take up the entire area.  Still adjusting
-        panel2.setLayout(new FlowLayout());
-        tabbedPane.addTab("Info", icon, panel2,
-                "Does twice as much nothing");
+        tabbedPane.addTab("Log", null, panel2, null);
+        panel2.setLayout(null);
+        panel2.setBackground(new Color(r, g, b));
         
-        JComponent tbCarName = new JTextField("Enter Name");
-        panel2.add(tbCarName);
-        tbCarName.setSize(200, 20);
-        JComponent tbCarYear = new JTextField("Enter Year");
-        panel2.add(tbCarYear);
         
-        JComponent tbCarMake = new JTextField("Enter Make");
-        panel2.add(tbCarMake);
-        
-        JComponent tbCarModel = new JTextField("Enter Model");
-        panel2.add(tbCarModel);
-        
-        JComponent tbCarTrim = new JTextField("Enter Trim if Applicable");
-        panel2.add(tbCarTrim);
-        
-        JComponent tbCarVIN = new JTextField("Enter VIN");
-        panel2.add(tbCarVIN);
-        
-        JComponent carPlateNum = new JTextField("Enter Plate Number");
-        panel2.add(carPlateNum);
-        
-        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
-
+		
+		tabbedPane.setMnemonicAt(2, KeyEvent.VK_2);  
+		
+// ******MILEAGE TAB******        
         JComponent panel3 = makeTextPanel("Panel #3");
-        tabbedPane.addTab("Log", icon, panel3,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(2, KeyEvent.VK_3);
-
-        JComponent panel4 = makeTextPanel("Panel 4");
-        tabbedPane.addTab("Mileage", icon, panel4,"Does nothing at all");
-        tabbedPane.setMnemonicAt(3, KeyEvent.VK_4);
-
-        JComponent panel5 = makeTextPanel("Panel #5");
-        tabbedPane.addTab("Reminder", icon, panel5,
-                "Still does nothing");
-        //tabbedPane.setMnemonicAt(4, KeyEvent.VK_5);
-
-        JComponent panel6 = makeTextPanel("Panel #6");
-        tabbedPane.addTab("Documents", icon, panel6,
-                "Still does nothing");
-        //tabbedPane.setMnemonicAt(5, KeyEvent.VK_6);
-
-        JComponent panel7 = makeTextPanel("Panel #7");
-        tabbedPane.addTab("Settings", icon, panel7,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(6, KeyEvent.VK_7);
-
-        JComponent panel8 = makeTextPanel("Panel #8");
-        tabbedPane.addTab("Quit", icon, panel8,
-                "Still does nothing");
-        tabbedPane.setMnemonicAt(7, KeyEvent.VK_8);
-
-
+        tabbedPane.addTab("Mileage", icon, panel3, null);
+        tabbedPane.setMnemonicAt(3, KeyEvent.VK_3);      
+        panel3.setBackground(new Color(r, g, b));
+        panel3.setLayout(null);
+        
+        
+// ******SETTINGS TAB******        
+        JComponent panel4 = makeTextPanel("Panel #4");
+        tabbedPane.addTab("Settings", icon, panel4, null);
+        panel4.setBackground(new Color(r, g, b));
+        panel4.setLayout(null);
+        
+       
+        
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
+        
+// ******EXTRA TAB - FOR DEVELOPMENT******
+ 
+        JComponent panel6 = makeTextPanel("Panel #4");
+        tabbedPane.addTab("Settings", icon, panel6, null);
+        
+        tabbedPane.setMnemonicAt(4, KeyEvent.VK_4);
+        
+   
+// ******APPLIES TO ENTIRE WINDOW******
+*/
         add(tabbedPane);
+        
     }
 
     protected JComponent makeTextPanel(String text) {
@@ -103,9 +109,8 @@ public class Cant extends JPanel {
         return panel;
     }
 
-
     protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = Cant.class.getResource(path);
+        java.net.URL imgURL = CarNerdMainPage.class.getResource(path);
         if (imgURL != null) {
             return new ImageIcon(imgURL);
         } else {
@@ -115,12 +120,11 @@ public class Cant extends JPanel {
     }
 
 
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws ParseException {
         JFrame frame = new JFrame("CarNerd");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        frame.getContentPane().add(new Cant(), BorderLayout.CENTER);
 
+        frame.getContentPane().add(new CarNerdMainPage(), BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
@@ -130,7 +134,12 @@ public class Cant extends JPanel {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
         UIManager.put("swing.boldMetal", Boolean.FALSE);
-        createAndShowGUI();
+        try {
+			createAndShowGUI();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
             }
         });
     }
