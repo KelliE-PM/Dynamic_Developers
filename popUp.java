@@ -1,5 +1,6 @@
 package Program;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -16,7 +17,7 @@ import java.util.Date;
 public class popUp extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	private JPanel Mpanel;
 	private JTextField newMileage;
 	private JTextField newDate;
 	private JCheckBox checkChange;
@@ -111,50 +112,54 @@ public class popUp extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 360, 195);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][58.00][][60.00,left]", "[][][][][]"));
+
+		Mpanel = new JPanel();
+		Mpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(Mpanel);
+		Mpanel.setLayout(new MigLayout("", "[][58.00][][60.00,left]", "[][][][][]"));
+		Mpanel.setBackground(new Color(191,136,255));
 		
 		JLabel enter = new JLabel("ENTER NEW MILEAGE:  ");
-		contentPane.add(enter, "cell 0 0,alignx trailing");
+		Mpanel.add(enter, "cell 0 0,alignx trailing");
 		
 		newMileage = new JTextField();
 		newMileage.setHorizontalAlignment(SwingConstants.LEFT);
 		newMileage.setText(String.valueOf(lastMiles));
-		contentPane.add(newMileage, "cell 1 0,alignx center");
+		Mpanel.add(newMileage, "cell 1 0,alignx center");
 		newMileage.setColumns(10);
 		
 		// setMileage = 
 		
 		JLabel date = new JLabel(" DATE: ");
-		contentPane.add(date, "cell 2 0,alignx trailing");
+		Mpanel.add(date, "cell 2 0,alignx trailing");
 		
 		newDate = new JTextField();
 		newDate.setText(lastDate);
-		contentPane.add(newDate, "cell 3 0,alignx center,aligny center");
+		Mpanel.add(newDate, "cell 3 0,alignx center,aligny center");
 		newDate.setColumns(10);
 
 		// setDate = 
 		
 		last = new JLabel("             Last oil change was on " + changeDate + " with " + syn + " oil");
 		last.setFont(new Font("Tahoma", Font.ITALIC, 11));
-		contentPane.add(last, "cell 0 1 4 1,growx");
+		Mpanel.add(last, "cell 0 1 4 1,growx");
 		
 		checkChange = new JCheckBox("Oil Change?");
-		contentPane.add(checkChange, "cell 0 2,alignx right,aligny top");
+		checkChange.setBackground(new Color(191, 136, 255));
+		Mpanel.add(checkChange, "cell 0 2,alignx right,aligny top");
 		
 		if (checkChange.isSelected()) {change = true;} 
 		else{ change = false;}
 		
 		checkSynth = new JCheckBox("Synthetic oil?");
-		contentPane.add(checkSynth, "cell 1 2 2 1,growx,aligny top");
+		Mpanel.add(checkSynth, "cell 1 2 2 1,growx,aligny top");
+		checkSynth.setBackground(new Color(191, 136, 255));
 		
 		if (checkSynth.isSelected()) {synthetic = true;} 
 		else{ synthetic = false;}
 		
 		update = new JButton("Update");
-		contentPane.add(update, "cell 3 2");
+		Mpanel.add(update, "cell 3 2");
 		
 		/*
 		currentMiles = setMiles;
@@ -173,10 +178,10 @@ public class popUp extends JFrame {
 		
 		nextChange = new JLabel("             Next oil change at " + nextChangeMiles + " miles    ");
 		nextChange.setHorizontalAlignment(SwingConstants.LEFT);
-		contentPane.add(nextChange, "cell 0 3 3 1,alignx left,aligny bottom");
+		Mpanel.add(nextChange, "cell 0 3 3 1,alignx left,aligny bottom");
 		
 		reset = new JButton("Reset");
-		contentPane.add(reset, "cell 3 3,growx,aligny center");
+		Mpanel.add(reset, "cell 3 3,growx,aligny center");
 		
 		/* 
 		lastMiles = saveMiles;
@@ -186,10 +191,10 @@ public class popUp extends JFrame {
 		*/
 		
 		message = new JLabel(due);
-		contentPane.add(message, "cell 0 4 3 1,alignx left,aligny top");
+		Mpanel.add(message, "cell 0 4 3 1,alignx left,aligny top");
 		
 		exit = new JButton("   Exit   ");
-		contentPane.add(exit, "cell 3 4,growy");
+		Mpanel.add(exit, "cell 3 4,growy");
 		
 		// mile(currentMiles, currentDate)
 		// popUp.dispose();
