@@ -87,6 +87,13 @@ public class CarUI {
         panel.add(lblCarVIN);
         panel.add(lblPlateNum);
         panel.add(btnEdit);
+        
+        String[] reminders = {};
+	    JList list = new JList(reminders);
+		JScrollPane scrollPane = new JScrollPane(list);
+		panel.add(scrollPane, BorderLayout.WEST);
+		scrollPane.setBounds(10, 150, 170, 400);
+		
 	}
 	public static void loadNotes(JFrame panel) {
 		JTextArea txtrEnterTextHere = new JTextArea();
@@ -120,17 +127,35 @@ public class CarUI {
 	    btnClear.setBounds(501, 349, 89, 45);
 	    panel.add(btnClear);
 	          
+	    btnClear.addActionListener(new ActionListener()
+	    {
+	      public void actionPerformed(ActionEvent e)
+	      {
+	    	  
+	    	  txtrEnterTextHere.setText("");
+	       
+	      }
+	    });
+	    
+	    String[] remindersText = {};
+		JList remindersTextList = new JList(remindersText);
+	    
+	    btnSave.addActionListener(new ActionListener()
+	    {
+	      public void actionPerformed(ActionEvent e)
+	      {
+	    	  
+	    	  remindersTextList.add(txtrEnterTextHere, remindersTextList);
+	       
+	      }
+	    });
 	
-	    String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
-	    JList list = new JList(reminders);
-		JScrollPane scrollPane = new JScrollPane(list);
-		panel.add(scrollPane, BorderLayout.WEST);
-		scrollPane.setBounds(10, 150, 170, 400);
-		
-		
-	    JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
+	    JLabel lblNote = new JLabel("Add note.");
 	    lblNote.setBounds(10, 560, 700, 20);
 	    panel.add(lblNote);
+		
+		
+		
 	}
 	
 	public static void loadMileage(JComponent panel) throws ParseException {
