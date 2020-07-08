@@ -1,4 +1,7 @@
+package CarNerd;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
@@ -116,7 +119,6 @@ public class MainUI {
                 notePopup.setVisible(true);
             }
         });
-	    
 	}
 	
 	public static void loadMileage(JFrame frame) throws ParseException {
@@ -149,8 +151,20 @@ public class MainUI {
 	        frame.add(lblLastOilDate);
 	        frame.add(lblNextOilMile);
 	        frame.add(lblNextOilDate);
+	        
 	        frame.add(btnAddMile);
-	}
+	        btnAddMile.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	JFrame mFrame = new JFrame("Mileage Tracker");
+	            	int x = 360, y = 184;
+	                mFrame.setPreferredSize(new Dimension(x, y));
+	                mFrame.getContentPane().add(new MileagePopup(mFrame), BorderLayout.CENTER);
+	                mFrame.pack();
+	                mFrame.setVisible(true);
+	            }
+	        });
+		}
 	
 	public static void loadSettings(JFrame frame) {
         JButton btnExportMile = new JButton("Export Mileage");
