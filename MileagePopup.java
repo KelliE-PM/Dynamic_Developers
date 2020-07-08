@@ -22,29 +22,40 @@ public class MileagePopup extends JPanel {
 	
 	// Create fields
 	String lastDateSS;
+	String saveDateSS;
 	String changeDateSS;
+	String saveChangeDateSS;
 	String currentDateSS;
 	LocalDate lastDate;
-	LocalDate nextReg;
-	LocalDate nextSyn;
+	LocalDate saveDate;
 	LocalDate changeDate;
+	LocalDate saveChangeDate;
 	LocalDate currentDate;
 	LocalDate nextChangeDate;
+	LocalDate saveNextChangeDate;
 	String lastDateS;
+	String saveDateS;
 	String changeDateS;
+	String saveChangeDateS;
 	String currentDateS;
-	String nextSynS;
-	String nextRegS;
+	String nextChangeDateS;
+	String saveNextChangeDateS;
 	int lastMiles;
+	int saveMiles;
 	int changeMiles;
-	int changeMilesReg;
-	int changeMilesSyn;
+	int saveChange;
 	int nextChangeMiles;
+	int saveNextChange;
 	int currentMiles;
 	boolean change;
 	boolean synthetic;
+	boolean lastSyn;
 	String syn;
+	String saveSyn;
 	int milesLeft;
+	int saveLeft;
+	String due;
+	int mile;
 	
 	public static void main(String[] args) {
 		
@@ -55,47 +66,58 @@ public class MileagePopup extends JPanel {
 		// Update Data
 		lastDateSS = "12/31/2020";
 		changeDateSS = "12/12/2020";
-		currentDateSS = "09/31/2021";
+		currentDateSS = "1/31/2021";
 		lastMiles = 564378;
-		currentMiles = lastMiles;
+		currentMiles = 564390;
 		changeMiles = 562934;
+		lastSyn = false;
 		
 		// Create strings to dates to calculate
 		lastDate = LocalDate.parse(lastDateSS, formater);
 		changeDate = LocalDate.parse(changeDateSS, formater);
 		currentDate = LocalDate.parse(currentDateSS, formater);
-		nextReg = changeDate.plusMonths(6);
-		nextSyn = changeDate.plusMonths(9);
-		nextChangeDate = nextReg;
 		
 		// Convert back to strings to output
 		lastDateS = lastDate.format(formater);
-		nextRegS =nextReg.format(formater);
-		nextSynS =nextSyn.format(formater);
+		changeDateS = changeDate.format(formater);
+		currentDateS = currentDate.format(formater);
+		
+		if (lastSyn == true) {
+			nextChangeMiles = changeMiles + 5000;
+			nextChangeDate = changeDate.plusMonths(9);
+			syn = "synthetic";
+			
+		} else { 
+			nextChangeMiles = changeMiles + 3000;
+			nextChangeDate = changeDate.plusMonths(6);
+			syn = "regular";
+		}
+
+		nextChangeDateS = nextChangeDate.format(formater);
+		milesLeft = nextChangeMiles - currentMiles;
 		
 		// Oil change booleans
-		change = true;
+		change = false;
 		synthetic = false;
 		syn = "regular";
 		if (synthetic == true) {syn = "synthetic";}
 		
-		// Calculate next Oil Change
-		changeMilesReg = changeMiles + 3000;
-		changeMilesSyn = changeMiles + 5000;
-		
-		nextChangeMiles = changeMilesReg;
-		if (synthetic == true) {nextChangeMiles = changeMilesSyn; nextChangeDate = nextSyn;} 
-		milesLeft = nextChangeMiles - currentMiles;
-		
-		// Save mileage for reset
-		//int saveMiles = lastMiles;
-		//String saveDate = lastDate;
-		//int saveChangeMiles = changeMiles;
-		//String saveChangeDate = changeDate;
+		// Backup info
+		saveMiles = lastMiles;
+		saveDate = lastDate;
+		saveDateS = saveDate.format(formater);
+		saveChange = changeMiles;
+		saveChangeDate = changeDate;
+		saveChangeDateS = saveChangeDate.format(formater);
+		saveNextChange = nextChangeMiles;
+		saveNextChangeDate = nextChangeDate;
+		saveNextChangeDateS = nextChangeDate.format(formater);
+		saveSyn = syn;
+		saveLeft = milesLeft;
 		
 		// Message at bottom (can change)
-		String due = "                 In " + milesLeft + " miles or by " + nextRegS;
-		if (currentMiles > nextChangeMiles || currentDate.compareTo(changeDate) >= 1) {due = "             You are past due for an oil change";}
+		due = "                 In " + milesLeft + " miles or by " + nextChangeDateS;
+		if (currentMiles > nextChangeMiles || currentDate.compareTo(nextChangeDate) >= 1) {due = "             You are past due for an oil change";}
 		
 //****************************FRAME SETTING*********************************************		
 		
@@ -148,6 +170,23 @@ public class MileagePopup extends JPanel {
 		checkChange.setBackground(new Color(191, 136, 255));
 		checkSynth.setBackground(new Color(191, 136, 255));
 		
+		checkChange.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (checkChange.isSelected()) {change = true;} 
+				else {change = false;}
+				
+			}});
+		
+		checkSynth.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (checkSynth.isSelected()) {synthetic = true; syn = "synthetic";} 
+				else {synthetic = false; syn = "regular";}
+				
+			}});
+		
+		
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -159,22 +198,58 @@ public class MileagePopup extends JPanel {
 				changeDateSS = changeDate.format(formater);	
 				last.setText("            Last oil change was on " + changeDateSS + " with " + syn + " oil");
 				
+				if (synthetic == false) {
+				mile = 3000;
+				nextChangeMiles = changeMile + mile; 
+				nextChangeDate = changeDate.plusMonths(6);
+				nextChangeDateS = nextChangeDate.format(formater);
+				}
+				
+				if (synthetic == true) {
+				mile = 5000;
+				nextChangeMiles = changeMile + mile; 
+				nextChangeDate = changeDate.plusMonths(9);
+				nextChangeDateS = nextChangeDate.format(formater);
+				}
+				
+				nextChange.setText("             Next oil change at " + nextChangeMiles + " miles    ");
+				message.setText("                 In " + mile + " miles or by " + nextChangeDateS);
+				
+				// FIX  send oil change mile and date to object or log
+				
 				} else {
 				String setMileS = newMileage.getText();
 				int setMile = Integer.parseInt(setMileS);
 				String setDateS = newDate.getText();
 				LocalDate setDate = LocalDate.parse(setDateS, formater);
 				String setDateSS = setDate.format(formater);
+				milesLeft = nextChangeMiles - setMile; 
+				nextChange.setText("             Next oil change at " + nextChangeMiles + " miles");
+				message.setText("                 In " + milesLeft + " miles or by " + nextChangeDateS);
+				if (setMile > nextChangeMiles || setDate.compareTo(nextChangeDate) >= 1) {
+				message.setText("             You are past due for an oil change");}
+				
+				// FIX  send mile and date to object or log
+				
 				}
 				
 			}});
 		
+		reset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newMileage.setText(String.valueOf(saveMiles));
+				newDate.setText(saveDateS);
+				last.setText("            Last oil change was on " + saveDateS + " with " + saveSyn + " oil");
+				nextChange.setText("             Next oil change at " + saveNextChange + " miles");
+				message.setText("                 In " + saveLeft + " miles or by " + saveNextChangeDateS);
+				
+			}});
 		
-		if (checkChange.isSelected()) {change = true;} 
-		else{ change = false;}
-		
-		if (checkSynth.isSelected()) {synthetic = true;} 
-		else{ synthetic = false;}
+		exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Mpanel.dispose();
+				
+			}});
 		
 	}
 
