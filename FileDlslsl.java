@@ -29,6 +29,17 @@ public class FileDlslsl {
 		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		
+		try {
+			ExportMileage data = new ExportMileage(file_name, false);
+			data.writeToFile("459751197841981984916219845691988651989844191981 miles");
+			
+			System.out.println("mileage written");
+			
+		}
+		catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 
 	}
 }
