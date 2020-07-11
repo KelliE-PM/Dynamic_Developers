@@ -27,9 +27,9 @@ public class AddCarPopup extends JPanel {
 // ****SIZE OF POPUP WINDOW******       
         int x = 400, y = 400;
         frame.setPreferredSize(new Dimension(x, y));
+		
+    	setBackground(new Color(191,136,255));
 
-        int r = 191, g = 136, b = 255;
-        frame.getContentPane().setBackground(new Color(r, g, b));
         
 // TODO grab current label information
         
