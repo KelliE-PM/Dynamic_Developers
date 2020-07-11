@@ -57,9 +57,7 @@ public class AddMileagePopup extends JPanel {
 	String due;
 	int mile;
 	
-	public static void main(String[] args) {}
-
-		MileagePopup(JFrame Mpanel) {
+		AddMileagePopup(JFrame Mpanel) {
 					
 		// Update Data
 		lastDateSS = "12/31/2020";
