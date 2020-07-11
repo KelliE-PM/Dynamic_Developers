@@ -165,8 +165,8 @@ public class MainUI {
 	        btnAddMile.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	JFrame mFrame = new JFrame("New Mileage");
-	            	int x = 400, y = 400;
+	            	JFrame mFrame = new JFrame("Mileage Tracker");
+	            	int x = 360, y = 184;
 	                mFrame.setPreferredSize(new Dimension(x, y));
 	                mFrame.getContentPane().add(new AddMileagePopup(mFrame), BorderLayout.CENTER);
 	                mFrame.pack();
