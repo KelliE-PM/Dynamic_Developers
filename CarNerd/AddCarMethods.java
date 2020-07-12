@@ -1,16 +1,15 @@
 package CarNerd;
 
-//import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-//import java.util.Scanner;
-
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import java.io.IOException;
 
 public class AddCarMethods {
-	
+JComboBox<String> cbChooseCar = new JComboBox<String>();	
 	private String path;
 	private boolean append_to_file = false;
 	public ArrayList<Car> listCars = new ArrayList<Car>();
@@ -32,7 +31,6 @@ public class AddCarMethods {
 	public void addNewCar(String name, String year, String make, String model, String trim, String vin, String plate) {
 // adds car from Add Car popup upon pressing the Add New Car button
 		Car tempCar = new Car();
-		
 //TODO if or case statements to catch empty fields
 		tempCar.setName(name);
 		tempCar.setYear(year);
@@ -43,19 +41,29 @@ public class AddCarMethods {
 		tempCar.setPlate(plate);
 		listCars.add(tempCar);
 	}
-	public String[] addCarOptions() throws FileNotFoundException {
+	public void addCarOptions(JFrame frame) throws FileNotFoundException {
 // adds the cars to an ArrayList for the spinner to generate
-		String[] carsOption = new String[listCars.size()];
-		MainUI MainUI = new MainUI();
-		//FileInputStream FIS = new FileInputStream("cars.txt");
-		//Scanner inputRead = new Scanner(FIS);
+		Car tempCar = new Car();
+		tempCar.setName("TestCar");
+		listCars.add(tempCar);
 		
-		for (int c = 0; c < listCars.size(); c++) {
-			carsOption[c] = listCars.get(c).getName();
-		}
-
-		return carsOption;
+		tempCar = new Car();
+		tempCar.setName("AnotherTest");
+		listCars.add(tempCar);
+				
+		cbChooseCar.setBounds(10, 10, 150, 20);
+		for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
+	    
+	    frame.add(cbChooseCar);
 	}
+	
+	public void addMoreChoices(JFrame AddCarFrame) {
+		Car tCar = new Car();
+		tCar.setName("AnotherTest");
+		listCars.add(tCar);
+		for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
+	}
+	
 	public void selectCar() {
 		
 		

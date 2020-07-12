@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,39 +16,34 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 
 public class MainUI {
-	public JComboBox<String> spChooseCar = new JComboBox<String>();
-	public void selectCar(JFrame frame) throws FileNotFoundException{
+	public void selectCar(JFrame mainFrame) throws FileNotFoundException{
 // ********** SELECT CAR // ADD CAR // DELETE CAR // EDIT CAR **********
-		//String[] cars = {"Select Car", "Miata", "F150", "Jeep", "Mazda 3", "350z", "Add Car"};
-		
 	    JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
 	    
 	    AddCarMethods addCarMethods = new AddCarMethods();
-//TODO add cars to spinner	    
-	    //spChooseCar.add(addCarMethods.addCarOptions());
-	    //spChooseCar.clear();
 	    
 	    btnAddCar.setBounds(10, 40, 100, 30);
-	    spChooseCar.setBounds(10, 10, 150, 20);
 	    btnDeleteCar.setBounds(10, 80, 100, 30);
 	    
-	    frame.add(btnAddCar);
+	    addCarMethods.addCarOptions(mainFrame);
+	    
+	    mainFrame.add(btnAddCar);
 	    btnAddCar.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	        	JFrame popupFrame = new JFrame("Edit Car Information");
-	            try { popupFrame.getContentPane().add(new AddCarPopup(popupFrame), BorderLayout.CENTER); } 
+	            try { popupFrame.getContentPane().add(new AddCarPopup(popupFrame, mainFrame), BorderLayout.CENTER); } 
 	            catch (ParseException e1) { e1.printStackTrace(); }
 	            popupFrame.pack();
 	            popupFrame.setVisible(true);
 	        }
 	    });
 	 // ********** DELETE CAR **********	    
-	    frame.add(btnDeleteCar);
+	    mainFrame.add(btnDeleteCar);
 	    btnDeleteCar.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	int result = JOptionPane.showConfirmDialog(frame,"Are you sure you would like to delete [car]?", "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	        	int result = JOptionPane.showConfirmDialog(mainFrame,"Are you sure you would like to delete [car]?", "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	            if(result == JOptionPane.YES_OPTION){ 
 	        //TODO delete car 
 	            	JOptionPane.showMessageDialog(null, "[car] as been deleted.");
@@ -59,10 +53,9 @@ public class MainUI {
 				}
 	        }
 	    });
-	    frame.add(spChooseCar);
 }
 
-	public void loadCarInfo(JFrame frame) {
+	public void loadCarInfo(JFrame mainFrame) {
 // car information loading
         JLabel lblCarName = new JLabel("");
         JLabel lblCarYear = new JLabel("");
@@ -82,20 +75,20 @@ public class MainUI {
         lblPlateNum.setBounds(350, 70, 150, 20);
         btnEdit.setBounds(550, 40, 100, 30);
 
-        frame.add(lblCarName);
-		frame.add(lblCarYear);
-        frame.add(lblCarMake);
-        frame.add(lblCarModel);
-        frame.add(lblCarTrim);
-        frame.add(lblCarVIN);
-        frame.add(lblPlateNum);
-        frame.add(btnEdit);
+        mainFrame.add(lblCarName);
+		mainFrame.add(lblCarYear);
+        mainFrame.add(lblCarMake);
+        mainFrame.add(lblCarModel);
+        mainFrame.add(lblCarTrim);
+        mainFrame.add(lblCarVIN);
+        mainFrame.add(lblPlateNum);
+        mainFrame.add(btnEdit);
 // onclick listener - reacts to the EDIT button being pressed
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             	JFrame carPopup = new JFrame("Edit Car Information");
-                try { carPopup.getContentPane().add(new AddCarPopup(carPopup), BorderLayout.CENTER); } 
+                try { carPopup.getContentPane().add(new AddCarPopup(carPopup, mainFrame), BorderLayout.CENTER); } 
                 catch (ParseException e1) { e1.printStackTrace(); }
                 carPopup.pack();
                 carPopup.setVisible(true);
@@ -130,7 +123,7 @@ public class MainUI {
         });
 	}
 	
-	public void loadMileage(JFrame frame) throws ParseException {
+	public void loadMileage(JFrame mainFrame) throws ParseException {
 	        int lastOilMile = 157249;
 	        
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -154,19 +147,19 @@ public class MainUI {
 	        lblNextOilDate.setBounds(300, 350, 350, 20);
 	        btnAddMile.setBounds(350, 380, 150, 30);
         
-	        frame.add(lblLastMile);
-			frame.add(lblLastMileDate);
-	        frame.add(lblLastOilMile);
-	        frame.add(lblLastOilDate);
-	        frame.add(lblNextOilMile);
-	        frame.add(lblNextOilDate);
+	        mainFrame.add(lblLastMile);
+			mainFrame.add(lblLastMileDate);
+	        mainFrame.add(lblLastOilMile);
+	        mainFrame.add(lblLastOilDate);
+	        mainFrame.add(lblNextOilMile);
+	        mainFrame.add(lblNextOilDate);
 		     
-	        frame.add(btnAddMile);
+	        mainFrame.add(btnAddMile);
 	        btnAddMile.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	JFrame mFrame = new JFrame("New Mileage");
-	            	int x = 400, y = 400;
+	            	JFrame mFrame = new JFrame("Mileage Tracker");
+	            	int x = 360, y = 184;
 	                mFrame.setPreferredSize(new Dimension(x, y));
 	                mFrame.getContentPane().add(new AddMileagePopup(mFrame), BorderLayout.CENTER);
 	                mFrame.pack();
@@ -175,7 +168,7 @@ public class MainUI {
 	        });
 		}
 
-	public void loadSettings(JFrame frame) {
+	public void loadSettings(JFrame mainFrame) {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");
         JButton btnExit = new JButton("Exit");
@@ -184,8 +177,9 @@ public class MainUI {
         btnLogout.setBounds(270, 650, 150, 30);
         btnExit.setBounds(470, 650 , 150, 30);
         
-        frame.add(btnExportMile);
-        frame.add(btnLogout);
-        frame.add(btnExit);
+        mainFrame.add(btnExportMile);
+        mainFrame.add(btnLogout);
+        mainFrame.add(btnExit);
+        btnExit.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) {System.exit(0);}});
 	}
 }

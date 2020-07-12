@@ -20,9 +20,8 @@ public class AddNotePopup extends JPanel{
 		// ****SIZE OF POPUP WINDOW******       
 		int x = 600, y = 400;
 		frame.setPreferredSize(new Dimension(x, y));
-
-        int r = 191, g = 136, b = 255;
-		frame.getContentPane().setBackground(new Color(r, g, b));
+		
+		setBackground(new Color(191,136,255));
 		
 		JLabel lblNoteDate = new JLabel("Current Date (MM/DD/YYYY");
 		JLabel lblRemindDate = new JLabel("Reminder Date (MM/DD/YYYY");

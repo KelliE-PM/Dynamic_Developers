@@ -1,4 +1,4 @@
-package car_nerds_ui_stage1;
+package CarNerd;
 
 import java.io.FileWriter;
 import java.io.IOException;

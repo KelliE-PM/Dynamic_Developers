@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,13 +24,13 @@ public class AddCarPopup extends JPanel {
     
 	public AddCarPopup() {}
 	
-	public AddCarPopup(JFrame frame) throws ParseException {
+	public AddCarPopup(JFrame frame, JFrame mainFrame) throws ParseException {
 // ****SIZE OF POPUP WINDOW******       
         int x = 400, y = 400;
         frame.setPreferredSize(new Dimension(x, y));
+		
+    	setBackground(new Color(191,136,255));
 
-        int r = 191, g = 136, b = 255;
-        frame.getContentPane().setBackground(new Color(r, g, b));
         
 // TODO grab current label information
         
@@ -74,8 +75,12 @@ public class AddCarPopup extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	        	AddCarMethods addCar = new AddCarMethods();
 	        	addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
-//TODO add dump pop up data
-//TODO add pop up visible = false	        	
+	        	try { addCar.addCarOptions(mainFrame); } 
+	        	catch (FileNotFoundException e1) { e1.printStackTrace(); }
+	        	
+	        	addCar.addMoreChoices(mainFrame);
+	        	frame.dispose();
+	        	frame.setVisible(false);	        	
 	        }
 	    });
 //TODO create an onclick listener and update information
