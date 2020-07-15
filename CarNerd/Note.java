@@ -1,6 +1,7 @@
 package CarNerd;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Note {
 	private LocalDate currentDate;
@@ -23,6 +24,20 @@ public class Note {
 		this.noteText = noteText;
 	}
 
+	// constructor w/o variables for populating from the UI input
+	public Note() {
+		
+	}
+
+	private String convertDate (LocalDate dateToChange) {
+		// convert a LocalDate to string
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		LocalDate date = LocalDate.parse("29-Mar-2019", formatter);
+		System.out.println(date);
+		return "not done"; 
+	}
+
+	// Getters and Setters
 	public LocalDate getCurrentDate() {return currentDate;}
 	public void setCurrentDate(LocalDate currentDate) {this.currentDate = currentDate;}
 
