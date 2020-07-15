@@ -1,25 +1,21 @@
 package CarNerd;
 
-import javax.swing.JPanel;
-
-/*
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
-
-
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-*/
-public class AddCarPopup extends JPanel {
-	/*
-	private static final long serialVersionUID = 1L;
+import javax.swing.SwingUtilities;
+
+public class AddCarPanel extends JPanel{
 	public JTextField tfCarName = new JTextField();
 	public JTextField tfCarYear = new JTextField("");
 	public JTextField tfCarMake = new JTextField("");
@@ -27,29 +23,27 @@ public class AddCarPopup extends JPanel {
 	public JTextField tfCarTrim = new JTextField("");
 	public JTextField tfCarVIN = new JTextField("");
 	public JTextField tfCarPlate = new JTextField("");
-    
-	public AddCarPopup() {}
+	public JButton btnUpdate = new JButton("Update");
+	public JLabel lblCarName = new JLabel("Name");
+	public JLabel lblCarYear = new JLabel("Year");
+	public JLabel lblCarMake = new JLabel("Make");
+	public JLabel lblCarModel = new JLabel("Model");
+	public JLabel lblCarTrim = new JLabel("Trim");
+	public JLabel lblCarVIN = new JLabel("VIN");
+	public JLabel lblPlateNum = new JLabel("Plate");
 	
-	public AddCarPopup(JFrame frame, JFrame mainFrame) throws ParseException {
+	private static final long serialVersionUID = 1L;
+	AddCarPanel(JPanel panel, JDialog dialog, JFrame mainFrame) {
 // ****SIZE OF POPUP WINDOW******       
-        int x = 400, y = 400;
-        frame.setPreferredSize(new Dimension(x, y));
-		
+		int x = 400, y = 400;
+        panel.setPreferredSize(new Dimension(x, y));
     	setBackground(new Color(191,136,255));
 
         
 // TODO grab current label information
         
 //TODO create a check to make sure you would like to edit the VIN
-        JButton btnUpdate = new JButton("Update");
-        JLabel lblCarName = new JLabel("Name");
-        JLabel lblCarYear = new JLabel("Year");
-        JLabel lblCarMake = new JLabel("Make");
-        JLabel lblCarModel = new JLabel("Model");
-        JLabel lblCarTrim = new JLabel("Trim");
-        JLabel lblCarVIN = new JLabel("VIN");
-        JLabel lblPlateNum = new JLabel("Plate");
-        
+		
         lblCarName.setBounds(10, 10, 100, 30);
 		lblCarYear.setBounds(10, 50, 100, 30);
         lblCarMake.setBounds(10, 90, 100, 30);
@@ -67,54 +61,42 @@ public class AddCarPopup extends JPanel {
         tfCarPlate.setBounds(75, 250, 150, 30);
         btnUpdate.setBounds(150, 290, 100, 30);
         
-        frame.add(tfCarName);
-		frame.add(tfCarYear);
-		frame.add(tfCarMake);
-		frame.add(tfCarModel);
-		frame.add(tfCarTrim);
-		frame.add(tfCarVIN);
-		frame.add(tfCarPlate);
-//TODO change update / add when pressing the edit / add buttons on main screen        
-		frame.add(btnUpdate);
+        panel.add(tfCarName);
+		panel.add(tfCarYear);
+		panel.add(tfCarMake);
+		panel.add(tfCarModel);
+		panel.add(tfCarTrim);
+		panel.add(tfCarVIN);
+		panel.add(tfCarPlate);
+		
+        panel.add(lblCarName);
+        panel.add(lblCarYear);
+        panel.add(lblCarMake);
+        panel.add(lblCarModel);
+        panel.add(lblCarTrim);
+        panel.add(lblCarVIN);
+        panel.add(lblPlateNum);
+        panel.add(btnUpdate);
         btnUpdate.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	        	AddCarMethods addCar = new AddCarMethods();
+	        	MainUI mainUI = new MainUI();
 	        	addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
+	        	
+	        	mainUI.cbChooseCar.removeAllItems();
+	        	
+	        	mainUI.cbChooseCar.addItem(tfCarName.getText());
+	        	
+	        	dialog.dispose();
+	        	SwingUtilities.updateComponentTreeUI(mainFrame);
+	        	/*
 	        	mainFrame.dispose();
-	        	frame.dispose();
-	        	frame.setVisible(false);
-	        	JFrame newMainFrame = new JFrame();
-	        	CarNerdMainPage mp = null;
-				try {
-					mp = new CarNerdMainPage(newMainFrame);
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	        	try {
-					mp.createAndShowGUI();
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+	        	try { CarNerdMainPage.createAndShowGUI(); } 
+	            catch (ParseException | FileNotFoundException e1) { e1.printStackTrace(); }
+	        	*/
 	        }
 	    });
-//TODO create an onclick listener and update information
-        
-        frame.add(lblCarName);
-        frame.add(lblCarYear);
-        frame.add(lblCarMake);
-        frame.add(lblCarModel);
-        frame.add(lblCarTrim);
-        frame.add(lblCarVIN);
-        frame.add(lblPlateNum);
-    }
-    */
+       
+	}
 }

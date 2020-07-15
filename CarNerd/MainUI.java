@@ -9,35 +9,57 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class MainUI {
+	JComboBox<String> cbChooseCar = new JComboBox<String>();
+	static Car theCar = new Car();
 	public void selectCar(JFrame mainFrame) throws FileNotFoundException{
 // ********** SELECT CAR // ADD CAR // DELETE CAR // EDIT CAR **********
 	    JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
 	    
-	    AddCarMethods addCarMethods = new AddCarMethods();
-	    
 	    btnAddCar.setBounds(10, 40, 100, 30);
 	    btnDeleteCar.setBounds(10, 80, 100, 30);
-	    
-	    addCarMethods.addCarOptions(mainFrame);
-	    
-	    mainFrame.add(btnAddCar);
-	    btnAddCar.addActionListener(new ActionListener() {
+	    cbChooseCar.setBounds(10, 10, 150, 20);
+	     
+//TODO loop through car class and add options
+	 // ********** SELECT CAR **********
+	    AddCarMethods addCar = new AddCarMethods();
+	    addCar.readFile();
+	    for (int rf = 0; rf < addCar.listCars.size(); rf++) { 
+	    	cbChooseCar.addItem(addCar.listCars.get(rf).getName());
+	    }
+	    mainFrame.add(cbChooseCar);
+	    cbChooseCar.addActionListener (new ActionListener () {
 	        @Override
-	        public void actionPerformed(ActionEvent e) {
-	        	JFrame popupFrame = new JFrame("Edit Car Information");
-	            try { popupFrame.getContentPane().add(new AddCarPopup(popupFrame, mainFrame), BorderLayout.CENTER); } 
-	            catch (ParseException e1) { e1.printStackTrace(); }
-	            popupFrame.pack();
-	            popupFrame.setVisible(true);
+	    	public void actionPerformed(ActionEvent e) {
+//TODO change labels, notes, mileage to selection
+	        	String selectedCar = cbChooseCar.getSelectedItem().toString();
+	        	System.out.println(selectedCar);
+	        	
+	        	for (int a = 0; a < addCar.listCars.size(); a++) { 
+	        		if (addCar.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = addCar.listCars.get(a); }
+	        	}
+	        	loadCarInfo(mainFrame, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
+	        	SwingUtilities.updateComponentTreeUI(mainFrame);
 	        }
 	    });
+	    
+	 // ********** ADD CAR **********   
+	    mainFrame.add(btnAddCar);
+	    btnAddCar.addActionListener(new ActionListener() {
+	    	@Override
+	        public void actionPerformed(ActionEvent e) { }
+	    });
+	    
 	 // ********** DELETE CAR **********	    
 	    mainFrame.add(btnDeleteCar);
 	    btnDeleteCar.addActionListener(new ActionListener() {
@@ -48,22 +70,21 @@ public class MainUI {
 	        //TODO delete car 
 	            	JOptionPane.showMessageDialog(null, "[car] as been deleted.");
 	            }
-				else if (result == JOptionPane.NO_OPTION){ 
-			//TODO do nothing
-				}
+				else if (result == JOptionPane.NO_OPTION){ }
 	        }
 	    });
 }
 
-	public void loadCarInfo(JFrame mainFrame) {
+	public void loadCarInfo(JFrame mainFrame, String name, String year, String make, String model, String trim, String vin, String plate) {
 // car information loading
-        JLabel lblCarName = new JLabel("");
-        JLabel lblCarYear = new JLabel("");
-		JLabel lblCarMake = new JLabel("");
-        JLabel lblCarModel = new JLabel("");
-        JLabel lblCarTrim = new JLabel("");
-		JLabel lblCarVIN = new JLabel("VIN: " + "");
-        JLabel lblPlateNum = new JLabel("Plate: " + "");
+		
+        JLabel lblCarName = new JLabel(name);
+        JLabel lblCarYear = new JLabel(year);
+		JLabel lblCarMake = new JLabel(make);
+        JLabel lblCarModel = new JLabel(model);
+        JLabel lblCarTrim = new JLabel(trim);
+		JLabel lblCarVIN = new JLabel("VIN: " + vin);
+        JLabel lblPlateNum = new JLabel("Plate: " + plate);
         JButton btnEdit = new JButton("Edit");
        
         lblCarName.setBounds(180, 10, 100, 20);
@@ -87,12 +108,16 @@ public class MainUI {
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	JFrame carPopup = new JFrame("Edit Car Information");
-                try { carPopup.getContentPane().add(new AddCarPopup(carPopup, mainFrame), BorderLayout.CENTER); } 
-                catch (ParseException e1) { e1.printStackTrace(); }
-                carPopup.pack();
-                carPopup.setVisible(true);
+            	final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
+            	dialog.setSize(400, 400);
+            	
+            	JPanel panel = new JPanel(new BorderLayout());
+            	panel.add(new AddCarPanel(panel, dialog, mainFrame)); 
+            	
+            	dialog.add(panel);
+            	dialog.setVisible(true);
             }
+            
         });
         
 	}
@@ -122,7 +147,7 @@ public class MainUI {
             }
         });
 	}
-	
+	/*
 	public void loadMileage(JFrame mainFrame) throws ParseException {
 	        int lastOilMile = 157249;
 	        
@@ -167,7 +192,7 @@ public class MainUI {
 	            }
 	        });
 		}
-
+	*/
 	public void loadSettings(JFrame mainFrame) {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");

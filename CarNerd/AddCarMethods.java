@@ -4,15 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import java.io.IOException;
 
 public class AddCarMethods {
-JComboBox<String> cbChooseCar = new JComboBox<String>();	
+	public ArrayList<Car> listCars = new ArrayList<Car>();
 	private String path;
 	private boolean append_to_file = false;
-	public ArrayList<Car> listCars = new ArrayList<Car>();
 	public AddCarMethods (String filepath) { path = filepath; }
 	
 	public AddCarMethods (String filepath, boolean append_value ) {
@@ -40,29 +37,45 @@ JComboBox<String> cbChooseCar = new JComboBox<String>();
 		tempCar.setVIN(vin);
 		tempCar.setPlate(plate);
 		listCars.add(tempCar);
+		//return listCars.get(listCars.size() - 1);
 	}
-	public void addCarOptions(JFrame frame) throws FileNotFoundException {
+	public void readFile() throws FileNotFoundException {
 // adds the cars to an ArrayList for the spinner to generate
+		MainUI mainUI = new MainUI();
 		Car tempCar = new Car();
-		tempCar.setName("TestCar");
+		tempCar.setName("Mira");
+		tempCar.setYear("2000");
+		tempCar.setMake("Mazda");
+		tempCar.setModel("Miata");
+		tempCar.setTrim("SE");
+		tempCar.setVIN("*****************");
+		tempCar.setPlate("PH1C5M");
 		listCars.add(tempCar);
 		
 		tempCar = new Car();
-		tempCar.setName("AnotherTest");
+		tempCar.setName("Vera");
+		tempCar.setYear("2006");
+		tempCar.setMake("Nissan");
+		tempCar.setModel("350Z");
+		tempCar.setTrim("Awesome");
+		tempCar.setVIN("#################");
+		tempCar.setPlate("2BA96F");
 		listCars.add(tempCar);
-				
-		cbChooseCar.setBounds(10, 10, 150, 20);
-		for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
+		
+		
+		
+		//cbChooseCar.setBounds(10, 10, 150, 20);
+		for (int c = 0; c < listCars.size(); c++ ) { mainUI.cbChooseCar.addItem(listCars.get(c).getName()); }
 	    
-	    frame.add(cbChooseCar);
+	   // return listCars;
 	}
 	
-	public void addMoreChoices(JFrame AddCarFrame) {
-		Car tCar = new Car();
-		tCar.setName("AnotherTest");
-		listCars.add(tCar);
-		for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
-	}
+	//public void addMoreChoices(JFrame AddCarFrame) {
+	//	Car tCar = new Car();
+	//	tCar.setName("AnotherTest");
+	//	listCars.add(tCar);
+	//	for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
+//	}
 	
 	public void selectCar() {
 		

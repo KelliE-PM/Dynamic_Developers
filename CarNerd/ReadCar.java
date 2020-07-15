@@ -30,6 +30,7 @@ public class ReadCar {
 		FileReader file_to_read = new FileReader(path);
 		BufferedReader bf = new BufferedReader(file_to_read);
 		
+		@SuppressWarnings("unused")
 		String aLine;
 		int numberOfLines = 0;
 		while (( aLine = bf.readLine()) != null) {
