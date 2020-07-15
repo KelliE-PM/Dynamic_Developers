@@ -1,9 +1,17 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -92,10 +100,83 @@ public class MainUI {
         });
         
 	}
+	
+	static DefaultListModel listModel = new DefaultListModel();
+	static JList notes = new JList(listModel);
+	
 	public static void loadNotes(JFrame frame) { 
-	    String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
-	    JList<String> list = new JList<String>(reminders);
-		JScrollPane scrollPane = new JScrollPane(list);
+		
+		try {
+			FileReader fr = new FileReader("notes.txt");
+			BufferedReader br = new BufferedReader(fr);
+			
+			String nextLine;
+			String currentDate = "";
+			String remindDate = "";
+			String title = "";
+			String text = "";
+			
+			int lineCounter = 0;
+			
+			
+			
+			Note currentNote;
+			
+			try {
+				while((nextLine = br.readLine()) != null) {
+					
+					switch (lineCounter % 4) {
+					
+					case 0:
+						currentDate = nextLine;
+						break;
+						
+					case 1:
+						remindDate = nextLine;
+						break;
+						
+					case 2:
+						title = nextLine;
+						break;
+						
+					case 3:
+						text = nextLine;
+						currentNote = new Note(toDate(currentDate), toDate(remindDate), title, text);
+						listModel.addElement(currentNote);
+						break;
+						
+					default:
+						break;
+					
+					}//end switch
+					
+					lineCounter++;
+					
+				}
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		DefaultListModel listModel2 = new DefaultListModel();
+		JList titles = new JList(listModel2);
+		
+		for(int i=0;i<notes.getModel().getSize();i++) {
+			
+			Note theNote = (Note) (notes.getModel().getElementAt(i));
+			
+			listModel2.addElement(theNote.getNoteTitle());
+			
+		}
+		
+		JScrollPane scrollPane = new JScrollPane(titles);
 		frame.add(scrollPane, BorderLayout.WEST);
 		scrollPane.setBounds(10, 150, 170, 400);
 		
@@ -115,10 +196,20 @@ public class MainUI {
                 notePopup.pack();
                 notePopup.setVisible(true);
             }
+            
+            
         });
 	    
 	}
 	
+	private static LocalDate toDate(String text) {
+			
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d/MM/yyyy");
+			
+			LocalDate date = LocalDate.parse(text, f);
+			// TODO Auto-generated method stub
+			return date;
+		}
 	public static void loadMileage(JFrame frame) throws ParseException {
 	        int lastOilMile = 157249;
 	        

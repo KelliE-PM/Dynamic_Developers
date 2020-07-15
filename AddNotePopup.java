@@ -3,7 +3,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,17 +66,42 @@ public class AddNotePopup extends JPanel{
 	    btnClear.setBounds(300, 300, 140, 45);
 	    frame.add(btnClear);
 	    
+	    
+	    
 	    btnSave.addActionListener(new ActionListener()
 	    {
 	      public void actionPerformed(ActionEvent e)
 	      {
 	    	  
-	    	  System.out.println(tfNoteDate.getText());
-	    	  System.out.println(tfRemindDate.getText());
-	    	  System.out.println(tfNoteTitle.getText());
-	    	  System.out.println(taNoteText.getText());
+	    	  if(tfNoteDate.getText().matches("\\\\d{2}/\\\\d{2}/\\\\d{4}") && tfRemindDate.getText().matches("\\\\d{2}/\\\\d{2}/\\\\d{4}")) {
+	    	  
+	    	  try {
+	  			FileWriter fw = new FileWriter("notes.txt", true);
+	  			PrintWriter pw = new PrintWriter(fw);
+	  			
+	  			pw.println(tfNoteDate.getText());
+	  			pw.println(tfRemindDate.getText());
+	  			pw.println(tfNoteTitle.getText());
+	  			pw.print(taNoteText.getText());
+	  			
+	  			pw.close();
+	  			
+	  		} catch (IOException e1) {
+	  			// TODO Auto-generated catch block
+	  			e1.printStackTrace();
+	  		}
+	    	  }
 	    	  
 	      }
+
+		private LocalDate toDate(String text) {
+			
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d/MM/yyyy");
+			
+			LocalDate date = LocalDate.parse(text, f);
+			// TODO Auto-generated method stub
+			return date;
+		}
 	    });
 	          
 	    btnClear.addActionListener(new ActionListener()
