@@ -7,9 +7,8 @@ import javax.swing.UIManager;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 
 public class CarNerdMainPage extends JPanel {
@@ -18,7 +17,7 @@ public class CarNerdMainPage extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	public CarNerdMainPage() {}
-	public CarNerdMainPage(JFrame mainFrame) throws ParseException, FileNotFoundException {
+	public CarNerdMainPage(JFrame mainFrame) throws ParseException, IOException {
     	
 // ****SIZE OF MAIN WINDOW******       
         int x = 750, y = 750;
@@ -31,9 +30,7 @@ public class CarNerdMainPage extends JPanel {
         createMainFrame(mainFrame);
     }
 
-    public static void createAndShowGUI() throws ParseException, FileNotFoundException {
-    	
-        //JFrame mainFrame = new JFrame();
+    public static void createAndShowGUI() throws ParseException, IOException {
     	JFrame mainFrame = mainUI.makeFrame();
 
 // TODO We may be able to set save state here
@@ -43,7 +40,7 @@ public class CarNerdMainPage extends JPanel {
         mainFrame.setVisible(true);
     }
     
-    public static void createMainFrame(JFrame mainFrame) throws FileNotFoundException, ParseException {
+    public static void createMainFrame(JFrame mainFrame) throws ParseException, IOException {
     	MainUI MainUI = new MainUI();
     	MainUI.selectCar();
         MainUI.loadCarInfo("", "", "", "", "", "", "");
@@ -57,7 +54,7 @@ public class CarNerdMainPage extends JPanel {
             public void run() {
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         try { createAndShowGUI(); } 
-        catch (ParseException | FileNotFoundException e) { e.printStackTrace(); }
+        catch (ParseException | IOException e) { e.printStackTrace(); }
             }
         });
     }

@@ -4,16 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 public class AddCarPanel extends JPanel{
 	public JTextField tfCarName = new JTextField();
@@ -23,7 +20,7 @@ public class AddCarPanel extends JPanel{
 	public JTextField tfCarTrim = new JTextField("");
 	public JTextField tfCarVIN = new JTextField("");
 	public JTextField tfCarPlate = new JTextField("");
-	public JButton btnUpdate = new JButton("Update");
+	public JButton btnUpdate = new JButton();
 	public JLabel lblCarName = new JLabel("Name");
 	public JLabel lblCarYear = new JLabel("Year");
 	public JLabel lblCarMake = new JLabel("Make");
@@ -33,7 +30,7 @@ public class AddCarPanel extends JPanel{
 	public JLabel lblPlateNum = new JLabel("Plate");
 	
 	private static final long serialVersionUID = 1L;
-	AddCarPanel(JPanel panel, JDialog dialog, JFrame mainFrame) {
+	AddCarPanel(String btnTxt, JPanel panel, JDialog dialog, String name, String year, String make, String model, String trim, String vin, String plate) {
 // ****SIZE OF POPUP WINDOW******       
 		int x = 400, y = 400;
         panel.setPreferredSize(new Dimension(x, y));
@@ -42,7 +39,15 @@ public class AddCarPanel extends JPanel{
 // TODO grab current label information
         
 // TODO create a check to make sure you would like to edit the VIN
-		
+    	tfCarName.setText(name);
+    	tfCarYear.setText(year);
+    	tfCarMake.setText(make);
+    	tfCarModel.setText(model);
+    	tfCarTrim.setText(trim);
+    	tfCarVIN.setText(vin);
+    	tfCarPlate.setText(plate);
+    	btnUpdate.setText(btnTxt);
+    	
         lblCarName.setBounds(10, 10, 100, 30);
 		lblCarYear.setBounds(10, 50, 100, 30);
         lblCarMake.setBounds(10, 90, 100, 30);
@@ -84,17 +89,20 @@ public class AddCarPanel extends JPanel{
 	        	addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
 	        	
 	        	mainUI.setDropDown();
-	        	
+	        	try { addCar.writeToFile(); } 
+	        	catch (IOException e2) { e2.printStackTrace(); }
 	        	dialog.dispose();
 	        	//mainFrame.invalidate();
 	        	//mainFrame.validate();
 	        	//mainFrame.repaint();
 	        	//SwingUtilities.updateComponentTreeUI(mainFrame);
-	        	/*
-	        	mainFrame.dispose();
-	        	*/
-	        	//try { CarNerdMainPage.createAndShowGUI(); } 
-	            //catch (ParseException | FileNotFoundException e1) { e1.printStackTrace(); }
+	        	//NerdList.listCars = null;
+	        	MainUI.mainFrame.dispose();
+	        	
+	        	
+	        	try { CarNerdMainPage.createAndShowGUI(); } 
+	            catch (ParseException | IOException e1) { e1.printStackTrace(); }
+// TODO popup that car has been loaded
 	        	
 	        }
 	    });

@@ -1,13 +1,13 @@
 package CarNerd;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -23,6 +23,9 @@ public class MainUI {
 	JLabel lblCarName, lblCarYear, lblCarMake, lblCarModel, lblCarTrim, lblCarVIN, lblPlateNum;
 	static JFrame mainFrame;
 	JComboBox<String> cbChooseCar = new JComboBox<String>();
+	AddCarMethods addCar = new AddCarMethods();
+// ******************** THE CAR INSTANCIATION ********************
+// theCar is the selected car and should be used throughout the program to pull the currently selected car
 	static Car theCar = new Car();
 	
 	public JFrame makeFrame() {
@@ -30,63 +33,58 @@ public class MainUI {
 		return mainFrame;
 	}
 	
-	public void selectCar() throws FileNotFoundException, ParseException{
-// ********** SELECT CAR // ADD CAR // DELETE CAR // EDIT CAR **********
-	    JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
+	public void selectCar() throws ParseException, IOException{
+		JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
 	    
 	    btnAddCar.setBounds(10, 40, 100, 30);
 	    btnDeleteCar.setBounds(10, 80, 100, 30);
 	    cbChooseCar.setBounds(10, 10, 150, 20);
-	     
-//TODO loop through car class and add options
-	 // ********** SELECT CAR **********
-	    Car car = new Car();
+
+// ******************** SELECT CAR ********************
+	    //Car car = new Car();
 	    AddCarMethods addCar = new AddCarMethods();
 	    addCar.readFile();
-	    
-	    /*  made into it's own method.
-	    for (int rf = 0; rf < CarList.listCars.size(); rf++) { 
-	    	cbChooseCar.addItem(CarList.listCars.get(rf).getName());
-// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
-	    	System.out.println(CarList.listCars.get(rf).getName());
-	    }
-	    mainFrame.add(cbChooseCar);
-	    */
+
 	    setDropDown();
 	    cbChooseCar.addActionListener (new ActionListener () {
 	        @Override
 	    	public void actionPerformed(ActionEvent e) {
 //TODO change labels, notes, mileage to selection
 	        	String selectedCar = cbChooseCar.getSelectedItem().toString();
-// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING		        	
-	        	System.out.println(selectedCar);
 	        	
-	        	for (int a = 0; a < NerdList.listCars.size(); a++) { 
-// ********** THE CAR INSTANCIATION **********
-// theCar is the selected car and should be used throughout the program to pull the currently selected car	        		
+	        	for (int a = 0; a < NerdList.listCars.size(); a++) {	        		
 	        		if (NerdList.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = NerdList.listCars.get(a); }
 	        	}
 	        	setCarInfo(theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
 	        	SwingUtilities.updateComponentTreeUI(mainFrame);
-	        }
-	    });
+	        }});
 	    
-	 // ********** ADD CAR **********   
+// ******************** ADD CAR ********************   
 	    mainFrame.add(btnAddCar);
 	    btnAddCar.addActionListener(new ActionListener() {
 	    	@Override
-	        public void actionPerformed(ActionEvent e) { }
+	        public void actionPerformed(ActionEvent e) {
+	    		final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
+            	dialog.setSize(400, 400);
+            	
+            	JPanel panel = new JPanel(new BorderLayout());
+            	panel.add(new AddCarPanel("Add", panel, dialog, "", "", "", "", "", "", "")); 
+            	
+            	dialog.add(panel);
+            	dialog.setVisible(true);
+	    	}
 	    });
 	    
-	 // ********** DELETE CAR **********	    
+// ******************** DELETE CAR ********************	    
 	    mainFrame.add(btnDeleteCar);
 	    btnDeleteCar.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	int result = JOptionPane.showConfirmDialog(mainFrame,"Are you sure you would like to delete [car]?", "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	        	String deleteCar = theCar.getName();
+	        	int result = JOptionPane.showConfirmDialog(mainFrame,"Are you sure you would like to delete ?" + deleteCar, "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	            if(result == JOptionPane.YES_OPTION){ 
-	        //TODO delete car 
-	            	JOptionPane.showMessageDialog(null, "[car] as been deleted.");
+	            	addCar.deleteCar(deleteCar);
+	            	JOptionPane.showMessageDialog(null, deleteCar + " as been deleted.");
 	            }
 				else if (result == JOptionPane.NO_OPTION){ }
 	        }
@@ -100,6 +98,7 @@ public class MainUI {
 // TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
 	    	System.out.println(NerdList.listCars.get(rf).getName());
 	    }
+		if (lblCarName != null) { lblCarName.setText("Testing Updating Abilities"); }
 	    mainFrame.add(cbChooseCar);
 	    SwingUtilities.updateComponentTreeUI(mainFrame);
 	}
@@ -143,6 +142,7 @@ public class MainUI {
         mainFrame.add(lblCarVIN);
         mainFrame.add(lblPlateNum);
         mainFrame.add(btnEdit);
+// ******************** EDIT CAR ********************
 // onclick listener - reacts to the EDIT button being pressed
         btnEdit.addActionListener(new ActionListener() {
             @Override
@@ -151,7 +151,7 @@ public class MainUI {
             	dialog.setSize(400, 400);
             	
             	JPanel panel = new JPanel(new BorderLayout());
-            	panel.add(new AddCarPanel(panel, dialog, mainFrame)); 
+            	panel.add(new AddCarPanel("edit", panel, dialog, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate())); 
             	
             	dialog.add(panel);
             	dialog.setVisible(true);
@@ -244,6 +244,11 @@ public class MainUI {
         mainFrame.add(btnExportMile);
         mainFrame.add(btnLogout);
         mainFrame.add(btnExit);
-        btnExit.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) {System.exit(0);}});
+        btnExit.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) {
+// TODO write mileage, note, and car classes to a file.
+        	try { addCar.writeToFile(); } 
+        	catch (IOException e1) { e1.printStackTrace(); }
+        	System.exit(0);
+        	}});
 	}
 }

@@ -1,34 +1,33 @@
 package CarNerd;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class AddCarMethods {
 	Car car = new Car();
-	private String path;
-	private boolean append_to_file = false;
-	public AddCarMethods (String filepath) { path = filepath; }
 	
 	public AddCarMethods() { /* Constructor Method*/ }
 	
-	public AddCarMethods (String filepath, boolean append_value ) {
-		path = filepath;
-		append_to_file = append_value;
-	}
-	
-	public void writeToFile(String textLine) throws IOException {
-		FileWriter write = new FileWriter(path, append_to_file);
-		PrintWriter print_line = new PrintWriter(write);
-		print_line.printf("%s" + "%n", textLine);
-		print_line.close();
+	public void writeToFile() throws IOException {
+		FileOutputStream fos = new FileOutputStream("CarNerdCars.txt");
+		PrintWriter printy = new PrintWriter(fos);
+		for (int print = 0; print < NerdList.listCars.size(); print++) {
+			printy.printf("%s,%s,%s,%s,%s,%s,%s%n", NerdList.listCars.get(print).getName(), NerdList.listCars.get(print).getYear(), NerdList.listCars.get(print).getMake(), NerdList.listCars.get(print).getModel(), NerdList.listCars.get(print).getTrim(), NerdList.listCars.get(print).getVIN(), NerdList.listCars.get(print).getPlate());
+		}
+		printy.close();
+		fos.close();
+		
 	}
 	public void addNewCar(String name, String year, String make, String model, String trim, String vin, String plate) {
 // adds car from Add Car popup upon pressing the Add New Car button
 	
 		Car tempCar = new Car();
-//TODO if or case statements to catch empty fields
+// TODO if or case statements to catch empty fields
+// TODO if "," is included in a textbox, remove
 		tempCar.setName(name);
 		tempCar.setYear(year);
 		tempCar.setMake(make);
@@ -39,47 +38,49 @@ public class AddCarMethods {
 		NerdList.listCars.add(tempCar);
 		//return listCars.get(listCars.size() - 1);
 	}
-	public void readFile() throws FileNotFoundException {
+	public void deleteAllCars() {
+		for (int c = 0; c < NerdList.listCars.size(); c++ ) { 
+		NerdList.listCars.remove(c);
+		}
+	}
+	public void deleteCar(String car) {
+		for (int c = 0; c < NerdList.listCars.size(); c++ ) { 
+			if (car.compareTo(NerdList.listCars.get(c).getName()) == 0) {
+				NerdList.listCars.remove(c);
+				return;
+			}
+		}
+	}
+	public void readFile() throws IOException {
 // adds the cars to an ArrayList for the spinner to generate
 		MainUI mainUI = new MainUI();
-		Car tempCar = new Car();
-		tempCar.setName("Mira");
-		tempCar.setYear("2000");
-		tempCar.setMake("Mazda");
-		tempCar.setModel("Miata");
-		tempCar.setTrim("SE");
-		tempCar.setVIN("*****************");
-		tempCar.setPlate("PH1C5M");
-		NerdList.listCars.add(tempCar);
+		Car tempCar;
+		String[] tempArr = null;
+		FileInputStream fis = null;
 		
-		tempCar = new Car();
-		tempCar.setName("Vera");
-		tempCar.setYear("2006");
-		tempCar.setMake("Nissan");
-		tempCar.setModel("350Z");
-		tempCar.setTrim("Awesome");
-		tempCar.setVIN("#################");
-		tempCar.setPlate("2BA96F");
-		NerdList.listCars.add(tempCar);
-		
-		
-		
-		//cbChooseCar.setBounds(10, 10, 150, 20);
+		try{
+			fis = new FileInputStream("CarNerdCars.txt");
+		}
+		catch (FileNotFoundException e2) {
+			FileOutputStream fos = new FileOutputStream("CarNerdCars.txt");
+			fos.close();
+			fis = new FileInputStream("CarNerdCars.txt");
+		}
+		@SuppressWarnings("resource")
+		Scanner ready = new Scanner(fis);
+		deleteAllCars();
+		while (ready.hasNextLine()) {
+			tempCar = new Car();
+			tempArr = ready.nextLine().split(",");
+			tempCar.setName(tempArr[0]);
+			tempCar.setYear(tempArr[1]);
+			tempCar.setMake(tempArr[2]);
+			tempCar.setModel(tempArr[3]);
+			tempCar.setTrim(tempArr[4]);
+			tempCar.setVIN(tempArr[5]);
+			tempCar.setPlate(tempArr[6]);
+			NerdList.listCars.add(tempCar);
+		}
 		for (int c = 0; c < NerdList.listCars.size(); c++ ) { mainUI.cbChooseCar.addItem(NerdList.listCars.get(c).getName()); }
-	    
-	   // return listCars;
-	}
-	
-	//public void addMoreChoices(JFrame AddCarFrame) {
-	//	Car tCar = new Car();
-	//	tCar.setName("AnotherTest");
-	//	listCars.add(tCar);
-	//	for (int c = 0; c < listCars.size(); c++ ) { cbChooseCar.addItem(listCars.get(c).getName()); }
-//	}
-	
-	public void selectCar() {
-		
-		
-		
 	}
 }
