@@ -36,7 +36,7 @@ public class AddCarMethods {
 		tempCar.setTrim(trim);
 		tempCar.setVIN(vin);
 		tempCar.setPlate(plate);
-		CarList.listCars.add(tempCar);
+		NerdList.listCars.add(tempCar);
 		//return listCars.get(listCars.size() - 1);
 	}
 	public void readFile() throws FileNotFoundException {
@@ -50,7 +50,7 @@ public class AddCarMethods {
 		tempCar.setTrim("SE");
 		tempCar.setVIN("*****************");
 		tempCar.setPlate("PH1C5M");
-		CarList.listCars.add(tempCar);
+		NerdList.listCars.add(tempCar);
 		
 		tempCar = new Car();
 		tempCar.setName("Vera");
@@ -60,12 +60,12 @@ public class AddCarMethods {
 		tempCar.setTrim("Awesome");
 		tempCar.setVIN("#################");
 		tempCar.setPlate("2BA96F");
-		CarList.listCars.add(tempCar);
+		NerdList.listCars.add(tempCar);
 		
 		
 		
 		//cbChooseCar.setBounds(10, 10, 150, 20);
-		for (int c = 0; c < CarList.listCars.size(); c++ ) { mainUI.cbChooseCar.addItem(CarList.listCars.get(c).getName()); }
+		for (int c = 0; c < NerdList.listCars.size(); c++ ) { mainUI.cbChooseCar.addItem(NerdList.listCars.get(c).getName()); }
 	    
 	   // return listCars;
 	}

@@ -61,10 +61,10 @@ public class MainUI {
 // TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING		        	
 	        	System.out.println(selectedCar);
 	        	
-	        	for (int a = 0; a < CarList.listCars.size(); a++) { 
+	        	for (int a = 0; a < NerdList.listCars.size(); a++) { 
 // ********** THE CAR INSTANCIATION **********
 // theCar is the selected car and should be used throughout the program to pull the currently selected car	        		
-	        		if (CarList.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = CarList.listCars.get(a); }
+	        		if (NerdList.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = NerdList.listCars.get(a); }
 	        	}
 	        	setCarInfo(theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
 	        	SwingUtilities.updateComponentTreeUI(mainFrame);
@@ -95,10 +95,10 @@ public class MainUI {
 
 	public void setDropDown() {
 		mainFrame.remove(cbChooseCar);
-		for (int rf = 0; rf < CarList.listCars.size(); rf++) { 
-	    	cbChooseCar.addItem(CarList.listCars.get(rf).getName());
+		for (int rf = 0; rf < NerdList.listCars.size(); rf++) { 
+	    	cbChooseCar.addItem(NerdList.listCars.get(rf).getName());
 // TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
-	    	System.out.println(CarList.listCars.get(rf).getName());
+	    	System.out.println(NerdList.listCars.get(rf).getName());
 	    }
 	    mainFrame.add(cbChooseCar);
 	    SwingUtilities.updateComponentTreeUI(mainFrame);
