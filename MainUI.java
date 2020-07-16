@@ -4,11 +4,14 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 import javax.swing.DefaultListModel;
@@ -107,6 +110,7 @@ public class MainUI {
 	public static void loadNotes(JFrame frame) { 
 		
 		try {
+			
 			FileReader fr = new FileReader("notes.txt");
 			BufferedReader br = new BufferedReader(fr);
 			
@@ -118,12 +122,12 @@ public class MainUI {
 			
 			int lineCounter = 0;
 			
-			
-			
 			Note currentNote;
 			
 			try {
 				while((nextLine = br.readLine()) != null) {
+					
+					if(!nextLine.trim().isEmpty()) {
 					
 					switch (lineCounter % 4) {
 					
@@ -151,6 +155,8 @@ public class MainUI {
 					}//end switch
 					
 					lineCounter++;
+					
+					}
 					
 				}
 				
@@ -200,6 +206,24 @@ public class MainUI {
             
         });
 	    
+	}
+	
+	private static boolean isValidDate(String text) {
+		
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+		try {
+			
+		LocalDate date = LocalDate.parse(text, f);
+		
+		
+		} catch (DateTimeParseException e) {
+			
+		return false;
+			
+		}
+		
+		return true;
+		
 	}
 	
 	private static LocalDate toDate(String text) {
