@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -73,34 +74,56 @@ public class AddNotePopup extends JPanel{
 	      public void actionPerformed(ActionEvent e)
 	      {
 	    	  
-	    	  if(tfNoteDate.getText().matches("\\\\d{2}/\\\\d{2}/\\\\d{4}") && tfRemindDate.getText().matches("\\\\d{2}/\\\\d{2}/\\\\d{4}")) {
+	    	  if(isValidDate(tfNoteDate.getText()) && isValidDate(tfRemindDate.getText())) {
 	    	  
-	    	  try {
-	  			FileWriter fw = new FileWriter("notes.txt", true);
-	  			PrintWriter pw = new PrintWriter(fw);
-	  			
-	  			pw.println(tfNoteDate.getText());
-	  			pw.println(tfRemindDate.getText());
-	  			pw.println(tfNoteTitle.getText());
-	  			pw.print(taNoteText.getText());
-	  			
-	  			pw.close();
-	  			
-	  		} catch (IOException e1) {
-	  			// TODO Auto-generated catch block
-	  			e1.printStackTrace();
-	  		}
+		    	  try {
+		  			FileWriter fw = new FileWriter("notes.txt", true);
+		  			PrintWriter pw = new PrintWriter(fw);
+		  			
+		  			pw.print(tfNoteDate.getText());
+		  			pw.println();
+		  			pw.print(tfRemindDate.getText());
+		  			pw.println();
+		  			pw.print(tfNoteTitle.getText());
+		  			pw.println();
+		  			pw.print(taNoteText.getText());
+		  			pw.println();
+		  			
+		  			pw.close();
+		  			
+		  		} catch (IOException e1) {
+		  			// TODO Auto-generated catch block
+		  			e1.printStackTrace();
+		  		}
 	    	  }
 	    	  
 	      }
 
 		private LocalDate toDate(String text) {
 			
-			DateTimeFormatter f = DateTimeFormatter.ofPattern("d/MM/yyyy");
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
 			
 			LocalDate date = LocalDate.parse(text, f);
 			// TODO Auto-generated method stub
 			return date;
+		}
+		
+		private boolean isValidDate(String text) {
+			
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+			try {
+				
+			LocalDate date = LocalDate.parse(text, f);
+			
+			
+			} catch (DateTimeParseException e) {
+				
+			return false;
+				
+			}
+			
+			return true;
+			
 		}
 	    });
 	          

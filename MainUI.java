@@ -204,7 +204,7 @@ public class MainUI {
 	
 	private static LocalDate toDate(String text) {
 			
-			DateTimeFormatter f = DateTimeFormatter.ofPattern("d/MM/yyyy");
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
 			
 			LocalDate date = LocalDate.parse(text, f);
 			// TODO Auto-generated method stub
