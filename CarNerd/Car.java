@@ -2,6 +2,7 @@ package CarNerd;
 
 public class Car {
 	private String name, year, make, model, trim, VIN, plate;
+	
 	//private Mileage miles;
 	//private Note notes;
 	

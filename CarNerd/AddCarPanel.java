@@ -38,11 +38,10 @@ public class AddCarPanel extends JPanel{
 		int x = 400, y = 400;
         panel.setPreferredSize(new Dimension(x, y));
     	setBackground(new Color(191,136,255));
-
         
 // TODO grab current label information
         
-//TODO create a check to make sure you would like to edit the VIN
+// TODO create a check to make sure you would like to edit the VIN
 		
         lblCarName.setBounds(10, 10, 100, 30);
 		lblCarYear.setBounds(10, 50, 100, 30);
@@ -84,17 +83,19 @@ public class AddCarPanel extends JPanel{
 	        	MainUI mainUI = new MainUI();
 	        	addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
 	        	
-	        	mainUI.cbChooseCar.removeAllItems();
-	        	
-	        	mainUI.cbChooseCar.addItem(tfCarName.getText());
+	        	mainUI.setDropDown();
 	        	
 	        	dialog.dispose();
-	        	SwingUtilities.updateComponentTreeUI(mainFrame);
+	        	//mainFrame.invalidate();
+	        	//mainFrame.validate();
+	        	//mainFrame.repaint();
+	        	//SwingUtilities.updateComponentTreeUI(mainFrame);
 	        	/*
 	        	mainFrame.dispose();
-	        	try { CarNerdMainPage.createAndShowGUI(); } 
-	            catch (ParseException | FileNotFoundException e1) { e1.printStackTrace(); }
 	        	*/
+	        	//try { CarNerdMainPage.createAndShowGUI(); } 
+	            //catch (ParseException | FileNotFoundException e1) { e1.printStackTrace(); }
+	        	
 	        }
 	    });
        

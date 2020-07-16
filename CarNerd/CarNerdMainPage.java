@@ -9,11 +9,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 
 public class CarNerdMainPage extends JPanel {
-	private static final long serialVersionUID = 1L;
+	static AddCarMethods addCar = new AddCarMethods();
+	static MainUI mainUI = new MainUI();
 	
+	private static final long serialVersionUID = 1L;
+	public CarNerdMainPage() {}
 	public CarNerdMainPage(JFrame mainFrame) throws ParseException, FileNotFoundException {
     	
 // ****SIZE OF MAIN WINDOW******       
@@ -28,7 +32,9 @@ public class CarNerdMainPage extends JPanel {
     }
 
     public static void createAndShowGUI() throws ParseException, FileNotFoundException {
-        JFrame mainFrame = new JFrame();
+    	
+        //JFrame mainFrame = new JFrame();
+    	JFrame mainFrame = mainUI.makeFrame();
 
 // TODO We may be able to set save state here
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,11 +45,11 @@ public class CarNerdMainPage extends JPanel {
     
     public static void createMainFrame(JFrame mainFrame) throws FileNotFoundException, ParseException {
     	MainUI MainUI = new MainUI();
-    	MainUI.selectCar(mainFrame);	
-        MainUI.loadCarInfo(mainFrame, "", "", "", "", "", "", "");
-        MainUI.loadNotes(mainFrame);
-        MainUI.loadSettings(mainFrame);
-        //MainUI.loadMileage(mainFrame);
+    	MainUI.selectCar();
+        MainUI.loadCarInfo("", "", "", "", "", "", "");
+        MainUI.loadNotes();
+        MainUI.loadSettings();
+        //MainUI.loadMileage();
     }
 
     public static void main(String[] args) {

@@ -20,9 +20,17 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 public class MainUI {
+	JLabel lblCarName, lblCarYear, lblCarMake, lblCarModel, lblCarTrim, lblCarVIN, lblPlateNum;
+	static JFrame mainFrame;
 	JComboBox<String> cbChooseCar = new JComboBox<String>();
 	static Car theCar = new Car();
-	public void selectCar(JFrame mainFrame) throws FileNotFoundException{
+	
+	public JFrame makeFrame() {
+		mainFrame = new JFrame();
+		return mainFrame;
+	}
+	
+	public void selectCar() throws FileNotFoundException, ParseException{
 // ********** SELECT CAR // ADD CAR // DELETE CAR // EDIT CAR **********
 	    JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
 	    
@@ -32,23 +40,33 @@ public class MainUI {
 	     
 //TODO loop through car class and add options
 	 // ********** SELECT CAR **********
+	    Car car = new Car();
 	    AddCarMethods addCar = new AddCarMethods();
 	    addCar.readFile();
-	    for (int rf = 0; rf < addCar.listCars.size(); rf++) { 
-	    	cbChooseCar.addItem(addCar.listCars.get(rf).getName());
+	    
+	    /*  made into it's own method.
+	    for (int rf = 0; rf < CarList.listCars.size(); rf++) { 
+	    	cbChooseCar.addItem(CarList.listCars.get(rf).getName());
+// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
+	    	System.out.println(CarList.listCars.get(rf).getName());
 	    }
 	    mainFrame.add(cbChooseCar);
+	    */
+	    setDropDown();
 	    cbChooseCar.addActionListener (new ActionListener () {
 	        @Override
 	    	public void actionPerformed(ActionEvent e) {
 //TODO change labels, notes, mileage to selection
 	        	String selectedCar = cbChooseCar.getSelectedItem().toString();
+// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING		        	
 	        	System.out.println(selectedCar);
 	        	
-	        	for (int a = 0; a < addCar.listCars.size(); a++) { 
-	        		if (addCar.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = addCar.listCars.get(a); }
+	        	for (int a = 0; a < CarList.listCars.size(); a++) { 
+// ********** THE CAR INSTANCIATION **********
+// theCar is the selected car and should be used throughout the program to pull the currently selected car	        		
+	        		if (CarList.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = CarList.listCars.get(a); }
 	        	}
-	        	loadCarInfo(mainFrame, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
+	        	setCarInfo(theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
 	        	SwingUtilities.updateComponentTreeUI(mainFrame);
 	        }
 	    });
@@ -75,16 +93,37 @@ public class MainUI {
 	    });
 }
 
-	public void loadCarInfo(JFrame mainFrame, String name, String year, String make, String model, String trim, String vin, String plate) {
-// car information loading
-		
-        JLabel lblCarName = new JLabel(name);
-        JLabel lblCarYear = new JLabel(year);
-		JLabel lblCarMake = new JLabel(make);
-        JLabel lblCarModel = new JLabel(model);
-        JLabel lblCarTrim = new JLabel(trim);
-		JLabel lblCarVIN = new JLabel("VIN: " + vin);
-        JLabel lblPlateNum = new JLabel("Plate: " + plate);
+	public void setDropDown() {
+		mainFrame.remove(cbChooseCar);
+		for (int rf = 0; rf < CarList.listCars.size(); rf++) { 
+	    	cbChooseCar.addItem(CarList.listCars.get(rf).getName());
+// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
+	    	System.out.println(CarList.listCars.get(rf).getName());
+	    }
+	    mainFrame.add(cbChooseCar);
+	    SwingUtilities.updateComponentTreeUI(mainFrame);
+	}
+	
+	public void setCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
+	// changes the labels to the currently selected car
+		lblCarName.setText(name);
+        lblCarYear.setText(year);
+		lblCarMake.setText(make);
+        lblCarModel.setText(model);
+        lblCarTrim.setText(trim);
+		lblCarVIN.setText("VIN: " + vin);
+        lblPlateNum.setText("Plate: " + plate);
+	}
+	
+	public void loadCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
+	// initial car information loading
+        lblCarName = new JLabel();
+        lblCarYear = new JLabel();
+		lblCarMake = new JLabel();
+        lblCarModel = new JLabel();
+        lblCarTrim = new JLabel();
+		lblCarVIN = new JLabel("VIN: ");
+        lblPlateNum = new JLabel("Plate: ");
         JButton btnEdit = new JButton("Edit");
        
         lblCarName.setBounds(180, 10, 100, 20);
@@ -122,20 +161,20 @@ public class MainUI {
         
 	}
 
-	public void loadNotes(JFrame frame) { 
+	public void loadNotes() { 
 	    String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
 	    JList<String> list = new JList<String>(reminders);
 		JScrollPane scrollPane = new JScrollPane(list);
-		frame.add(scrollPane, BorderLayout.WEST);
+		mainFrame.add(scrollPane, BorderLayout.WEST);
 		scrollPane.setBounds(10, 150, 170, 400);
 		
 		JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
 	    lblNote.setBounds(10, 560, 700, 20);
-	    frame.add(lblNote);
+	    mainFrame.add(lblNote);
 	    
 	    JButton btnNewNote = new JButton("Add Note");
 	    btnNewNote.setBounds(10, 590, 150, 30);
-	    frame.add(btnNewNote);
+	    mainFrame.add(btnNewNote);
 	    btnNewNote.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,7 +187,7 @@ public class MainUI {
         });
 	}
 	/*
-	public void loadMileage(JFrame mainFrame) throws ParseException {
+	public void loadMileage() throws ParseException {
 	        int lastOilMile = 157249;
 	        
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -193,7 +232,7 @@ public class MainUI {
 	        });
 		}
 	*/
-	public void loadSettings(JFrame mainFrame) {
+	public void loadSettings() {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");
         JButton btnExit = new JButton("Exit");
