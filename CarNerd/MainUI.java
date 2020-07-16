@@ -49,7 +49,7 @@ public class MainUI {
 	    cbChooseCar.addActionListener (new ActionListener () {
 	        @Override
 	    	public void actionPerformed(ActionEvent e) {
-//TODO change labels, notes, mileage to selection
+//TODO change notes, mileage to selection
 	        	String selectedCar = cbChooseCar.getSelectedItem().toString();
 	        	
 	        	for (int a = 0; a < NerdList.listCars.size(); a++) {	        		
@@ -151,7 +151,7 @@ public class MainUI {
             	dialog.setSize(400, 400);
             	
             	JPanel panel = new JPanel(new BorderLayout());
-            	panel.add(new AddCarPanel("edit", panel, dialog, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate())); 
+            	panel.add(new AddCarPanel("Edit", panel, dialog, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate())); 
             	
             	dialog.add(panel);
             	dialog.setVisible(true);

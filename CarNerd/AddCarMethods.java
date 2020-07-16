@@ -26,8 +26,6 @@ public class AddCarMethods {
 // adds car from Add Car popup upon pressing the Add New Car button
 	
 		Car tempCar = new Car();
-// TODO if or case statements to catch empty fields
-// TODO if "," is included in a textbox, remove
 		tempCar.setName(name);
 		tempCar.setYear(year);
 		tempCar.setMake(make);
@@ -36,7 +34,6 @@ public class AddCarMethods {
 		tempCar.setVIN(vin);
 		tempCar.setPlate(plate);
 		NerdList.listCars.add(tempCar);
-		//return listCars.get(listCars.size() - 1);
 	}
 	public void deleteAllCars() {
 		for (int c = 0; c < NerdList.listCars.size(); c++ ) { 
