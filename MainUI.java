@@ -4,64 +4,125 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 public class MainUI {
-	public static void selectCar(JFrame mainFrame) throws FileNotFoundException{
-// ********** SELECT CAR // ADD CAR // DELETE CAR // EDIT CAR **********
-	    JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
-	    
-	    AddCarMethods addCarMethods = new AddCarMethods();
+	JLabel lblCarName, lblCarYear, lblCarMake, lblCarModel, lblCarTrim, lblCarVIN, lblPlateNum;
+	static JFrame mainFrame;
+	JComboBox<String> cbChooseCar = new JComboBox<String>();
+	AddCarMethods addCar = new AddCarMethods();
+// ******************** THE CAR INSTANCIATION ********************
+// theCar is the selected car and should be used throughout the program to pull the currently selected car
+	static Car theCar = new Car();
+	
+	public JFrame makeFrame() {
+		mainFrame = new JFrame();
+		return mainFrame;
+	}
+	
+	public void selectCar() throws ParseException, IOException{
+		JButton btnAddCar = new JButton("Add Car"), btnDeleteCar = new JButton("Delete Car");
 	    
 	    btnAddCar.setBounds(10, 40, 100, 30);
 	    btnDeleteCar.setBounds(10, 80, 100, 30);
+	    cbChooseCar.setBounds(10, 10, 150, 20);
+
+// ******************** SELECT CAR ********************
+	    //Car car = new Car();
+	    AddCarMethods addCar = new AddCarMethods();
+	    addCar.readFile();
+
+	    setDropDown();
+	    cbChooseCar.addActionListener (new ActionListener () {
+	        @Override
+	    	public void actionPerformed(ActionEvent e) {
+//TODO change notes, mileage to selection
+	        	String selectedCar = cbChooseCar.getSelectedItem().toString();
+	        	
+	        	for (int a = 0; a < NerdList.listCars.size(); a++) {	        		
+	        		if (NerdList.listCars.get(a).getName().compareTo(selectedCar) == 0) { theCar = NerdList.listCars.get(a); }
+	        	}
+	        	setCarInfo(theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate());
+	        	SwingUtilities.updateComponentTreeUI(mainFrame);
+	        }});
 	    
-	    addCarMethods.addCarOptions(mainFrame);
-	    
+// ******************** ADD CAR ********************   
 	    mainFrame.add(btnAddCar);
 	    btnAddCar.addActionListener(new ActionListener() {
-	        @Override
+	    	@Override
 	        public void actionPerformed(ActionEvent e) {
-	        	JFrame popupFrame = new JFrame("Edit Car Information");
-	            try { popupFrame.getContentPane().add(new AddCarPopup(popupFrame, mainFrame), BorderLayout.CENTER); } 
-	            catch (ParseException e1) { e1.printStackTrace(); }
-	            popupFrame.pack();
-	            popupFrame.setVisible(true);
-	        }
+	    		final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
+            	dialog.setSize(400, 400);
+            	
+            	JPanel panel = new JPanel(new BorderLayout());
+            	panel.add(new AddCarPanel("Add", panel, dialog, "", "", "", "", "", "", "")); 
+            	
+            	dialog.add(panel);
+            	dialog.setVisible(true);
+	    	}
 	    });
-	 // ********** DELETE CAR **********	    
+	    
+// ******************** DELETE CAR ********************	    
 	    mainFrame.add(btnDeleteCar);
 	    btnDeleteCar.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	int result = JOptionPane.showConfirmDialog(mainFrame,"Are you sure you would like to delete [car]?", "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	        	String deleteCar = theCar.getName();
+	        	int result = JOptionPane.showConfirmDialog(mainFrame,"Are you sure you would like to delete ?" + deleteCar, "Delete Car", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	            if(result == JOptionPane.YES_OPTION){ 
-	        //TODO delete car 
-	            	JOptionPane.showMessageDialog(null, "[car] as been deleted.");
+	            	addCar.deleteCar(deleteCar);
+	            	JOptionPane.showMessageDialog(null, deleteCar + " as been deleted.");
 	            }
-				else if (result == JOptionPane.NO_OPTION){ 
-			//TODO do nothing
-				}
+				else if (result == JOptionPane.NO_OPTION){ }
 	        }
 	    });
 }
 
-	public static void loadCarInfo(JFrame mainFrame) {
-// car information loading
-        JLabel lblCarName = new JLabel("");
-        JLabel lblCarYear = new JLabel("");
-		JLabel lblCarMake = new JLabel("");
-        JLabel lblCarModel = new JLabel("");
-        JLabel lblCarTrim = new JLabel("");
-		JLabel lblCarVIN = new JLabel("VIN: " + "");
-        JLabel lblPlateNum = new JLabel("Plate: " + "");
+	public void setDropDown() {
+		mainFrame.remove(cbChooseCar);
+		for (int rf = 0; rf < NerdList.listCars.size(); rf++) { 
+	    	cbChooseCar.addItem(NerdList.listCars.get(rf).getName());
+// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
+	    	System.out.println(NerdList.listCars.get(rf).getName());
+	    }
+		if (lblCarName != null) { lblCarName.setText("Testing Updating Abilities"); }
+	    mainFrame.add(cbChooseCar);
+	    SwingUtilities.updateComponentTreeUI(mainFrame);
+	}
+	
+	public void setCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
+	// changes the labels to the currently selected car
+		lblCarName.setText(name);
+        lblCarYear.setText(year);
+		lblCarMake.setText(make);
+        lblCarModel.setText(model);
+        lblCarTrim.setText(trim);
+		lblCarVIN.setText("VIN: " + vin);
+        lblPlateNum.setText("Plate: " + plate);
+	}
+	
+	public void loadCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
+	// initial car information loading
+        lblCarName = new JLabel();
+        lblCarYear = new JLabel();
+		lblCarMake = new JLabel();
+        lblCarModel = new JLabel();
+        lblCarTrim = new JLabel();
+		lblCarVIN = new JLabel("VIN: ");
+        lblPlateNum = new JLabel("Plate: ");
         JButton btnEdit = new JButton("Edit");
        
         lblCarName.setBounds(180, 10, 100, 20);
@@ -81,34 +142,39 @@ public class MainUI {
         mainFrame.add(lblCarVIN);
         mainFrame.add(lblPlateNum);
         mainFrame.add(btnEdit);
+// ******************** EDIT CAR ********************
 // onclick listener - reacts to the EDIT button being pressed
         btnEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	JFrame carPopup = new JFrame("Edit Car Information");
-                try { carPopup.getContentPane().add(new AddCarPopup(carPopup, mainFrame), BorderLayout.CENTER); } 
-                catch (ParseException e1) { e1.printStackTrace(); }
-                carPopup.pack();
-                carPopup.setVisible(true);
+            	final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
+            	dialog.setSize(400, 400);
+            	
+            	JPanel panel = new JPanel(new BorderLayout());
+            	panel.add(new AddCarPanel("Edit", panel, dialog, theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate())); 
+            	
+            	dialog.add(panel);
+            	dialog.setVisible(true);
             }
+            
         });
         
 	}
 
-	public static void loadNotes(JFrame frame) { 
+	public void loadNotes() { 
 	    String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
 	    JList<String> list = new JList<String>(reminders);
 		JScrollPane scrollPane = new JScrollPane(list);
-		frame.add(scrollPane, BorderLayout.WEST);
+		mainFrame.add(scrollPane, BorderLayout.WEST);
 		scrollPane.setBounds(10, 150, 170, 400);
 		
 		JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
 	    lblNote.setBounds(10, 560, 700, 20);
-	    frame.add(lblNote);
+	    mainFrame.add(lblNote);
 	    
 	    JButton btnNewNote = new JButton("Add Note");
 	    btnNewNote.setBounds(10, 590, 150, 30);
-	    frame.add(btnNewNote);
+	    mainFrame.add(btnNewNote);
 	    btnNewNote.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -121,58 +187,52 @@ public class MainUI {
         });
 	}
 	
-	public static void loadMileage(JFrame mainFrame) throws ParseException {
-		
-		// FIX   Call to object, can't pull from pop up
-		int lastMiles = AddMileagePopup.lastMiles;
-		String lastDateS = AddMileagePopup.lastDateS;
-		int changeMiles = AddMileagePopup.changeMiles;
-		String changeDateS = AddMileagePopup.changeDateS;
-		int nextChangeMiles =  AddMileagePopup.nextChangeMiles;
-		String nextChangeDateS = AddMileagePopup.nextChangeDateS;
-		
-		//Dummy info
-		lastMiles = 564378;
-		lastDateS = "12/31/2020";
-		changeMiles = 562934;
-		changeDateS = "12/12/2020";
-		nextChangeMiles = 565934;
-		nextChangeDateS = "6/12/2021";
-		
-		JLabel lblLastMileage = new JLabel("<html>LAST REPORTED MILEAGE:  <b>" + lastMiles + "</b> miles on <i>" + lastDateS + "</i></html>");
-	    lblLastMileage.setBounds(300, 200, 350, 20);
-        mainFrame.add(lblLastMileage);
-		if (lastMiles == 0) {lblLastMileage.setText("LAST REPORTED MILEAGE: ");}
-
-		JLabel lblLastChange = new JLabel("<html>LAST REPORTED OIL CHANGE:  <b>" + changeMiles + "</b> miles on <i>" + changeDateS + "</i></html>");
-	    lblLastChange.setBounds(300, 224, 350, 20);
-        mainFrame.add(lblLastChange);
-		if (changeMiles == 0) {lblLastChange.setText("LAST REPORTED OIL CHANGE: ");}
+	public void loadMileage() throws ParseException {
+	        int lastOilMile = 157249;
+	        
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	        Date lastOilDate = (dateFormat.parse("04/29/2020"));
+	        int lastMile = 155924;
+	        Date lastMileDate = (dateFormat.parse("06/04/2020"));	        
+	        
+	        JLabel lblLastMile = new JLabel("Last Reported Mileage: " + lastMile);
+	        JLabel lblLastMileDate = new JLabel("Reported on: " + lastMileDate); 
+			JLabel lblLastOilMile = new JLabel("Last Reported Oil Change Mileage: " + (lastOilMile));
+	        JLabel lblLastOilDate = new JLabel("Reported on: " + lastOilDate);
+	        JLabel lblNextOilMile = new JLabel("Next Oil Change Mileage: " + String.valueOf(lastOilMile + 3000));
+			JLabel lblNextOilDate = new JLabel("Suggested Next Oil Change Date: 10/26/2020");
+	        JButton btnAddMile = new JButton("Add Mileage");
+	        
+	        lblLastMile.setBounds(300, 200, 350, 20);
+			lblLastMileDate.setBounds(300, 230, 350, 20);
+	        lblLastOilMile.setBounds(300, 260, 350, 20);
+	        lblLastOilDate.setBounds(300, 290, 350, 20);
+			lblNextOilMile.setBounds(300, 320, 350, 20);
+	        lblNextOilDate.setBounds(300, 350, 350, 20);
+	        btnAddMile.setBounds(350, 380, 150, 30);
         
-		JLabel lblNextChange = new JLabel("<html>NEXT CHANGE DUE:  <b>" + nextChangeMiles + "</b> miles or on <i>" + nextChangeDateS + "</i></html>");
-	    lblNextChange.setBounds(300, 248, 350, 20);
-        mainFrame.add(lblNextChange);
-    	if (nextChangeMiles == 0) {lblNextChange.setText("NEXT CHANGE DUE: ");}
+	        mainFrame.add(lblLastMile);
+			mainFrame.add(lblLastMileDate);
+	        mainFrame.add(lblLastOilMile);
+	        mainFrame.add(lblLastOilDate);
+	        mainFrame.add(lblNextOilMile);
+	        mainFrame.add(lblNextOilDate);
+		     
+	        mainFrame.add(btnAddMile);
+	        btnAddMile.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	JFrame mFrame = new JFrame("Mileage Tracker");
+	            	int x = 360, y = 184;
+	                mFrame.setPreferredSize(new Dimension(x, y));
+	                mFrame.getContentPane().add(new AddMileagePopup(mFrame), BorderLayout.CENTER);
+	                mFrame.pack();
+	                mFrame.setVisible(true);
+	            }
+	        });
+		}
 	
-		JButton btnAddMile = new JButton("Add Mileage");
-        btnAddMile.setBounds(350, 280, 150, 30);
-        
-        mainFrame.add(btnAddMile);
-        btnAddMile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	JFrame mFrame = new JFrame("Mileage Tracker");
-            	int x = 360, y = 184;
-                mFrame.setPreferredSize(new Dimension(x, y));
-                mFrame.getContentPane().add(new AddMileagePopup(mFrame), BorderLayout.CENTER);
-                mFrame.pack();
-                mFrame.setVisible(true);
-        }});
-        
-	}
-
-
-	public static void loadSettings(JFrame mainFrame) {
+	public void loadSettings() {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");
         JButton btnExit = new JButton("Exit");
@@ -184,6 +244,11 @@ public class MainUI {
         mainFrame.add(btnExportMile);
         mainFrame.add(btnLogout);
         mainFrame.add(btnExit);
-        btnExit.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) {System.exit(0);}});
+        btnExit.addActionListener(new ActionListener() { public void actionPerformed(ActionEvent e) {
+// TODO write mileage, note, and car classes to a file.
+        	try { addCar.writeToFile(); } 
+        	catch (IOException e1) { e1.printStackTrace(); }
+        	System.exit(0);
+        	}});
 	}
 }
