@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -174,6 +176,7 @@ public class MainUI {
 		DefaultListModel listModel2 = new DefaultListModel();
 		JList titles = new JList(listModel2);
 		
+		
 		for(int i=0;i<notes.getModel().getSize();i++) {
 			
 			Note theNote = (Note) (notes.getModel().getElementAt(i));
@@ -198,6 +201,44 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
             	JFrame notePopup = new JFrame("New Note");
                 try { notePopup.getContentPane().add(new AddNotePopup(notePopup), BorderLayout.CENTER); } 
+                catch (ParseException e1) { e1.printStackTrace(); }
+                notePopup.pack();
+                notePopup.setVisible(true);
+            }
+            
+            
+        });
+	    
+	    JButton btnViewNote = new JButton("View Note");
+	    btnViewNote.setBounds(10, 620, 150, 30);
+	    frame.add(btnViewNote);
+	    
+	    btnViewNote.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JFrame notePopup = new JFrame("New Note");
+                try { 
+                	
+                	Note theNote = new Note();
+                	
+                	for(int i=0;i<notes.getModel().getSize();i++) {
+                		
+                		theNote = (Note) (notes.getModel().getElementAt(i));
+                		
+                		if(theNote.getNoteTitle() == titles.getSelectedValue()) {
+                			
+                			break;
+                			
+                		}
+                		
+                	}
+                	
+                	
+                	notePopup.getContentPane().add(new ViewNotePopup(notePopup, theNote), BorderLayout.CENTER); 
+                	
+                
+                
+                } 
                 catch (ParseException e1) { e1.printStackTrace(); }
                 notePopup.pack();
                 notePopup.setVisible(true);
