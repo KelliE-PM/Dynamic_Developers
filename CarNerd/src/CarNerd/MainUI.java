@@ -1,13 +1,13 @@
 package CarNerd;
 
 import java.awt.BorderLayout;
-//import java.awt.Dimension;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -186,7 +186,7 @@ public class MainUI {
             }
         });
 	}
-	/*
+	
 	public void loadMileage() throws ParseException {
 	        int lastOilMile = 157249;
 	        
@@ -231,7 +231,7 @@ public class MainUI {
 	            }
 	        });
 		}
-	*/
+	
 	public void loadSettings() {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");
