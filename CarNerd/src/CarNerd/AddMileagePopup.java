@@ -218,7 +218,7 @@ public class AddMileagePopup extends JPanel {
 				int setMile = Integer.parseInt(setMileS);
 				String setDateS = newDate.getText();
 				LocalDate setDate = LocalDate.parse(setDateS, formater);
-				String setDateSS = setDate.format(formater);
+				//String setDateSS = setDate.format(formater);
 				milesLeft = nextChangeMiles - setMile; 
 				nextChange.setText("             Next oil change at " + nextChangeMiles + " miles");
 				message.setText("                 In " + milesLeft + " miles or by " + nextChangeDateS);

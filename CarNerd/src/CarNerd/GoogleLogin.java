@@ -1,5 +1,13 @@
 package CarNerd;
 
+//import java.io.InputStreamReader;
+
+//import com.google.api.client.auth.oauth2.Credential;
+//import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+//import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+//import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+//import com.google.api.client.util.store.FileDataStoreFactory;
+
 
 public class GoogleLogin {
 	/*
@@ -15,8 +23,6 @@ public class GoogleLogin {
 		  // authorize
 		  return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
 		}
-
-
 	public static void main(String[] args) {
 		try {
 		    httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -26,9 +32,9 @@ public class GoogleLogin {
 		    // set up global Plus instance
 		    plus = new Plus.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(
 		        APPLICATION_NAME).build();
+		        
 		   // ...
+		    
 		}
-	}
-	*/
-	
-}	
+	}*/
+}
