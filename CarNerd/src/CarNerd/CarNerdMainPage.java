@@ -41,13 +41,13 @@ public class CarNerdMainPage extends JPanel {
     }
     
     public static void createMainFrame(JFrame mainFrame) throws ParseException, IOException {
-    	MainUI MainUI = new MainUI();
-    	MainUI.selectCar();
-        MainUI.loadCarInfo("", "", "", "", "", "", "");
-        MainUI.loadNotes();
-        MainUI.loadSettings();
+    	MainUI mainUI = new MainUI();
+    	mainUI.selectCar();
+        mainUI.loadCarInfo("", "", "", "", "", "", "");
+        mainUI.loadNotes(mainFrame);
+        mainUI.loadSettings();
 
-        MainUI.loadMileage();
+        mainUI.loadMileage(mainFrame);
     }
 
     public static void main(String[] args) {
