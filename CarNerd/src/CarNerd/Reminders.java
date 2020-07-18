@@ -3,12 +3,9 @@ package CarNerd;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridBagLayout;
 import javax.swing.JScrollPane;
-import java.awt.GridBagConstraints;
 import javax.swing.JList;
 import javax.swing.JLabel;
-import java.awt.Insets;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
