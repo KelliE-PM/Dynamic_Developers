@@ -1,13 +1,12 @@
 package CarNerd;
 
 import java.awt.BorderLayout;
-//import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -41,7 +40,6 @@ public class MainUI {
 	    cbChooseCar.setBounds(10, 10, 150, 20);
 
 // ******************** SELECT CAR ********************
-	    //Car car = new Car();
 	    AddCarMethods addCar = new AddCarMethods();
 	    addCar.readFile();
 
@@ -64,14 +62,15 @@ public class MainUI {
 	    btnAddCar.addActionListener(new ActionListener() {
 	    	@Override
 	        public void actionPerformed(ActionEvent e) {
-	    		final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
-            	dialog.setSize(400, 400);
+
+	    		JDialog aDialog = new JDialog(mainFrame, "Click a button", true);
+            	aDialog.setSize(400, 400);
             	
-            	JPanel panel = new JPanel(new BorderLayout());
-            	panel.add(new AddCarPanel("Add", panel, dialog, "", "", "", "", "", "", "")); 
+            	JPanel aPanel = new JPanel(new BorderLayout());
+            	aPanel.add(new AddCarPanel("Add", aPanel, aDialog, "", "", "", "", "", "", "")); 
             	
-            	dialog.add(panel);
-            	dialog.setVisible(true);
+            	aDialog.add(aPanel);
+            	aDialog.setVisible(true);
 	    	}
 	    });
 	    
@@ -113,7 +112,8 @@ public class MainUI {
 		lblCarVIN.setText("VIN: " + vin);
         lblPlateNum.setText("Plate: " + plate);
 	}
-	
+
+// TODO take out unnecessary arguments
 	public void loadCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
 	// initial car information loading
         lblCarName = new JLabel();
@@ -186,7 +186,6 @@ public class MainUI {
             }
         });
 	}
-	/*
 	public void loadMileage() throws ParseException {
 	        int lastOilMile = 157249;
 	        
@@ -219,19 +218,35 @@ public class MainUI {
 	        mainFrame.add(lblNextOilDate);
 		     
 	        mainFrame.add(btnAddMile);
+
+// ******************** ADD MILEAGE ********************
+// TODO create titles for ALL dialog boxes.  Don't delete TODO until all are complete
+	        /*
+	         * 
+	         * JDialog dialog = new JDialog(mainFrame, "Click a button", true);
+            	dialog.setSize(400, 400);
+            	
+            	JPanel panel = new JPanel(new BorderLayout());
+            	panel.add(new AddCarPanel("Add", panel, dialog, "", "", "", "", "", "", "")); 
+            	
+            	dialog.add(panel);
+            	dialog.setVisible(true);
+	         */
 	        btnAddMile.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	            	JFrame mFrame = new JFrame("Mileage Tracker");
-	            	int x = 360, y = 184;
-	                mFrame.setPreferredSize(new Dimension(x, y));
-	                mFrame.getContentPane().add(new AddMileagePopup(mFrame), BorderLayout.CENTER);
-	                mFrame.pack();
-	                mFrame.setVisible(true);
+	            	JDialog mDialog = new JDialog();
+	            	mDialog.setSize(360, 190);
+	                
+	                JPanel mPanel = new JPanel(new BorderLayout());
+	            	mPanel.add(new AddMileagePopup(mPanel, mDialog)); 
+	                                
+	            	mDialog.add(mPanel);
+	                mDialog.setVisible(true);
 	            }
 	        });
 		}
-	*/
+	
 	public void loadSettings() {
         JButton btnExportMile = new JButton("Export Mileage");
         JButton btnLogout = new JButton("Logout");
