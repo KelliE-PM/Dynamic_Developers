@@ -3,10 +3,22 @@ package CarNerd;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -158,21 +170,97 @@ public class MainUI {
         });
         
 	}
-
-	public void loadNotes() { 
-	    String[] reminders = {"   NoteTitle1", "**NoteTitle2", "    NoteTitle3", "   NoteTitle4", "**NoteTitle5", "   NoteTitle6", "**NoteTitle7"};
-	    JList<String> list = new JList<String>(reminders);
-		JScrollPane scrollPane = new JScrollPane(list);
-		mainFrame.add(scrollPane, BorderLayout.WEST);
+	
+	static DefaultListModel listModel = new DefaultListModel();
+	static JList notes = new JList(listModel);
+	
+	public static void loadNotes(JFrame frame) { 
+		
+		try {
+			
+			FileReader fr = new FileReader("notes.txt");
+			BufferedReader br = new BufferedReader(fr);
+			
+			String nextLine;
+			String currentDate = "";
+			String remindDate = "";
+			String title = "";
+			String text = "";
+			
+			int lineCounter = 0;
+			
+			Note currentNote;
+			
+			try {
+				while((nextLine = br.readLine()) != null) {
+					
+					if(!nextLine.trim().isEmpty()) {
+					
+					switch (lineCounter % 4) {
+					
+					case 0:
+						currentDate = nextLine;
+						break;
+						
+					case 1:
+						remindDate = nextLine;
+						break;
+						
+					case 2:
+						title = nextLine;
+						break;
+						
+					case 3:
+						text = nextLine;
+						currentNote = new Note(toDate(currentDate), toDate(remindDate), title, text);
+						listModel.addElement(currentNote);
+						break;
+						
+					default:
+						break;
+					
+					}//end switch
+					
+					lineCounter++;
+					
+					}
+					
+				}
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
+		DefaultListModel listModel2 = new DefaultListModel();
+		JList titles = new JList(listModel2);
+		
+		
+		for(int i=0;i<notes.getModel().getSize();i++) {
+			
+			Note theNote = (Note) (notes.getModel().getElementAt(i));
+			
+			listModel2.addElement(theNote.getNoteTitle());
+			
+		}
+		
+		JScrollPane scrollPane = new JScrollPane(titles);
+		frame.add(scrollPane, BorderLayout.WEST);
 		scrollPane.setBounds(10, 150, 170, 400);
 		
 		JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
 	    lblNote.setBounds(10, 560, 700, 20);
-	    mainFrame.add(lblNote);
+	    frame.add(lblNote);
 	    
 	    JButton btnNewNote = new JButton("Add Note");
 	    btnNewNote.setBounds(10, 590, 150, 30);
-	    mainFrame.add(btnNewNote);
+	    frame.add(btnNewNote);
 	    btnNewNote.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,10 +270,77 @@ public class MainUI {
                 notePopup.pack();
                 notePopup.setVisible(true);
             }
+            
+            
         });
+	    
+	    JButton btnViewNote = new JButton("View Note");
+	    btnViewNote.setBounds(10, 620, 150, 30);
+	    frame.add(btnViewNote);
+	    
+	    btnViewNote.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JFrame notePopup = new JFrame("New Note");
+                try { 
+                	
+                	Note theNote = new Note();
+                	
+                	for(int i=0;i<notes.getModel().getSize();i++) {
+                		
+                		theNote = (Note) (notes.getModel().getElementAt(i));
+                		
+                		if(theNote.getNoteTitle() == titles.getSelectedValue()) {
+                			
+                			break;
+                			
+                		}
+                		
+                	}
+                	
+                	
+                	notePopup.getContentPane().add(new ViewNotePopup(notePopup, theNote), BorderLayout.CENTER); 
+                	
+                
+                
+                } 
+                catch (ParseException e1) { e1.printStackTrace(); }
+                notePopup.pack();
+                notePopup.setVisible(true);
+            }
+            
+            
+        });
+	    
 	}
 	
-	public void loadMileage() throws ParseException {
+	private static boolean isValidDate(String text) {
+		
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+		try {
+			
+		LocalDate date = LocalDate.parse(text, f);
+		
+		
+		} catch (DateTimeParseException e) {
+			
+		return false;
+			
+		}
+		
+		return true;
+		
+	}
+	
+	private static LocalDate toDate(String text) {
+			
+			DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+			
+			LocalDate date = LocalDate.parse(text, f);
+			// TODO Auto-generated method stub
+			return date;
+		}
+	public static void loadMileage(JFrame frame) throws ParseException {
 	        int lastOilMile = 157249;
 	        
 	        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
