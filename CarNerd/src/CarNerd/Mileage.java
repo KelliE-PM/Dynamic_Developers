@@ -1,5 +1,6 @@
 package CarNerd;
 
+
 public class Mileage {
 	
 	private int currentMiles;
@@ -15,6 +16,7 @@ public class Mileage {
 	}
 		
 	// Three variables is an oil change
+
 	public Mileage(int changeMiles, String changeDate, boolean synthetic) {
 		this.changeMiles = changeMiles;
 		this.changeDate = changeDate;

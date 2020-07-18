@@ -1,14 +1,12 @@
 package CarNerd;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 

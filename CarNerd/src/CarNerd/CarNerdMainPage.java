@@ -46,6 +46,7 @@ public class CarNerdMainPage extends JPanel {
         MainUI.loadCarInfo("", "", "", "", "", "", "");
         MainUI.loadNotes();
         MainUI.loadSettings();
+
         MainUI.loadMileage();
     }
 

@@ -34,7 +34,7 @@ public class AddCarPanel extends JPanel{
 	AddCarPanel(String btnTxt, JPanel aPanel, JDialog aDialog, String name, String year, String make, String model, String trim, String vin, String plate) {
 // ****SIZE OF POPUP WINDOW******       
 		int x = 400, y = 400;
-        aPanel.setPreferredSize(new Dimension(x, y));
+      aPanel.setPreferredSize(new Dimension(x, y));
     	setBackground(new Color(191,136,255));
 
     	tfCarName.setText(name);
@@ -63,6 +63,7 @@ public class AddCarPanel extends JPanel{
         tfCarPlate.setBounds(75, 250, 150, 30);
         btnUpdate.setBounds(150, 290, 100, 30);
         
+
         aPanel.add(tfCarName);
 		aPanel.add(tfCarYear);
 		aPanel.add(tfCarMake);
@@ -79,6 +80,7 @@ public class AddCarPanel extends JPanel{
         aPanel.add(lblCarVIN);
         aPanel.add(lblCarPlate);
         aPanel.add(btnUpdate);
+
         
 
 
@@ -99,7 +101,9 @@ public class AddCarPanel extends JPanel{
 		        if (tfCarPlate.getText().contains(",") == true) { tfCarPlate.setText(tfCarPlate.getText().replaceAll(",", "")); }	    
         
 	        	if (vin.compareTo(tfCarVIN.getText()) != 0 && vin.compareTo("") != 0) {
+
 	        		int result = JOptionPane.showConfirmDialog(aPanel,"Are you sure you want to change the VIN?", "Change VIN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
 		            if(result == JOptionPane.YES_OPTION){ 
 		            	newVIN = tfCarVIN.getText();
 		            	JOptionPane.showMessageDialog(null, tfCarName.getText() + "'s VIN has been changed.");
@@ -110,7 +114,9 @@ public class AddCarPanel extends JPanel{
 	        	mainUI.setDropDown();
 	        	try { addCar.writeToFile(); } 
 	        	catch (IOException e2) { e2.printStackTrace(); }
+
 	        	aDialog.dispose();
+
 	        	//mainFrame.invalidate();
 	        	//mainFrame.validate();
 	        	//mainFrame.repaint();

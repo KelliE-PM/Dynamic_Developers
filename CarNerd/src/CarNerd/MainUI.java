@@ -62,6 +62,7 @@ public class MainUI {
 	    btnAddCar.addActionListener(new ActionListener() {
 	    	@Override
 	        public void actionPerformed(ActionEvent e) {
+
 	    		JDialog aDialog = new JDialog(mainFrame, "Click a button", true);
             	aDialog.setSize(400, 400);
             	
@@ -111,6 +112,7 @@ public class MainUI {
 		lblCarVIN.setText("VIN: " + vin);
         lblPlateNum.setText("Plate: " + plate);
 	}
+
 // TODO take out unnecessary arguments
 	public void loadCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
 	// initial car information loading
@@ -184,7 +186,6 @@ public class MainUI {
             }
         });
 	}
-	
 	public void loadMileage() throws ParseException {
 	        int lastOilMile = 157249;
 	        
@@ -217,6 +218,7 @@ public class MainUI {
 	        mainFrame.add(lblNextOilDate);
 		     
 	        mainFrame.add(btnAddMile);
+
 // ******************** ADD MILEAGE ********************
 // TODO create titles for ALL dialog boxes.  Don't delete TODO until all are complete
 	        /*

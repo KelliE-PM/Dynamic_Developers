@@ -2,7 +2,6 @@ package CarNerd;
 
 import java.awt.Color;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -17,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 public class AddMileagePopup extends JPanel {
 
+
 	private static final long serialVersionUID = 1L;
 
 	// Dates
@@ -27,6 +27,7 @@ public class AddMileagePopup extends JPanel {
 	String changeDateSS;
 	String saveChangeDateSS;
 	String currentDateSS;
+
 	String saveChangeDateS;
 	String currentDateS;
 	String saveNextChangeDateS;
@@ -45,6 +46,7 @@ public class AddMileagePopup extends JPanel {
 	LocalDate currentDate;
 	LocalDate nextChangeDate;
 	LocalDate saveNextChangeDate;
+
 	
 	
 	static LocalDate lastDate;
@@ -74,7 +76,6 @@ public class AddMileagePopup extends JPanel {
 	boolean synthetic;
 	boolean lastSyn;
 	
-	
 	AddMileagePopup(JPanel mPanel, JDialog mDialog) {
 
 		// Update Data
@@ -85,12 +86,11 @@ public class AddMileagePopup extends JPanel {
 		currentMiles = 564390;
 		changeMiles = 562934;
 		lastSyn = false;
-
+    
 		// Create strings to dates to calculate
 		lastDate = LocalDate.parse(lastDateSS, formater);
 		changeDate = LocalDate.parse(changeDateSS, formater);
 		currentDate = LocalDate.parse(currentDateSS, formater);
-
 		// Convert back to strings to output
 		lastDateS = lastDate.format(formater);
 		changeDateS = changeDate.format(formater);
@@ -291,7 +291,6 @@ public class AddMileagePopup extends JPanel {
 				mDialog.dispose();
 			
 			}});
-
 	}
 
 }
