@@ -36,8 +36,8 @@ public class AddCarMethods {
 		NerdList.listCars.add(tempCar);
 	}
 	public void deleteAllCars() {
-		for (int c = 0; c < NerdList.listCars.size(); c++ ) { 
-		NerdList.listCars.remove(c);
+		while (!NerdList.listCars.isEmpty()) { 
+		NerdList.listCars.remove(0);
 		}
 	}
 	public void deleteCar(String car) {
