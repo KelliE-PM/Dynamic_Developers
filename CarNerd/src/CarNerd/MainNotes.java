@@ -81,8 +81,72 @@ public class MainNotes {
 			}
 
 		} catch (FileNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			FileWriter fw;
+			try {
+				fw = new FileWriter("notes.txt", true);
+				PrintWriter pw = new PrintWriter(fw);
+				
+				pw.close();
+				
+				FileReader fr = new FileReader("notes.txt");
+				BufferedReader br = new BufferedReader(fr);
+				
+				String nextLine;
+				String currentDate = "";
+				String remindDate = "";
+				String title = "";
+				String text = "";
+				
+				int lineCounter = 0;
+				
+				Note currentNote;
+				
+				try {
+					while((nextLine = br.readLine()) != null) {
+						
+						if(!nextLine.trim().isEmpty()) {
+						
+						switch (lineCounter % 4) {
+						
+						case 0:
+							currentDate = nextLine;
+							break;
+							
+						case 1:
+							remindDate = nextLine;
+							break;
+							
+						case 2:
+							title = nextLine;
+							break;
+							
+						case 3:
+							text = nextLine;
+							currentNote = new Note(toDate(currentDate), toDate(remindDate), title, text);
+							listModel.addElement(currentNote);
+							break;
+							
+						default:
+							break;
+						
+						}//end switch
+						
+						lineCounter++;
+						
+						}
+						
+					}
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+  			
 		}
 
 		DefaultListModel listModel2 = new DefaultListModel();
