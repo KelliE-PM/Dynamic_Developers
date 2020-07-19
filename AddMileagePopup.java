@@ -1,20 +1,22 @@
 package CarNerd;
 
 import java.awt.Color;
-import javax.swing.JFrame;
+import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AddMileagePopup extends JPanel {
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -22,49 +24,57 @@ public class AddMileagePopup extends JPanel {
 	DateTimeFormatter formater = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 	// Create fields
-	static String lastDateSS;
 	String saveDateSS;
 	String changeDateSS;
 	String saveChangeDateSS;
 	String currentDateSS;
-	static LocalDate lastDate;
+
+	String saveChangeDateS;
+	String currentDateS;
+	String saveNextChangeDateS;
+	String setDateS;
+	String setDateSS;
+
+	static String changeDateS;
+	static String nextChangeDateS;
+	static String setMileS;
+	static String lastDateS;
+	static String lastDateSS;
+	
 	LocalDate saveDate;
-	static LocalDate setDate;
-	static LocalDate changeDate;
 	LocalDate saveChangeDate;
 	LocalDate currentDate;
 	LocalDate nextChangeDate;
 	LocalDate saveNextChangeDate;
-	static String lastDateS;
+	
+	static LocalDate lastDate;
+	static LocalDate setDate;
+	static LocalDate changeDate;
+	
 	String saveDateS;
-	static String changeDateS;
-	String saveChangeDateS;
-	String currentDateS;
-	static String nextChangeDateS;
-	String saveNextChangeDateS;
-	static int lastMiles;
-	int saveMiles;
 	String changeMilesS;
+	String syn;
+	String saveSyn;
+	String due;
+	
 	static int changeMiles;
-	int saveChange;
 	static int nextChangeMiles;
+	static int setMile;
+	static int lastMiles;
+	
+	int saveChange;
 	int saveNextChange;
 	int currentMiles;
-	static int setMile;
+	int saveMiles;
+	int milesLeft;
+	int saveLeft;
+	int mile;
+	
 	boolean change;
 	boolean synthetic;
 	boolean lastSyn;
-	String syn;
-	String saveSyn;
-	int milesLeft;
-	int saveLeft;
-	String due;
-	int mile;
-	static String setMileS;
-	String setDateS;
-	String setDateSS;
-
-	AddMileagePopup(JFrame Mpanel) {
+	
+	AddMileagePopup(JPanel mPanel, JDialog mDialog) {
 
 		// Update Data
 		lastDateSS = "12/31/2020";
@@ -74,12 +84,12 @@ public class AddMileagePopup extends JPanel {
 		currentMiles = 564390;
 		changeMiles = 562934;
 		lastSyn = false;
-
+    
 		// Create strings to dates to calculate
 		lastDate = LocalDate.parse(lastDateSS, formater);
 		changeDate = LocalDate.parse(changeDateSS, formater);
 		currentDate = LocalDate.parse(currentDateSS, formater);
-
+		
 		// Convert back to strings to output
 		lastDateS = lastDate.format(formater);
 		changeDateS = changeDate.format(formater);
@@ -122,84 +132,89 @@ public class AddMileagePopup extends JPanel {
 		due ="<html>&emsp;&emsp;&emsp;&emsp; In <b>" + milesLeft + "</b> miles or by " + nextChangeDateS + "</html>";
 		if (currentMiles > nextChangeMiles || currentDate.compareTo(nextChangeDate) >= 1) {due = "             You are past due for an oil change";}
 
-		//****************************FRAME SETTING*********************************************		
-
+		//****************************PANEL SETTING*********************************************		
+		mPanel.setPreferredSize(new Dimension(360, 190));
 		setBounds(100, 100, 360, 180);
 		setBackground(new Color(191,136,255));
-		JTextField newMileage = new JTextField();
-		JTextField newDate = new JTextField();
-		JCheckBox checkChange = new JCheckBox("Oil Change?");
-		JCheckBox checkSynth = new JCheckBox("Synthetic oil?");
-		JLabel nextChange = new JLabel("             Next oil change at " + nextChangeMiles + " miles    ");
-		JButton update = new JButton("Update");
-		JButton exit = new JButton("   Save   ");
-		JLabel message = new JLabel(due);
-		JButton reset = new JButton("Reset");
-		JLabel last = new JLabel("            Last oil change was on " + changeDateSS + " with " + syn + " oil");
-		JLabel date = new JLabel(" DATE: ");
-		JLabel enter = new JLabel("ENTER NEW MILEAGE:  ");
+		
+		JTextField tfNewMileage = new JTextField();
+		JTextField tfNewDate = new JTextField();
+		
+		JCheckBox chkChange = new JCheckBox("Oil Change?");
+		JCheckBox chkSynth = new JCheckBox("Synthetic oil?");
+		
+		JButton btnUpdate = new JButton("Update");
+		JButton btnExit = new JButton("  Save  ");
+		JButton btnReset = new JButton("Reset");
+		
+		JLabel lblMessage = new JLabel(due);
+		JLabel lblLast = new JLabel("            Last oil change was on " + changeDateSS + " with " + syn + " oil");
+		JLabel lblDate = new JLabel(" DATE: ");
+		JLabel lblEnter = new JLabel("ENTER NEW MILEAGE:  ");
+		JLabel lblNextChange = new JLabel("             Next oil change at " + nextChangeMiles + " miles    ");
+		
 
-		last.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblLast.setFont(new Font("Tahoma", Font.ITALIC, 11));
 
-		Mpanel.add(newMileage);
-		Mpanel.add(newDate);
-		Mpanel.add(checkChange);
-		Mpanel.add(checkSynth);
-		Mpanel.add(nextChange);
-		Mpanel.add(update);
-		Mpanel.add(exit);
-		Mpanel.add(message);
-		Mpanel.add(reset);
-		Mpanel.add(last);
-		Mpanel.add(date);
-		Mpanel.add(enter);
+		mPanel.add(tfNewMileage);
+		mPanel.add(tfNewDate);
+		mPanel.add(chkChange);
+		mPanel.add(chkSynth);
+		mPanel.add(lblNextChange);
+		mPanel.add(btnUpdate);
+		mPanel.add(btnExit);
+		mPanel.add(lblMessage);
+		mPanel.add(btnReset);
+		mPanel.add(lblLast);
+		mPanel.add(lblDate);
+		mPanel.add(lblEnter);
 
-		enter.setBounds(12, 15, 140, 14);
-		newMileage.setBounds(148, 12, 58, 20);
-		date.setBounds(216, 15, 70, 14);
-		newDate.setBounds(260, 12, 69, 20);
-		last.setBounds(12, 33, 289, 20);
-		checkChange.setBounds(43, 54, 100, 23);
-		checkSynth.setBounds(136, 54, 98, 23);
-		update.setBounds(250, 54, 79, 23);
-		nextChange.setBounds(12, 90, 240, 14);
-		reset.setBounds(250, 81, 79, 23);
-		message.setBounds(12, 108, 240, 14);
-		exit.setBounds(250, 108, 79, 23);
+		lblEnter.setBounds(12, 15, 140, 14);
+		tfNewMileage.setBounds(148, 12, 58, 20);
+		lblDate.setBounds(216, 15, 70, 14);
+		tfNewDate.setBounds(260, 12, 69, 20);
+		lblLast.setBounds(12, 33, 289, 20);
+		chkChange.setBounds(43, 54, 100, 23);
+		chkSynth.setBounds(136, 54, 110, 23);
+		btnUpdate.setBounds(250, 54, 79, 23);
+		lblNextChange.setBounds(12, 90, 240, 14);
+		btnReset.setBounds(250, 81, 79, 23);
+		lblMessage.setBounds(12, 108, 240, 14);
+		btnExit.setBounds(250, 108, 79, 23);
 
-		newMileage.setText(String.valueOf(lastMiles));
-		newDate.setText(lastDateS);
+		tfNewMileage.setText(String.valueOf(lastMiles));
+		tfNewDate.setText(lastDateS);
 
-		checkChange.setBackground(new Color(191, 136, 255));
-		checkSynth.setBackground(new Color(191, 136, 255));
+		chkChange.setBackground(new Color(191, 136, 255));
+		chkSynth.setBackground(new Color(191, 136, 255));
 
-		checkChange.addActionListener(new ActionListener() {
+		chkChange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (checkChange.isSelected()) {change = true;} 
+				if (chkChange.isSelected()) {change = true;} 
 				else {change = false;}
 
 			}});
 
-		checkSynth.addActionListener(new ActionListener() {
+		chkSynth.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (checkSynth.isSelected()) {synthetic = true; syn = "synthetic";} 
+				if (chkSynth.isSelected()) {synthetic = true; syn = "synthetic";} 
 				else {synthetic = false; syn = "regular";}
 
 			}});
 
 
-		update.addActionListener(new ActionListener() {
+		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				if (change == true) {
-					changeMilesS = newMileage.getText();
+					changeMilesS = tfNewMileage.getText();
 					changeMiles = Integer.parseInt(changeMilesS);
-					changeDateS = newDate.getText();
+					changeDateS = tfNewDate.getText();
 					changeDate = LocalDate.parse(changeDateS, formater);
 					changeDateSS = changeDate.format(formater);	
-					last.setText("            Last oil change was on " + changeDateSS + " with " + syn + " oil");
+					lblLast.setText("            Last oil change was on " + changeDateSS + " with " + syn + " oil");
 
 					if (synthetic == false) {
 						mile = 3000;
@@ -219,37 +234,37 @@ public class AddMileagePopup extends JPanel {
 					setDateSS = changeDateSS;
 					
 
-					nextChange.setText("             Next oil change at " + nextChangeMiles + " miles    ");
-					message.setText("                 In " + mile + " miles or by " + nextChangeDateS);
+					lblNextChange.setText("             Next oil change at " + nextChangeMiles + " miles    ");
+					lblMessage.setText("                 In " + mile + " miles or by " + nextChangeDateS);
 
 				} else {
-					setMileS = newMileage.getText();
+					setMileS = tfNewMileage.getText();
 					setMile = Integer.parseInt(setMileS);
-					setDateS = newDate.getText();
+					setDateS = tfNewDate.getText();
 					setDate = LocalDate.parse(setDateS, formater);
 					setDateSS = setDate.format(formater);
 					milesLeft = nextChangeMiles - setMile; 
-					nextChange.setText("             Next oil change at " + nextChangeMiles + " miles");
-					message.setText("                 In " + milesLeft + " miles or by " + nextChangeDateS);
+					lblNextChange.setText("             Next oil change at " + nextChangeMiles + " miles");
+					lblMessage.setText("                 In " + milesLeft + " miles or by " + nextChangeDateS);
 					if (setMile > nextChangeMiles || setDate.compareTo(nextChangeDate) >= 1) {
-						message.setText("             You are past due for an oil change");}
+						lblMessage.setText("             You are past due for an oil change");}
 
 				}}});
 
-		reset.addActionListener(new ActionListener() {
+		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				newMileage.setText(String.valueOf(saveMiles));
-				newDate.setText(saveDateS);
-				last.setText("            Last oil change was on " + saveDateS + " with " + saveSyn + " oil");
-				nextChange.setText("             Next oil change at " + saveNextChange + " miles");
-				message.setText("                 In " + saveLeft + " miles or by " + saveNextChangeDateS);
+				tfNewMileage.setText(String.valueOf(saveMiles));
+				tfNewDate.setText(saveDateS);
+				lblLast.setText("            Last oil change was on " + saveDateS + " with " + saveSyn + " oil");
+				lblNextChange.setText("             Next oil change at " + saveNextChange + " miles");
+				lblMessage.setText("                 In " + saveLeft + " miles or by " + saveNextChangeDateS);
 
 			}});
 
-		exit.addActionListener(new ActionListener() {
+		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//ArrayList<Mileage> listMiles = new ArrayList<Mileage>();
+				//ArrayList<Mileage> listMiles = new ArrayList<Mileage>();  // list created elsewhere
 				
 				if (change == true) {
 				Mileage newOil = new Mileage(setMile, setDateSS, synthetic);
@@ -261,21 +276,25 @@ public class AddMileagePopup extends JPanel {
 				NerdList.listMiles.add(newReg);
 				}
 				
+				/* handled in mileage class now
 				String mileLog = "On " + setDateSS + " mileage was: " + setMile;
 				if (change == true) {
 					String addChange = ", Oil was changed with " + syn + " oil.";
 					mileLog = mileLog + addChange;
+					
 				}
-				
 				System.out.println(mileLog);
+				*/
+				
+
+				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				
 				// Tried to change labels when pop up closes  FAIL
 				//MainUI.loadMileage(mainFrame).lblLastMileage.setText("LAST REPORTED MILEAGE:  " + lastMiles + " miles on " + lastDateSS));
 				
-				Mpanel.dispose();
+				mDialog.dispose();
 			
 			}});
-
 	}
 
 }
