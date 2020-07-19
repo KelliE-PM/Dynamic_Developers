@@ -176,7 +176,7 @@ public class AddMileagePopup extends JPanel {
 		tfNewDate.setBounds(260, 12, 69, 20);
 		lblLast.setBounds(12, 33, 289, 20);
 		chkChange.setBounds(43, 54, 100, 23);
-		chkSynth.setBounds(136, 54, 98, 23);
+		chkSynth.setBounds(136, 54, 110, 23);
 		btnUpdate.setBounds(250, 54, 79, 23);
 		lblNextChange.setBounds(12, 90, 240, 14);
 		btnReset.setBounds(250, 81, 79, 23);
@@ -277,13 +277,14 @@ public class AddMileagePopup extends JPanel {
 				NerdList.listMiles.add(newReg);
 				}
 				
+				/* handled in mileage class now
 				String mileLog = "On " + setDateSS + " mileage was: " + setMile;
 				if (change == true) {
 					String addChange = ", Oil was changed with " + syn + " oil.";
 					mileLog = mileLog + addChange;
 				}
-				
 				System.out.println(mileLog);
+				*/
 				
 				// Tried to change labels when pop up closes  FAIL
 				//MainUI.loadMileage(mainFrame).lblLastMileage.setText("LAST REPORTED MILEAGE:  " + lastMiles + " miles on " + lastDateSS));

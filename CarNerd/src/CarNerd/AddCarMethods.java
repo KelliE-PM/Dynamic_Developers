@@ -50,7 +50,7 @@ public class AddCarMethods {
 	}
 	public void readFile() throws IOException {
 // adds the cars to an ArrayList for the spinner to generate
-		MainUI mainUI = new MainUI();
+		MainCarInfo mci = new MainCarInfo();
 		Car tempCar;
 		String[] tempArr = null;
 		FileInputStream fis = null;
@@ -78,6 +78,6 @@ public class AddCarMethods {
 			tempCar.setPlate(tempArr[6]);
 			NerdList.listCars.add(tempCar);
 		}
-		for (int c = 0; c < NerdList.listCars.size(); c++ ) { mainUI.cbChooseCar.addItem(NerdList.listCars.get(c).getName()); }
+		for (int c = 0; c < NerdList.listCars.size(); c++ ) { mci.cbChooseCar.addItem(NerdList.listCars.get(c).getName()); }
 	}
 }

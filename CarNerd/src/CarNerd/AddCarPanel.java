@@ -88,7 +88,7 @@ public class AddCarPanel extends JPanel{
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	        	AddCarMethods addCar = new AddCarMethods();
-	        	MainUI mainUI = new MainUI();
+	        	MainCarInfo mci = new MainCarInfo();
 	        	String newVIN = vin;
 	        	
 		        // ERROR HANDLING cannot have "," ANYWHERE in the car inputs.
@@ -111,7 +111,7 @@ public class AddCarPanel extends JPanel{
 					else if (result == JOptionPane.NO_OPTION){ }
 	        	}
 				addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
-	        	mainUI.setDropDown();
+	        	//mci.setDropDown();
 	        	try { addCar.writeToFile(); } 
 	        	catch (IOException e2) { e2.printStackTrace(); }
 
