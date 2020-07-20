@@ -4,12 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import javax.swing.JButton;
@@ -20,14 +18,6 @@ import javax.swing.JPanel;
 
 public class MainMileage {
 	
-	/*
-	//Tester
-	 public static void main(String[] args) throws IOException {
-		readMileageFile();
-		System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
-		System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
-	 */
-
 	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
 
 		FileInputStream readMile = new FileInputStream("Mileage.txt");

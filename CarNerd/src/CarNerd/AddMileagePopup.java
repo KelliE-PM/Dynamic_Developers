@@ -330,6 +330,7 @@ public class AddMileagePopup extends JPanel {
 
 				mDialog.dispose();
 				writer.close();
+				MainUI.reload();
 			}});
 
 	}
