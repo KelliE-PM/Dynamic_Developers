@@ -11,15 +11,17 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public class AddMileagePopup extends JPanel {
 
-
 	private static final long serialVersionUID = 1L;
-
+	
 	// Dates
 	DateTimeFormatter formater = DateTimeFormatter.ofPattern("M/d/yyyy");
 
@@ -74,7 +76,10 @@ public class AddMileagePopup extends JPanel {
 	boolean synthetic;
 	boolean lastSyn;
 	
-	AddMileagePopup(JPanel mPanel, JDialog mDialog) {
+	AddMileagePopup(JPanel mPanel, JDialog mDialog) throws IOException {
+		FileOutputStream write = new FileOutputStream("Mileage.txt");
+		PrintWriter writer = new PrintWriter(write);
+
 
 		// Update Data
 		lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
@@ -166,6 +171,8 @@ public class AddMileagePopup extends JPanel {
 		JLabel lblDate = new JLabel(" DATE: ");
 		JLabel lblEnter = new JLabel("ENTER NEW MILEAGE:  ");
 		JLabel lblNextChange = new JLabel("             Next oil change at " + nextChangeMiles + " miles    ");
+		
+		
 
 		lblLast.setFont(new Font("Tahoma", Font.ITALIC, 11));
 
@@ -205,6 +212,11 @@ public class AddMileagePopup extends JPanel {
 			lblNextChange.setText("");
 			lblMessage.setText("");    
 		}
+		if (changeDateS.equals("1/11/1111")) {
+			lblLast.setText("");  
+			lblNextChange.setText("");
+			lblMessage.setText("");   
+		}
 		
 		chkChange.setBackground(new Color(191, 136, 255));
 		chkSynth.setBackground(new Color(191, 136, 255));
@@ -228,12 +240,6 @@ public class AddMileagePopup extends JPanel {
 
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (changeDateSS.equals("1/11/1111")) {
-					lblLast.setText("");  
-					lblNextChange.setText("");
-					lblMessage.setText("");   
-				}
 				
 				if (change == true) {
 					changeMilesS = tfNewMileage.getText();
@@ -260,11 +266,11 @@ public class AddMileagePopup extends JPanel {
 					setMile = changeMiles;
 					setDateSS = changeDateSS;
 					
-
 					lblNextChange.setText("             Next oil change at " + nextChangeMiles + " miles    ");
 					lblMessage.setText("                 In " + mile + " miles or by " + nextChangeDateS);
 
 				} else {
+						
 					setMileS = tfNewMileage.getText();
 					setMile = Integer.parseInt(setMileS);
 					setDateS = tfNewDate.getText();
@@ -275,6 +281,13 @@ public class AddMileagePopup extends JPanel {
 					lblMessage.setText("                 In " + milesLeft + " miles or by " + nextChangeDateS);
 					if (setMile > nextChangeMiles || setDate.compareTo(nextChangeDate) >= 1) {
 						lblMessage.setText("             You are past due for an oil change");}
+					
+					if (changeDateS.equals("1/11/1111")) {
+						lblLast.setText("");  
+						lblNextChange.setText("");
+						lblMessage.setText("");   
+					}
+					
 
 				}}});
 
@@ -293,7 +306,7 @@ public class AddMileagePopup extends JPanel {
 				
 				if (change == true) {
 				Mileage newOil = new Mileage(setMile, setDateSS, synthetic);
-				NerdList.listMiles.add(newOil);	
+				NerdList.listChange.add(newOil);	
 				System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
 				
 				} else {
@@ -301,10 +314,24 @@ public class AddMileagePopup extends JPanel {
 				NerdList.listMiles.add(newReg);
 				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				}
-				
+
+				for (int index = 0; index < NerdList.listMiles.size(); index++) {
+					writer.println(NerdList.listMiles.get(index).getType() + " " 
+							+ NerdList.listMiles.get(index).getCurrentMiles() + " "
+							+ NerdList.listMiles.get(index).getCurrentDate());
+				}
+
+				for (int index = 0; index < NerdList.listChange.size(); index++) {
+					writer.println(NerdList.listChange.get(index).getType() + " " 
+							+ NerdList.listChange.get(index).getChangeMiles() + " "
+							+ NerdList.listChange.get(index).getChangeDate() + " "
+							+ NerdList.listChange.get(index).getSynthetic());
+				}
+
 				mDialog.dispose();
-			
+				writer.close();
 			}});
+
 	}
 
 }

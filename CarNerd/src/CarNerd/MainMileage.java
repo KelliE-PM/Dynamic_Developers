@@ -94,7 +94,11 @@ public class MainMileage {
 			lblLastMileage.setText("LAST REPORTED MILEAGE:");
 			lblLastChange.setText("LAST REPORTED OIL CHANGE:");
 			lblNextChange.setText("NEXT CHANGE DUE:");
+		}
 			
+		if (changeDate.equals("1/11/1111")) {
+			lblLastChange.setText("LAST REPORTED OIL CHANGE:");
+			lblNextChange.setText("NEXT CHANGE DUE:");	
 		}
 
 		JButton btnAddMile = new JButton("Add Mileage");
@@ -108,7 +112,12 @@ public class MainMileage {
 				mDialog.setSize(360, 190);
 
 				JPanel mPanel = new JPanel(new BorderLayout());
-				mPanel.add(new AddMileagePopup(mPanel, mDialog)); 
+				try {
+					mPanel.add(new AddMileagePopup(mPanel, mDialog));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
 
 				mDialog.add(mPanel);
 				mDialog.setVisible(true);
