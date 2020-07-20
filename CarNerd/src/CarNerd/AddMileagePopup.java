@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class AddMileagePopup extends JPanel {
 
@@ -40,14 +41,11 @@ public class AddMileagePopup extends JPanel {
 	static String lastDateS;
 	static String lastDateSS;
 	
-	
 	LocalDate saveDate;
 	LocalDate saveChangeDate;
 	LocalDate currentDate;
 	LocalDate nextChangeDate;
 	LocalDate saveNextChangeDate;
-
-	
 	
 	static LocalDate lastDate;
 	static LocalDate setDate;
@@ -79,6 +77,17 @@ public class AddMileagePopup extends JPanel {
 	AddMileagePopup(JPanel mPanel, JDialog mDialog) {
 
 		// Update Data
+		lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
+		lastDateSS = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();
+		changeMiles = NerdList.listChange.get(NerdList.listChange.size() - 1).getChangeMiles();
+		changeDateSS = NerdList.listChange.get(NerdList.listChange.size() - 1).getChangeDate();
+		nextChangeMiles = NerdList.listChange.get(NerdList.listChange.size() - 1).getNextChangeMiles();
+		nextChangeDateS = NerdList.listChange.get(NerdList.listChange.size() - 1).getNextChangeDate();
+		lastSyn = NerdList.listChange.get(NerdList.listChange.size() - 1).getSynthetic();
+		currentDateSS = lastDateSS;
+		currentMiles = lastMiles;
+		
+		/*Old sample data
 		lastDateSS = "12/31/2020";
 		changeDateSS = "12/12/2020";
 		currentDateSS = "1/31/2021";
@@ -86,11 +95,15 @@ public class AddMileagePopup extends JPanel {
 		currentMiles = 564390;
 		changeMiles = 562934;
 		lastSyn = false;
+    	*/
     
 		// Create strings to dates to calculate
+		// Error on this line when trying to run the pop up a second time.
+		
 		lastDate = LocalDate.parse(lastDateSS, formater);
 		changeDate = LocalDate.parse(changeDateSS, formater);
 		currentDate = LocalDate.parse(currentDateSS, formater);
+		
 		// Convert back to strings to output
 		lastDateS = lastDate.format(formater);
 		changeDateS = changeDate.format(formater);
@@ -153,7 +166,6 @@ public class AddMileagePopup extends JPanel {
 		JLabel lblDate = new JLabel(" DATE: ");
 		JLabel lblEnter = new JLabel("ENTER NEW MILEAGE:  ");
 		JLabel lblNextChange = new JLabel("             Next oil change at " + nextChangeMiles + " miles    ");
-		
 
 		lblLast.setFont(new Font("Tahoma", Font.ITALIC, 11));
 
@@ -186,6 +198,14 @@ public class AddMileagePopup extends JPanel {
 		tfNewMileage.setText(String.valueOf(lastMiles));
 		tfNewDate.setText(lastDateS);
 
+		if (lastDateSS.equals("1/11/1111")) {
+			tfNewMileage.setText("");
+			tfNewDate.setText("M/D/YYYY");
+			lblLast.setText("");      
+			lblNextChange.setText("");
+			lblMessage.setText("");    
+		}
+		
 		chkChange.setBackground(new Color(191, 136, 255));
 		chkSynth.setBackground(new Color(191, 136, 255));
 
@@ -209,6 +229,12 @@ public class AddMileagePopup extends JPanel {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				if (changeDateSS.equals("1/11/1111")) {
+					lblLast.setText("");  
+					lblNextChange.setText("");
+					lblMessage.setText("");   
+				}
+				
 				if (change == true) {
 					changeMilesS = tfNewMileage.getText();
 					changeMiles = Integer.parseInt(changeMilesS);
@@ -258,36 +284,23 @@ public class AddMileagePopup extends JPanel {
 				tfNewDate.setText(saveDateS);
 				lblLast.setText("            Last oil change was on " + saveDateS + " with " + saveSyn + " oil");
 				lblNextChange.setText("             Next oil change at " + saveNextChange + " miles");
-				lblMessage.setText("                 In " + saveLeft + " miles or by " + saveNextChangeDateS);
+				lblMessage.setText("                 In " + saveLeft + " miles or by " + saveNextChangeDateS);	
 
 			}});
 
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//ArrayList<Mileage> listMiles = new ArrayList<Mileage>();
-				
 				if (change == true) {
 				Mileage newOil = new Mileage(setMile, setDateSS, synthetic);
 				NerdList.listMiles.add(newOil);	
-				
+				System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
 				
 				} else {
 				Mileage newReg = new Mileage(setMile, setDateSS);
 				NerdList.listMiles.add(newReg);
+				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				}
-				
-				/* handled in mileage class now
-				String mileLog = "On " + setDateSS + " mileage was: " + setMile;
-				if (change == true) {
-					String addChange = ", Oil was changed with " + syn + " oil.";
-					mileLog = mileLog + addChange;
-				}
-				System.out.println(mileLog);
-				*/
-				
-				// Tried to change labels when pop up closes  FAIL
-				//MainUI.loadMileage(mainFrame).lblLastMileage.setText("LAST REPORTED MILEAGE:  " + lastMiles + " miles on " + lastDateSS));
 				
 				mDialog.dispose();
 			
