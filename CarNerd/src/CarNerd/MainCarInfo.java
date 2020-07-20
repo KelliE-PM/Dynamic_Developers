@@ -5,14 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.text.ParseException;
-
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -22,8 +19,8 @@ public class MainCarInfo {
 	JComboBox<String> cbChooseCar = new JComboBox<String>();
 	AddCarMethods addCar = new AddCarMethods();
 // ******************** THE CAR INSTANCIATION ********************
-// theCar is the selected car and should be used throughout the program to pull the currently selected car
-	static Car theCar = new Car();
+// NerdList.theCar is the selected car and should be used throughout the program to pull the currently selected car
+	//static Car NerdList.theCar = new Car();
 	JLabel lblCarName, lblCarYear, lblCarMake, lblCarModel, lblCarTrim, lblCarVIN, lblPlateNum;	
 	
 
@@ -51,12 +48,12 @@ public class MainCarInfo {
 
 					if (NerdList.listCars.get(a).getName().compareTo(selectedCar) == 0) {
 
-						theCar = NerdList.listCars.get(a);
+						NerdList.theCar = NerdList.listCars.get(a);
 					}
 				}
 
-				setCarInfo(theCar.getName(), theCar.getYear(), theCar.getMake(), theCar.getModel(), theCar.getTrim(),
-						theCar.getVIN(), theCar.getPlate());
+				setCarInfo(NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(), NerdList.theCar.getModel(), NerdList.theCar.getTrim(),
+						NerdList.theCar.getVIN(), NerdList.theCar.getPlate());
 
 				SwingUtilities.updateComponentTreeUI(mainFrame);
 			}
@@ -87,15 +84,21 @@ public class MainCarInfo {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String deleteCar = theCar.getName();
+				String deleteCar = NerdList.theCar.getName();
 
 				int result = JOptionPane.showConfirmDialog(mainFrame,
-						"Are you sure you would like to delete ?" + deleteCar, "Delete Car", JOptionPane.YES_NO_OPTION,
+						"Are you sure you would like to delete " + deleteCar + "?", "Delete Car", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE);
 
 				if (result == JOptionPane.YES_OPTION) {
-					addCar.deleteCar(deleteCar);
+					try {
+						addCar.deleteCar(deleteCar);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(null, deleteCar + " as been deleted.");
+					
+					MainUI.reload();
 				}
 
 				else if (result == JOptionPane.NO_OPTION) {
@@ -175,8 +178,8 @@ public class MainCarInfo {
 				dialog.setSize(400, 400);
 
 				JPanel panel = new JPanel(new BorderLayout());
-				panel.add(new AddCarPanel("Edit", panel, dialog, theCar.getName(), theCar.getYear(), theCar.getMake(),
-						theCar.getModel(), theCar.getTrim(), theCar.getVIN(), theCar.getPlate()));
+				panel.add(new AddCarPanel("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),
+						NerdList.theCar.getModel(), NerdList.theCar.getTrim(), NerdList.theCar.getVIN(), NerdList.theCar.getPlate()));
 
 				dialog.add(panel);
 				dialog.setVisible(true);

@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.text.ParseException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -62,7 +60,6 @@ public class AddCarPanel extends JPanel{
         tfCarVIN.setBounds(75, 210, 150, 30);
         tfCarPlate.setBounds(75, 250, 150, 30);
         btnUpdate.setBounds(150, 290, 100, 30);
-        
 
         aPanel.add(tfCarName);
 		aPanel.add(tfCarYear);
@@ -80,27 +77,44 @@ public class AddCarPanel extends JPanel{
         aPanel.add(lblCarVIN);
         aPanel.add(lblCarPlate);
         aPanel.add(btnUpdate);
-
         
-
-
         btnUpdate.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
 	        	AddCarMethods addCar = new AddCarMethods();
-	        	MainCarInfo mci = new MainCarInfo();
 	        	String newVIN = vin;
 	        	
 		        // ERROR HANDLING cannot have "," ANYWHERE in the car inputs.
-		        if (tfCarName.getText().contains(",") == true) { tfCarName.setText(tfCarName.getText().replaceAll(",", "")); }
-		        if (tfCarYear.getText().contains(",") == true) { tfCarYear.setText(tfCarYear.getText().replaceAll(",", "")); }
-		        if (tfCarMake.getText().contains(",") == true) { tfCarMake.setText(tfCarMake.getText().replaceAll(",", "")); }
-		        if (tfCarModel.getText().contains(",") == true) { tfCarModel.setText(tfCarModel.getText().replaceAll(",", "")); }
-		        if (tfCarTrim.getText().contains(",") == true) { tfCarTrim.setText(tfCarTrim.getText().replaceAll(",", "")); }
-		        if (tfCarVIN.getText().contains(",") == true) { tfCarVIN.setText(tfCarVIN.getText().replaceAll(",", "")); }
-		        if (tfCarPlate.getText().contains(",") == true) { tfCarPlate.setText(tfCarPlate.getText().replaceAll(",", "")); }	    
+		        if (tfCarName.getText().contains(",") == true) { 
+		        	
+		        	tfCarName.setText(tfCarName.getText().replaceAll(",", "")); 
+		        	}
+		        if (tfCarYear.getText().contains(",") == true) {
+		        	
+		        	tfCarYear.setText(tfCarYear.getText().replaceAll(",", "")); 
+		        }
+		        if (tfCarMake.getText().contains(",") == true) { 
+		        	
+		        	tfCarMake.setText(tfCarMake.getText().replaceAll(",", ""));
+		        	}
+		        if (tfCarModel.getText().contains(",") == true) { 
+		        	
+		        	tfCarModel.setText(tfCarModel.getText().replaceAll(",", "")); 
+		        	}
+		        if (tfCarTrim.getText().contains(",") == true) { 
+		        	
+		        	tfCarTrim.setText(tfCarTrim.getText().replaceAll(",", "")); 
+		        	}
+		        if (tfCarVIN.getText().contains(",") == true) { 
+		        	
+		        	tfCarVIN.setText(tfCarVIN.getText().replaceAll(",", "")); 
+		        	}
+		        if (tfCarPlate.getText().contains(",") == true) { 
+		        	
+		        	tfCarPlate.setText(tfCarPlate.getText().replaceAll(",", "")); 
+		        	}	    
         
-	        	if (vin.compareTo(tfCarVIN.getText()) != 0 && vin.compareTo("") != 0) {
+	        	if (btnTxt == "Edit" && vin.compareTo(tfCarVIN.getText()) != 0) {
 
 	        		int result = JOptionPane.showConfirmDialog(aPanel,"Are you sure you want to change the VIN?", "Change VIN", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
@@ -110,22 +124,17 @@ public class AddCarPanel extends JPanel{
 		            }
 					else if (result == JOptionPane.NO_OPTION){ }
 	        	}
-				addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
-	        	//mci.setDropDown();
-	        	try { addCar.writeToFile(); } 
-	        	catch (IOException e2) { e2.printStackTrace(); }
+	        	if (btnTxt == "Add") {
+	        		addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
+	        	}
+	        	else if(btnTxt =="Edit") {
+	        		addCar.editCar(name, tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
+	        	}
+	        	addCar.writeToFile();
 
 	        	aDialog.dispose();
 
-	        	//mainFrame.invalidate();
-	        	//mainFrame.validate();
-	        	//mainFrame.repaint();
-	        	//SwingUtilities.updateComponentTreeUI(mainFrame);
-	        	//NerdList.listCars = null;
-	        	MainUI.mainFrame.dispose();
-	        	
-	        	try { CarNerdMainPage.createAndShowGUI(); } 
-	            catch (ParseException | IOException e1) { e1.printStackTrace(); }
+	        	MainUI.reload();
 // TODO popup that car has been loaded
 	    }});
 	}
