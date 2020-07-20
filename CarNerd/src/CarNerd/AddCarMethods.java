@@ -41,7 +41,6 @@ public class AddCarMethods {
 				NerdList.listCars.get(c).setTrim(trim);
 				NerdList.listCars.get(c).setVIN(vin);
 				NerdList.listCars.get(c).setPlate(plate);
-				//writeToFile();
 				return;
 			}
 		}	

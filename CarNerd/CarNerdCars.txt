@@ -1,3 +1,1 @@
 Mira,2000,Mazda,MX-5,SE,,PH2C5M
-ik,1999,subaru,1,hyu,,sedtyg
-oij,19999,jukil,outack,kop,,hujkio
