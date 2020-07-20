@@ -4,7 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -67,11 +73,48 @@ public class AddNotePopup extends JPanel{
 		
 	    btnSave.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
-	    	  System.out.println(tfNoteDate.getText());
-	    	  System.out.println(tfRemindDate.getText());
-	    	  System.out.println(tfNoteTitle.getText());
-	    	  System.out.println(taNoteText.getText());
+	    	  if(isValidDate(tfNoteDate.getText()) && isValidDate(tfRemindDate.getText())) {
+		    	  
+		    	  try {
+		  			FileWriter fw = new FileWriter("notes.txt", true);
+		  			PrintWriter pw = new PrintWriter(fw);
+		  			
+		  			pw.print(tfNoteDate.getText());
+		  			pw.println();
+		  			pw.print(tfRemindDate.getText());
+		  			pw.println();
+		  			pw.print(tfNoteTitle.getText());
+		  			pw.println();
+		  			pw.print(taNoteText.getText());
+		  			pw.println();
+		  			
+		  			pw.close();
+		  			
+		  		} catch (IOException e1) {
+		  			// TODO Auto-generated catch block
+		  			e1.printStackTrace();
+		  		}
+	    	  }
 	      }
+	      
+	      private boolean isValidDate(String text) {
+				
+				DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+				try {
+					
+				LocalDate date = LocalDate.parse(text, f);
+				
+				
+				} catch (DateTimeParseException e) {
+					
+				return false;
+					
+				}
+				
+				return true;
+				
+			}
+	      
 	    });
 	          
 	    btnClear.addActionListener(new ActionListener(){
