@@ -125,7 +125,7 @@ public class AddCarPanel extends JPanel{
 					else if (result == JOptionPane.NO_OPTION){ }
 	        	}
 	        	if (btnTxt == "Add") {
-	        		addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
+	        		addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
 	        	}
 	        	else if(btnTxt =="Edit") {
 	        		addCar.editCar(name, tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
