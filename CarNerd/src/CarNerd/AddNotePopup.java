@@ -1,7 +1,6 @@
 package CarNerd;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -21,11 +20,7 @@ import javax.swing.JTextField;
 public class AddNotePopup extends JPanel{
 	private static final long serialVersionUID = 1L;
 
-	public AddNotePopup(JFrame frame) throws ParseException {
-		// ****SIZE OF POPUP WINDOW******       
-		int x = 600, y = 400;
-		frame.setPreferredSize(new Dimension(x, y));
-		
+	public AddNotePopup(JPanel nPanel, JDialog nDialog) throws ParseException {
 		setBackground(new Color(191,136,255));
 		
 		JLabel lblNoteDate = new JLabel("Current Date (MM/DD/YYYY");
@@ -59,22 +54,22 @@ public class AddNotePopup extends JPanel{
 	    btnClear.setBounds(300, 300, 140, 45);
 	    
 		
-		frame.add(lblNoteDate);
-		frame.add(lblRemindDate);
-		frame.add(lblNoteTitle);
-		frame.add(lblNoteText);
+		nPanel.add(lblNoteDate);
+		nPanel.add(lblRemindDate);
+		nPanel.add(lblNoteTitle);
+		nPanel.add(lblNoteText);
 		
-		frame.add(tfNoteDate);
-		frame.add(tfRemindDate);
-		frame.add(tfNoteTitle);
-		frame.add(taNoteText);
+		nPanel.add(tfNoteDate);
+		nPanel.add(tfRemindDate);
+		nPanel.add(tfNoteTitle);
+		nPanel.add(taNoteText);
 		
-		frame.add(btnSave);
-		frame.add(btnClear);
+		nPanel.add(btnSave);
+		nPanel.add(btnClear);
 		
 	    btnSave.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
-	    	  if(isValidDate(frame, tfNoteDate.getText()) && isValidDate(frame, tfRemindDate.getText())) {
+	    	  if(isValidDate(nDialog, tfNoteDate.getText()) && isValidDate(nDialog, tfRemindDate.getText())) {
 		    	  
 		    	  try {
 		  			FileWriter fw = new FileWriter("notes.txt", true);
@@ -98,11 +93,12 @@ public class AddNotePopup extends JPanel{
 	    	  }
 	      }
 	      
-	      private boolean isValidDate(JFrame frame, String text) {
+	      private boolean isValidDate(JDialog frame, String text) {
 				
 				DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
 				try {
 					
+				@SuppressWarnings("unused")
 				LocalDate date = LocalDate.parse(text, f);
 				
 				
@@ -111,7 +107,7 @@ public class AddNotePopup extends JPanel{
 				return false;
 					
 				}
-				frame.dispose();
+				nDialog.dispose();
 				MainUI.reload();
 				return true;
 				

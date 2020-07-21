@@ -16,9 +16,11 @@ import java.time.format.DateTimeParseException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class MainNotes {
@@ -26,7 +28,7 @@ public class MainNotes {
 	static DefaultListModel listModel = new DefaultListModel();
 	static JList notes = new JList(listModel);
 	
-	public void loadNotes(JFrame frame) {
+	public void loadNotes(JFrame mainFrame) {
 
 		try {
 			FileReader fr = new FileReader("notes.txt");
@@ -161,41 +163,44 @@ public class MainNotes {
 			listModel2.addElement(theNote.getNoteTitle());
 
 		}
-
-		JScrollPane scrollPane = new JScrollPane(titles);
-		frame.add(scrollPane, BorderLayout.WEST);
-		scrollPane.setBounds(10, 150, 170, 400);
-
+		
 		JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
-		lblNote.setBounds(10, 560, 700, 20);
-		frame.add(lblNote);
-
+		
 		JButton btnNewNote = new JButton("Add Note");
+		JButton btnViewNote = new JButton("View Note");
+		JScrollPane scrollPane = new JScrollPane(titles);
+		
+		lblNote.setBounds(10, 560, 700, 20);
+		scrollPane.setBounds(10, 150, 170, 400);
 		btnNewNote.setBounds(10, 590, 150, 30);
-		frame.add(btnNewNote);
-
+		btnViewNote.setBounds(10, 620, 150, 30);
+		
+		
+		mainFrame.add(lblNote);
+		mainFrame.add(btnNewNote);
+		mainFrame.add(scrollPane, BorderLayout.WEST);
+		mainFrame.add(btnViewNote);
+		
+		
 		btnNewNote.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame notePopup = new JFrame("New Note");
+				JDialog nDialog = new JDialog(mainFrame, "Click a button", true);
+				nDialog.setSize(400, 400);
 
+				JPanel nPanel = new JPanel(new BorderLayout());
 				try {
-					notePopup.getContentPane().add(new AddNotePopup(notePopup), BorderLayout.CENTER);
+					nPanel.add(new AddNotePopup(nPanel, nDialog));
 				} catch (ParseException e1) {
 					e1.printStackTrace();
 				}
 
-				notePopup.pack();
-				notePopup.setVisible(true);
+				nDialog.add(nPanel);
+				nDialog.setVisible(true);
 			}
 
 		});
-
-		JButton btnViewNote = new JButton("View Note");
-		btnViewNote.setBounds(10, 620, 150, 30);
-
-		frame.add(btnViewNote);
-
+		
 		btnViewNote.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,7 +218,7 @@ public class MainNotes {
 							break;
 						}
 					}
-
+					
 					notePopup.getContentPane().add(new ViewNotePopup(notePopup, theNote), BorderLayout.CENTER);
 
 				} catch (ParseException e1) {
@@ -238,11 +243,8 @@ public class MainNotes {
 		} catch (DateTimeParseException e) {
 
 			return false;
-
 		}
-
 		return true;
-
 	}
 
 	private static LocalDate toDate(String text) {
