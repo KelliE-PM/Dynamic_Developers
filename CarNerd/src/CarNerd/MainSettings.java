@@ -26,11 +26,7 @@ public class MainSettings {
 			public void actionPerformed(ActionEvent e) {
 // TODO write mileage, note, and car classes to a file.
 
-				try {
-					addCar.writeToFile();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+				addCar.writeToFile();
 
 				System.exit(0);
 			}
