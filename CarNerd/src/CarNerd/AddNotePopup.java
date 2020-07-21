@@ -23,8 +23,8 @@ public class AddNotePopup extends JPanel{
 	public AddNotePopup(JPanel nPanel, JDialog nDialog, Note note) throws ParseException {
 		setBackground(new Color(191,136,255));
 		
-		JLabel lblNoteDate = new JLabel("Current Date (MM/DD/YYYY");
-		JLabel lblRemindDate = new JLabel("Reminder Date (MM/DD/YYYY");
+		JLabel lblNoteDate = new JLabel("Current Date (M/DD/YYYY");
+		JLabel lblRemindDate = new JLabel("Reminder Date (M/DD/YYYY");
 		JLabel lblNoteTitle = new JLabel("Title");
 		JLabel lblNoteText = new JLabel("Note: ");
 		
@@ -55,8 +55,9 @@ public class AddNotePopup extends JPanel{
 	    
 	    
 	    if (note != null) {
-	    	tfNoteDate.setText(note.getCurrentDate().toString());
-			tfRemindDate.setText(note.getRemindDate().toString());
+	    	MainNotes mn = new MainNotes();
+			tfNoteDate.setText(mn.returningDateString(note.getCurrentDate().toString()));
+			tfRemindDate.setText(mn.returningDateString(note.getRemindDate().toString()));
 			tfNoteTitle.setText(note.getNoteTitle());
 			taNoteText.setText(note.getNoteText());
 	    }
@@ -83,7 +84,7 @@ public class AddNotePopup extends JPanel{
 	      
 	      private boolean isValidDate(JDialog frame, String text) {
 				
-				DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+				DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
 				try {
 					
 				@SuppressWarnings("unused")
