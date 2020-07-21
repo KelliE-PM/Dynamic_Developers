@@ -19,6 +19,7 @@ public class CarNerdMainPage extends JPanel {
 	public CarNerdMainPage() {}
 	public CarNerdMainPage(JFrame mainFrame) throws ParseException, IOException {
     	
+		
 // ****SIZE OF MAIN WINDOW******       
         int x = 750, y = 750;
         mainFrame.setPreferredSize(new Dimension(x, y));

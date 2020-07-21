@@ -49,6 +49,5 @@ public class ViewNotePopup extends JPanel{
 		frame.add(tfRemindDate);
 		frame.add(tfNoteTitle);
 		frame.add(taNoteText);
-		        
 	}
 }

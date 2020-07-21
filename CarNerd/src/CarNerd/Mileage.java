@@ -51,7 +51,6 @@ public class Mileage {
 			nextChangeDate = nextChangeDateLD.format(formater);
 		}
 		
-		
 	}
 	
 	public void setType(String cType) {type = cType;}

@@ -131,7 +131,6 @@ public class MainCarInfo {
 		lblCarTrim.setText(trim);
 		lblCarVIN.setText("VIN: " + vin);
 		lblPlateNum.setText("Plate: " + plate);
-		
 	}
 
 // TODO take out unnecessary arguments

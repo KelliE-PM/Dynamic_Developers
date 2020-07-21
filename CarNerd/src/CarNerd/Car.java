@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Car {
 	private String name, year, make, model, trim, VIN, plate;
 	
-	
 	//private Mileage miles;
 	public Car() {}  // constructor method
 	

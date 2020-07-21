@@ -29,7 +29,6 @@ public class Note {
 		this.noteTitle = noteTitle;
 		this.noteText = noteText;
 	}
-
 	// constructor w/o variables for populating from the UI input
 	public Note() {
 		

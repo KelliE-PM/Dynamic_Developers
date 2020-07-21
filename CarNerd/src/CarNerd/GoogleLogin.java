@@ -7,8 +7,6 @@ package CarNerd;
 //import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 //import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 //import com.google.api.client.util.store.FileDataStoreFactory;
-
-
 public class GoogleLogin {
 	/*
 		private static Credential authorize() throws Exception {

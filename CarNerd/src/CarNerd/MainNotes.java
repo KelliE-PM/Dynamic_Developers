@@ -211,7 +211,6 @@ public class MainNotes {
 				String text = "";
 				
 				int lineCounter = 0;
-				
 				Note currentNote;
 				
 				try {

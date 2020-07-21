@@ -88,6 +88,7 @@ public class AddCarMethods {
 		String[] tempArr = null;
 		FileInputStream fis = null;
 		
+		
 		try{
 			fis = new FileInputStream("CarNerdCars.txt");
 		}

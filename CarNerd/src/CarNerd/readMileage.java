@@ -35,7 +35,6 @@ public class readMileage  {
 		
 		reader.close();
 		readMile.close();
-		
 	}
 	
 	public void writeMileageFile() throws IOException {
