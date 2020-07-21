@@ -1,10 +1,10 @@
-BumbleBee~06-06-2020~07-07-2020~BB Title 2~note
-Vera~20-07-2020~01-08-2020~V Title 1~these are notes.
-Mira~20-07-2020~01-08-2020~M Title 1~these are notes.
-BumbleBee~20-07-2020~01-08-2020~BB Title 2~have some notes.
-Vera~20-07-2020~01-08-2020~V Title 2~this is the last note that ever was.
-Mira~20-07-2020~20-08-2020~M Title 2~this is a testing note
-BumbleBee~20-07-2020~20-08-2020~BB Title 3~this is another test
-Vera~20-07-2020~20-08-2020~V Title 3~this is a test note.
-New Car~20-07-2020~20-08-2020~NC Title 1~this is a note
-BumbleBee~20-07-2020~20-08-2020~BB Title 4~testing notes
+BumbleBee~06/06/2020~07/07/2020~BB Title 1~note
+Vera~01/07/2020~01/08/2020~V Title 1~these are notes.
+Mira~01/07/2020~01/08/2020~M Title 1~these are notes.
+BumbleBee~01/07/2020~01/08/2020~BB Title 2~have some notes.
+Vera~01/07/2020~01/08/2020~V Title 2~this is the last note that ever was.
+Mira~01/07/2020~01/08/2020~M Title 2~this is a testing note
+BumbleBee~01/07/2020~01/08/2020~BB Title 3~this is another test
+Vera~01/07/2020~01/08/2020~V Title 3~this is a test note.
+New Car~01/07/2020~01/08/2020~NC Title 1~this is a note
+BumbleBee~01/07/2020~01/08/2020~BB Title 4~testing notes

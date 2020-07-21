@@ -2,6 +2,7 @@ package CarNerd;
 
 import java.time.LocalDate;
 //import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter;
 
 public class Note {
 	private LocalDate currentDate;
@@ -11,13 +12,18 @@ public class Note {
 	
 	// constructor for if user doesn't want to be reminded (without remindDate)
 	public Note (LocalDate currentDate, String noteTitle, String noteText) {
-		this.currentDate = currentDate;
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
+		LocalDate fCurrentDate = LocalDate.parse(currentDate.toString(), f);
+		this.currentDate = fCurrentDate;
 		this.noteTitle = noteTitle;
 		this.noteText = noteText;
 	}
 	
 	// constructor for full entry (currentDate, reminders, title, and text)
 	public Note (LocalDate currentDate, LocalDate remindDate, String noteTitle, String noteText) {
+		//DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
+		//LocalDate fCurrentDate = LocalDate.parse(currentDate.toString(), f);
+		//LocalDate fRemindDate = LocalDate.parse(remindDate.toString(), f);
 		this.currentDate = currentDate;
 		this.remindDate = remindDate;
 		this.noteTitle = noteTitle;

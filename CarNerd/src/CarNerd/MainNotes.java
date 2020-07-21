@@ -25,6 +25,13 @@ public class MainNotes {
 	
 	//static DefaultListModel listModel = new DefaultListModel();  TODO
 	//static JList notes = new JList(listModel);   TODO
+	public String returningDateString(String date) {
+		System.out.println(date);
+		String fixedDate = date.substring(5,7) + "/" + date.substring(8,10) + "/" + date.substring(0,4);
+		System.out.println(fixedDate);
+		return fixedDate;
+	}
+	
 	public void deleteAllNotes() {
 		while(!NerdList.carNotes.isEmpty()) {
 			NerdList.carNotes.remove(0);
@@ -184,10 +191,6 @@ public class MainNotes {
 					}
 
 				}
-				ArrayList<Note> testArray = NerdList.theCar.getNotes();
-				if (testArray != null) { for (int x = 0; x < testArray.size(); x++) {
-					System.out.println(testArray.get(x).getNoteTitle());
-				}}
 				br.close();
 		} catch (IOException e2) {
 			//FileWriter fw;
@@ -271,13 +274,13 @@ public class MainNotes {
 		return true;
 	}*/
 
-	private static LocalDate toDate(String text) {
+	public LocalDate toDate(String text) {
 		String strDate = text;
 		//if (text != "") {
 			//String dateFormatChange[] = text.split("/");
 			//strDate = dateFormatChange[1].toString() + "-" + dateFormatChange[0].toString() + "-" + dateFormatChange[2].toString();
 		//}
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
 
 		LocalDate date = LocalDate.parse(strDate, f);
 		// TODO Auto-generated method stub
