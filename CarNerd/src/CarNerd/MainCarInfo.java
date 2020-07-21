@@ -72,7 +72,7 @@ public class MainCarInfo {
 				aDialog.setSize(400, 400);
 
 				JPanel aPanel = new JPanel(new BorderLayout());
-				aPanel.add(new AddCarPanel("Add", aPanel, aDialog, "", "", "", "", "", "", ""));
+				aPanel.add(new AddCarPopup("Add", aPanel, aDialog, "", "", "", "", "", "", ""));
 
 				aDialog.add(aPanel);
 				aDialog.setVisible(true);
@@ -177,7 +177,7 @@ public class MainCarInfo {
 				dialog.setSize(400, 400);
 
 				JPanel panel = new JPanel(new BorderLayout());
-				panel.add(new AddCarPanel("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),
+				panel.add(new AddCarPopup("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),
 						NerdList.theCar.getModel(), NerdList.theCar.getTrim(), NerdList.theCar.getVIN(), NerdList.theCar.getPlate()));
 
 				dialog.add(panel);

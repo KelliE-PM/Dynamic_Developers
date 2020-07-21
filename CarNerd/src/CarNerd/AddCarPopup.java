@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AddCarPanel extends JPanel{
+public class AddCarPopup extends JPanel{
 	public JTextField tfCarName = new JTextField();
 	public JTextField tfCarYear = new JTextField("");
 	public JTextField tfCarMake = new JTextField("");
@@ -29,7 +29,7 @@ public class AddCarPanel extends JPanel{
 	public JLabel lblCarPlate = new JLabel("Plate");
 	
 	private static final long serialVersionUID = 1L;
-	AddCarPanel(String btnTxt, JPanel aPanel, JDialog aDialog, String name, String year, String make, String model, String trim, String vin, String plate) {
+	AddCarPopup(String btnTxt, JPanel aPanel, JDialog aDialog, String name, String year, String make, String model, String trim, String vin, String plate) {
 // ****SIZE OF POPUP WINDOW******       
 		int x = 400, y = 400;
       aPanel.setPreferredSize(new Dimension(x, y));
