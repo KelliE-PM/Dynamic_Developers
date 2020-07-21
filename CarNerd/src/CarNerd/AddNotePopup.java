@@ -11,7 +11,6 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,7 +72,7 @@ public class AddNotePopup extends JPanel{
 		
 	    btnSave.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
-	    	  if(isValidDate(tfNoteDate.getText()) && isValidDate(tfRemindDate.getText())) {
+	    	  if(isValidDate(frame, tfNoteDate.getText()) && isValidDate(frame, tfRemindDate.getText())) {
 		    	  
 		    	  try {
 		  			FileWriter fw = new FileWriter("notes.txt", true);
@@ -97,7 +96,7 @@ public class AddNotePopup extends JPanel{
 	    	  }
 	      }
 	      
-	      private boolean isValidDate(String text) {
+	      private boolean isValidDate(JFrame frame, String text) {
 				
 				DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
 				try {
@@ -110,7 +109,8 @@ public class AddNotePopup extends JPanel{
 				return false;
 					
 				}
-				
+				frame.dispose();
+				MainUI.reload();
 				return true;
 				
 			}
