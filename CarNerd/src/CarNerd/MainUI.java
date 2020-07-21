@@ -1,3 +1,4 @@
+
 package CarNerd;
 
 import java.io.IOException;
@@ -13,10 +14,11 @@ public class MainUI {
 
 		return mainFrame;
 	}
-	public static void reload() {
-	mainFrame.dispose();
 	
-	try { CarNerdMainPage.createAndShowGUI(); } 
-    catch (ParseException | IOException e1) { e1.printStackTrace(); }
+	public static void reload() {
+		mainFrame.dispose();
+    	
+    	try { CarNerdMainPage.createAndShowGUI(); } 
+        catch (ParseException | IOException e1) { e1.printStackTrace(); }
 	}
 }
