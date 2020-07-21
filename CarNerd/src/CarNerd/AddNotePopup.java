@@ -67,6 +67,18 @@ public class AddNotePopup extends JPanel{
 		
 	    btnSave.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
+	    	  
+	    	  if (tfRemindDate.getText().equals("")) {
+	    		  MainNotes.writeNoteFileOnce(MainNotes.toDate(tfNoteDate.getText()), tfNoteTitle.getText(), taNoteText.getText());
+	    	  }
+	    	  
+	    	  else {
+	    		  MainNotes.writeNoteFileOnce(MainNotes.toDate(tfNoteDate.getText()), MainNotes.toDate(tfRemindDate.getText()), tfNoteTitle.getText(), taNoteText.getText());
+	    	  }
+	    	  
+
+	    	  
+	    	  
 	    	  System.out.println(tfNoteDate.getText());
 	    	  System.out.println(tfRemindDate.getText());
 	    	  System.out.println(tfNoteTitle.getText());

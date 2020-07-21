@@ -5,8 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -133,7 +135,7 @@ public class MainNotes {
 		btnViewNote.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame notePopup = new JFrame("New Note");
+				JFrame notePopup = new JFrame("View Note");
 				try {
 
 					Note theNote = new Note();
@@ -164,7 +166,7 @@ public class MainNotes {
 
 	private static boolean isValidDate(String text) {
 
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		try {
 
 			LocalDate date = LocalDate.parse(text, f);
@@ -179,12 +181,63 @@ public class MainNotes {
 
 	}
 
-	private static LocalDate toDate(String text) {
+	static LocalDate toDate(String text) {
 
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
+		DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
 		LocalDate date = LocalDate.parse(text, f);
 		// TODO Auto-generated method stub
 		return date;
+	}
+	
+	public void writeNoteFile() throws IOException {
+		FileOutputStream write = new FileOutputStream("notes.txt");
+		PrintWriter writer = new PrintWriter(write);
+		
+		for (int index = 0; index < NerdList.listNotes.size(); index++) {
+			if (NerdList.listNotes.get(index).getRemindDate().equals("")) {
+				writer.println(NerdList.listNotes.get(index).getCurrentDate() + " " 
+						+ NerdList.listNotes.get(index).getNoteTitle() + " "
+						+ NerdList.listNotes.get(index).getNoteText());
+			}
+			else {
+				writer.println(NerdList.listNotes.get(index).getCurrentDate() + " " 
+						+ NerdList.listNotes.get(index).getRemindDate() + " "
+						+ NerdList.listNotes.get(index).getNoteTitle() + " "
+						+ NerdList.listNotes.get(index).getNoteText());
+			}
+			
+			
+			
+		}
+		writer.close();		
+		write.close();
+	}
+	
+	public static void writeNoteFileOnce(LocalDate currentDate, LocalDate remindDate, String NoteTitle, String NoteText) throws IOException {
+		FileOutputStream write = new FileOutputStream("notes.txt");
+		PrintWriter writer = new PrintWriter(write);
+		
+		writer.println(currentDate + " "
+				+ remindDate + " "
+				+ NoteTitle + " "
+				+ NoteText);
+		
+		writer.close();
+		write.close();
+		
+	}
+	
+	public static void writeNoteFileOnce(LocalDate currentDate, String NoteTitle, String NoteText) throws IOException {
+		FileOutputStream write = new FileOutputStream("notes.txt");
+		PrintWriter writer = new PrintWriter(write);
+		
+		writer.println(currentDate + " "
+				+ NoteTitle + " "
+				+ NoteText);
+		
+		writer.close();
+		write.close();
+		
 	}
 }
