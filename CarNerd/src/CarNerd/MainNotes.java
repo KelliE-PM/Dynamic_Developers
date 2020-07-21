@@ -43,8 +43,8 @@ public class MainNotes {
 			readNotesFile();
 		}
 		
-		DefaultListModel<String> listModel2 = new DefaultListModel<String>();  //TODO this may not be right.  If error, remove <String>
-		JList<String> titles = new JList<String>(listModel2);  // TODO this may not be right. If error, remove <String>
+		DefaultListModel<String> listModel2 = new DefaultListModel<String>(); 
+		JList<String> titles = new JList<String>(listModel2);  
 		
 		ArrayList<Note> tempNotes = NerdList.theCar.getNotes();
 		if (tempNotes != null) {
