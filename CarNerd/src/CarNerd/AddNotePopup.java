@@ -36,7 +36,9 @@ public class AddNotePopup extends JPanel{
 		JTextField tfNoteDate = new JTextField("");
 		JTextField tfRemindDate = new JTextField("");
 		JTextField tfNoteTitle = new JTextField("");
+		
 		JTextArea taNoteText = new JTextArea();
+		taNoteText.setLineWrap(true);
 		
 		JButton btnSave = new JButton("SAVE");
 	    JButton btnClear = new JButton("CLEAR");
