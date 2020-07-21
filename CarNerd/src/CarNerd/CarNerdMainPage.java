@@ -41,7 +41,6 @@ public class CarNerdMainPage extends JPanel {
     }
     
     public static void createMainFrame(JFrame mainFrame) throws ParseException, IOException {
-    	MainUI mainUI = new MainUI();
     	MainCarInfo mci = new MainCarInfo();
     	MainNotes mn = new MainNotes();
     	MainMileage mm = new MainMileage();
@@ -50,7 +49,6 @@ public class CarNerdMainPage extends JPanel {
         mci.loadCarInfo(mainFrame, "", "", "", "", "", "", "");
         mn.loadNotes(mainFrame);
         ms.loadSettings(mainFrame);
-
         mm.loadMileage(mainFrame);
     }
 

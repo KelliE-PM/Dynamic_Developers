@@ -43,18 +43,20 @@ public class MainCarInfo {
 			public void actionPerformed(ActionEvent e) {
 //TODO change notes, mileage to selection
 				String selectedCar = cbChooseCar.getSelectedItem().toString();
-
+				
 				for (int a = 0; a < NerdList.listCars.size(); a++) {
 
 					if (NerdList.listCars.get(a).getName().compareTo(selectedCar) == 0) {
 
 						NerdList.theCar = NerdList.listCars.get(a);
+						break;
 					}
 				}
-
-				setCarInfo(NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(), NerdList.theCar.getModel(), NerdList.theCar.getTrim(),
-						NerdList.theCar.getVIN(), NerdList.theCar.getPlate());
-
+				
+				//setCarInfo(NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(), NerdList.theCar.getModel(), NerdList.theCar.getTrim(),
+						//NerdList.theCar.getVIN(), NerdList.theCar.getPlate());
+				MainUI.reload();
+				cbChooseCar.setSelectedItem(NerdList.theCar.getName());
 				SwingUtilities.updateComponentTreeUI(mainFrame);
 			}
 		});
@@ -70,7 +72,7 @@ public class MainCarInfo {
 				aDialog.setSize(400, 400);
 
 				JPanel aPanel = new JPanel(new BorderLayout());
-				aPanel.add(new AddCarPanel("Add", aPanel, aDialog, "", "", "", "", "", "", ""));
+				aPanel.add(new AddCarPopup("Add", aPanel, aDialog, "", "", "", "", "", "", ""));
 
 				aDialog.add(aPanel);
 				aDialog.setVisible(true);
@@ -107,16 +109,11 @@ public class MainCarInfo {
 		});
 	}
 	public void setDropDown(JFrame mainFrame) {
-		mainFrame.remove(cbChooseCar);
-
+		//mainFrame.remove(cbChooseCar);
+		cbChooseCar.addItem("Select Car");
 		for (int rf = 0; rf < NerdList.listCars.size(); rf++) {
 
 			cbChooseCar.addItem(NerdList.listCars.get(rf).getName());
-// TODO **FOR DEBUGGING PURPOSES.  PLEASE REMOVE BEFORE SUBMITTING	    	
-			System.out.println(NerdList.listCars.get(rf).getName());
-		}
-		if (lblCarName != null) {
-			lblCarName.setText("Testing Updating Abilities");
 		}
 
 		mainFrame.add(cbChooseCar);
@@ -134,19 +131,21 @@ public class MainCarInfo {
 		lblCarTrim.setText(trim);
 		lblCarVIN.setText("VIN: " + vin);
 		lblPlateNum.setText("Plate: " + plate);
+		
 	}
 
 // TODO take out unnecessary arguments
 	public void loadCarInfo(JFrame mainFrame, String name, String year, String make, String model, String trim, String vin,
 			String plate) {
 		// initial car information loading
-		lblCarName = new JLabel();
-		lblCarYear = new JLabel();
-		lblCarMake = new JLabel();
-		lblCarModel = new JLabel();
-		lblCarTrim = new JLabel();
-		lblCarVIN = new JLabel("VIN: ");
-		lblPlateNum = new JLabel("Plate: ");
+		
+		lblCarName = new JLabel(NerdList.theCar.getName());
+		lblCarYear = new JLabel(NerdList.theCar.getYear());
+		lblCarMake = new JLabel(NerdList.theCar.getMake());
+		lblCarModel = new JLabel(NerdList.theCar.getModel());
+		lblCarTrim = new JLabel(NerdList.theCar.getTrim());
+		lblCarVIN = new JLabel("VIN: " + NerdList.theCar.getVIN());
+		lblPlateNum = new JLabel("Plate: " + NerdList.theCar.getPlate());
 		JButton btnEdit = new JButton("Edit");
 
 		lblCarName.setBounds(180, 10, 100, 20);
@@ -178,7 +177,7 @@ public class MainCarInfo {
 				dialog.setSize(400, 400);
 
 				JPanel panel = new JPanel(new BorderLayout());
-				panel.add(new AddCarPanel("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),
+				panel.add(new AddCarPopup("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),
 						NerdList.theCar.getModel(), NerdList.theCar.getTrim(), NerdList.theCar.getVIN(), NerdList.theCar.getPlate()));
 
 				dialog.add(panel);

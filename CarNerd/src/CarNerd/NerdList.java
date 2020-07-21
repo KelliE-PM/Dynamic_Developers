@@ -6,6 +6,7 @@ public class NerdList {
 	static ArrayList<Car> listCars = new ArrayList<Car>();
 	static ArrayList<Mileage> listMiles = new ArrayList<Mileage>();
 	static ArrayList<Mileage> listChange = new ArrayList<Mileage>();
+	static ArrayList<Note> carNotes = new ArrayList<Note>();
 	static Car theCar = new Car();
   
 	NerdList(){}

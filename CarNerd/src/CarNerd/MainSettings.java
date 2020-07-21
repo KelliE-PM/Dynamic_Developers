@@ -18,7 +18,7 @@ public class MainSettings {
 		btnLogout.setBounds(270, 650, 150, 30);
 		btnExit.setBounds(470, 650, 150, 30);
 
-		mainFrame.add(btnExportMile);
+		//mainFrame.add(btnExportMile);
 		mainFrame.add(btnLogout);
 		mainFrame.add(btnExit);
 
