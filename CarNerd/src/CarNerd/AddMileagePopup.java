@@ -303,31 +303,31 @@ public class AddMileagePopup extends JPanel {
 
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				MainMileage mm = new MainMileage();
 				if (change == true) {
 				Mileage newOil = new Mileage(setMile, setDateSS, synthetic);
 				NerdList.listChange.add(newOil);	
 				System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
 				
+				try {
+					mm.writeMileage(newOil);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+					
 				} else {
-				Mileage newReg = new Mileage(setMile, setDateSS);
-				NerdList.listMiles.add(newReg);
-				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
+					Mileage newReg = new Mileage(setMile, setDateSS);
+					NerdList.listMiles.add(newReg);
+					System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
+					
+					try {
+						mm.writeMileage(newReg);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
-				
-				for (int index = 0; index < NerdList.listMiles.size(); index++) {
-					writer.println(NerdList.listMiles.get(index).getType() + " " 
-							+ NerdList.listMiles.get(index).getCurrentMiles() + " "
-							+ NerdList.listMiles.get(index).getCurrentDate());
-				}
-
-				for (int index = 0; index < NerdList.listChange.size(); index++) {
-					writer.println(NerdList.listChange.get(index).getType() + " " 
-							+ NerdList.listChange.get(index).getChangeMiles() + " "
-							+ NerdList.listChange.get(index).getChangeDate() + " "
-							+ NerdList.listChange.get(index).getSynthetic());
-				}
-				
 				mDialog.dispose();
 				writer.close();
 				MainUI.reload();

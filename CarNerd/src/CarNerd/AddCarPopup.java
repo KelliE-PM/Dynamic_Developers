@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -125,7 +127,13 @@ public class AddCarPopup extends JPanel{
 					else if (result == JOptionPane.NO_OPTION){ }
 	        	}
 	        	if (btnTxt == "Add") {
-	        		addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
+	        		try {
+						addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), 
+								tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 	        	}
 	        	else if(btnTxt =="Edit") {
 	        		addCar.editCar(name, tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());

@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -17,57 +17,92 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMileage {
-	public void writeMileage() throws IOException {
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
-		PrintWriter writer = new PrintWriter(write);
+	public void writeMileage(Mileage printMiles) throws IOException {
+			//FileOutputStream write = new FileOutputStream("Mileage.txt");
+			//PrintWriter writer = new PrintWriter(write);
+			
+			FileWriter fw = new FileWriter("Mileage.txt", true);
+			PrintWriter pw = new PrintWriter(fw);
+			
+			//for (int index = 0; index < NerdList.listMiles.size(); index++) {
+				
+				//pw.println(printMiles.getType() + " " 
+				//		+ printMiles.getCurrentMiles() + " "
+				//		+ printMiles.getCurrentDate() + " " 
+				//		+ NerdList.theCar.getName());
+			//}
 
-		for (int index = 0; index < NerdList.listMiles.size(); index++) {
-			writer.println(NerdList.listMiles.get(index).getType() + " " 
-					+ NerdList.listMiles.get(index).getCurrentMiles() + " "
-					+ NerdList.listMiles.get(index).getCurrentDate());
-		}
+			//for (int index = 0; index < NerdList.listChange.size(); index++) {
+				pw.println(printMiles.getType() + " " 
+						+ printMiles.getChangeMiles() + " "
+						+ printMiles.getChangeDate() + " "
+						+ printMiles.getSynthetic()+ " " 
+						+ NerdList.theCar.getName());
+			//}
 
-		for (int index = 0; index < NerdList.listChange.size(); index++) {
-			writer.println(NerdList.listChange.get(index).getType() + " " 
-					+ NerdList.listChange.get(index).getChangeMiles() + " "
-					+ NerdList.listChange.get(index).getChangeDate() + " "
-					+ NerdList.listChange.get(index).getSynthetic());
-		}
-
-		writer.close();
+			pw.close();
+			//fw.close();
 	}
-	public void readMileage() throws IOException {
-		FileInputStream readMile = new FileInputStream("Mileage.txt");
-		Scanner reader = new Scanner(readMile);
+		public void readMileage() throws IOException {
+			if (NerdList.theCar.getName() != null) {
+				FileInputStream readMile = new FileInputStream("Mileage.txt");
+				Scanner reader = new Scanner(readMile);
 
-		while (reader.hasNext()) {
-			String type = reader.next();
+				while (reader.hasNext()) {
+					String type = reader.next();
 
-			if (type.equals("Normal")) {
-				int lastMiles = reader.nextInt();
-				String lastDate = reader.next();
-				Mileage newReg = new Mileage(lastMiles, lastDate);
+					if (type.equals("Normal")) {
+						int lastMiles = reader.nextInt();
+						String lastDate = reader.next();
+						String carName = reader.nextLine().trim();
+						
+						if (NerdList.theCar.getName().equals(carName)) {
+							Mileage newReg = new Mileage(lastMiles, lastDate); //
+							NerdList.listMiles.add(newReg);
+						}
+					}
+
+					if (type.equals("Change")) {
+						int lastChange = reader.nextInt();
+						String changeDate = reader.next();
+						boolean lastSyn = reader.nextBoolean();
+						String carName = reader.nextLine().trim();
+
+						if (NerdList.theCar.getName().compareTo(carName) == 0) {
+							Mileage newOil = new Mileage(lastChange, changeDate, lastSyn);
+							NerdList.listChange.add(newOil);
+						}
+					}
+				}
+
+				reader.close();
+				readMile.close();
+				
+			} else {
+				Mileage newReg = new Mileage(-1, "1/11/1111");
+				Mileage newOil = new Mileage(-1, "1/11/1111", false);
+
 				NerdList.listMiles.add(newReg);
+				NerdList.listChange.add(newOil);
 			}
-
-			if (type.equals("Change")) {
-				int lastChange = reader.nextInt();
-				String changeDate = reader.next();
-				boolean lastSyn = reader.nextBoolean();
-				Mileage newOil = new Mileage(lastChange, changeDate, lastSyn);
-				NerdList.listChange.add(newOil);	
+		}
+			
+		public void deleteAllMileage() {
+			while(!NerdList.listMiles.isEmpty()) {
+				NerdList.listMiles.remove(0);
 			}
-		}	
+			while(!NerdList.listChange.isEmpty()) {
+				NerdList.listChange.remove(0);
+			}
+			
+		}
+		public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
 
-		reader.close();
-		readMile.close();
-	}
-	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
-
-		readMileage();
-		
-		//writeMileage();
-
+			deleteAllMileage();
+			readMileage();
+			
+			//writeMileage();
+			
 		int lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
 		String lastDate = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();
 		int changeMiles = NerdList.listChange.get(NerdList.listChange.size() - 1).getChangeMiles();

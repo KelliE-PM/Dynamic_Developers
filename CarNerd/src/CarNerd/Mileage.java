@@ -19,7 +19,8 @@ public class Mileage {
 	private LocalDate changeDateLD;
 	private int mile;
 	private String oil = "regular";
-
+	
+	
 	// Two variables is normal new mileage
 	public Mileage(int currentMiles, String currentDate) {
 		type = "Normal";

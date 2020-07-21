@@ -3,6 +3,7 @@ package CarNerd;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -45,7 +46,7 @@ public class AddCarMethods {
 			}
 		}	
 	}
-	public void addNewCar(String name, String year, String make, String model, String trim, String vin, String plate) {
+	public void addNewCar(String name, String year, String make, String model, String trim, String vin, String plate) throws IOException {
 // adds car from Add Car popup upon pressing the Add New Car button
 	
 		Car tempCar = new Car();
@@ -57,6 +58,14 @@ public class AddCarMethods {
 		tempCar.setVIN(vin);
 		tempCar.setPlate(plate);
 		NerdList.listCars.add(tempCar);
+		
+		FileWriter fw = new FileWriter("Mileage.txt", true);
+		PrintWriter pw = new PrintWriter(fw);
+		
+		pw.println("Normal -1 1/11/1111 " + name);
+		pw.println("Change -1 1/11/1111 false " + name);
+		
+		pw.close();
 	}
 	public void deleteAllCars() {
 		while (!NerdList.listCars.isEmpty()) { 
