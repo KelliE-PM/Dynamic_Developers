@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMileage {
-	public void writeMileage(Mileage printMiles) throws IOException {
+	public void writeMileage(Mileage printMiles, boolean oilChange) throws IOException {
 			//FileOutputStream write = new FileOutputStream("Mileage.txt");
 			//PrintWriter writer = new PrintWriter(write);
 			
@@ -24,20 +24,19 @@ public class MainMileage {
 			PrintWriter pw = new PrintWriter(fw);
 			
 			//for (int index = 0; index < NerdList.listMiles.size(); index++) {
-				
-				//pw.println(printMiles.getType() + " " 
-				//		+ printMiles.getCurrentMiles() + " "
-				//		+ printMiles.getCurrentDate() + " " 
-				//		+ NerdList.theCar.getName());
-			//}
-
+			if (oilChange == true) {
+				pw.println(printMiles.getType() + " " 
+						+ printMiles.getCurrentMiles() + " "
+						+ printMiles.getCurrentDate() + " " 
+						+ printMiles.getSynthetic()+ " " 
+						+ NerdList.theCar.getName());
+			} else {
 			//for (int index = 0; index < NerdList.listChange.size(); index++) {
 				pw.println(printMiles.getType() + " " 
 						+ printMiles.getChangeMiles() + " "
 						+ printMiles.getChangeDate() + " "
-						+ printMiles.getSynthetic()+ " " 
 						+ NerdList.theCar.getName());
-			//}
+			}
 
 			pw.close();
 			//fw.close();

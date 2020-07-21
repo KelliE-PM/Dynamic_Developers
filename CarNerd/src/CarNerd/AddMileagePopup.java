@@ -11,9 +11,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -77,10 +75,6 @@ public class AddMileagePopup extends JPanel {
 	boolean lastSyn;
 	
 	AddMileagePopup(JPanel mPanel, JDialog mDialog) throws IOException {
-		@SuppressWarnings("resource")
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
-		PrintWriter writer = new PrintWriter(write);
-		
 		// Update Data
 		lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
 		lastDateSS = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();
@@ -310,7 +304,7 @@ public class AddMileagePopup extends JPanel {
 				System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
 				
 				try {
-					mm.writeMileage(newOil);
+					mm.writeMileage(newOil, true);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -322,14 +316,13 @@ public class AddMileagePopup extends JPanel {
 					System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 					
 					try {
-						mm.writeMileage(newReg);
+						mm.writeMileage(newReg, false;
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
-				mDialog.dispose();
-				writer.close();
+				mDialog.dispose();;
 				MainUI.reload();
 			}});
 	}
