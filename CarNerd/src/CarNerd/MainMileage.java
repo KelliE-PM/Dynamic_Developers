@@ -17,9 +17,26 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMileage {
-	
-	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
+	public void writeMileage() throws IOException {
+		FileOutputStream write = new FileOutputStream("Mileage.txt");
+		PrintWriter writer = new PrintWriter(write);
 
+		for (int index = 0; index < NerdList.listMiles.size(); index++) {
+			writer.println(NerdList.listMiles.get(index).getType() + " " 
+					+ NerdList.listMiles.get(index).getCurrentMiles() + " "
+					+ NerdList.listMiles.get(index).getCurrentDate());
+		}
+
+		for (int index = 0; index < NerdList.listChange.size(); index++) {
+			writer.println(NerdList.listChange.get(index).getType() + " " 
+					+ NerdList.listChange.get(index).getChangeMiles() + " "
+					+ NerdList.listChange.get(index).getChangeDate() + " "
+					+ NerdList.listChange.get(index).getSynthetic());
+		}
+
+		writer.close();
+	}
+	public void readMileage() throws IOException {
 		FileInputStream readMile = new FileInputStream("Mileage.txt");
 		Scanner reader = new Scanner(readMile);
 
@@ -44,24 +61,12 @@ public class MainMileage {
 
 		reader.close();
 		readMile.close();
+	}
+	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
 
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
-		PrintWriter writer = new PrintWriter(write);
-
-		for (int index = 0; index < NerdList.listMiles.size(); index++) {
-			writer.println(NerdList.listMiles.get(index).getType() + " " 
-					+ NerdList.listMiles.get(index).getCurrentMiles() + " "
-					+ NerdList.listMiles.get(index).getCurrentDate());
-		}
-
-		for (int index = 0; index < NerdList.listChange.size(); index++) {
-			writer.println(NerdList.listChange.get(index).getType() + " " 
-					+ NerdList.listChange.get(index).getChangeMiles() + " "
-					+ NerdList.listChange.get(index).getChangeDate() + " "
-					+ NerdList.listChange.get(index).getSynthetic());
-		}
-
-		writer.close();
+		readMileage();
+		
+		//writeMileage();
 
 		int lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
 		String lastDate = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();

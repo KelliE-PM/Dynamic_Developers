@@ -162,7 +162,7 @@ public class AddMileagePopup extends JPanel {
 		JCheckBox chkChange = new JCheckBox("Oil Change?");
 		JCheckBox chkSynth = new JCheckBox("Synthetic oil?");
 		
-		JButton btnUpdate = new JButton("Update");
+		JButton btnSave = new JButton("Update");
 		JButton btnExit = new JButton("   Save   ");
 		JButton btnReset = new JButton("Reset");
 		
@@ -181,7 +181,7 @@ public class AddMileagePopup extends JPanel {
 		mPanel.add(chkChange);
 		mPanel.add(chkSynth);
 		mPanel.add(lblNextChange);
-		mPanel.add(btnUpdate);
+		mPanel.add(btnSave);
 		mPanel.add(btnExit);
 		mPanel.add(lblMessage);
 		mPanel.add(btnReset);
@@ -196,7 +196,7 @@ public class AddMileagePopup extends JPanel {
 		lblLast.setBounds(12, 33, 289, 20);
 		chkChange.setBounds(43, 54, 100, 23);
 		chkSynth.setBounds(136, 54, 110, 23);
-		btnUpdate.setBounds(250, 54, 79, 23);
+		btnSave.setBounds(250, 54, 79, 23);
 		lblNextChange.setBounds(12, 90, 240, 14);
 		btnReset.setBounds(250, 81, 79, 23);
 		lblMessage.setBounds(12, 108, 240, 14);
@@ -238,7 +238,7 @@ public class AddMileagePopup extends JPanel {
 			}});
 
 
-		btnUpdate.addActionListener(new ActionListener() {
+		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (change == true) {
@@ -256,7 +256,7 @@ public class AddMileagePopup extends JPanel {
 						nextChangeDateS = nextChangeDate.format(formater);
 					}
 
-					if (synthetic == true) {
+					else if (synthetic == true) {
 						mile = 5000;
 						nextChangeMiles = changeMiles + mile; 
 						nextChangeDate = changeDate.plusMonths(9);
@@ -314,7 +314,8 @@ public class AddMileagePopup extends JPanel {
 				NerdList.listMiles.add(newReg);
 				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				}
-
+				MainMileage mm = new MainMileage();
+				
 				for (int index = 0; index < NerdList.listMiles.size(); index++) {
 					writer.println(NerdList.listMiles.get(index).getType() + " " 
 							+ NerdList.listMiles.get(index).getCurrentMiles() + " "
@@ -327,7 +328,7 @@ public class AddMileagePopup extends JPanel {
 							+ NerdList.listChange.get(index).getChangeDate() + " "
 							+ NerdList.listChange.get(index).getSynthetic());
 				}
-
+				
 				mDialog.dispose();
 				writer.close();
 				MainUI.reload();
