@@ -80,8 +80,7 @@ public class AddMileagePopup extends JPanel {
 		@SuppressWarnings("resource")
 		FileOutputStream write = new FileOutputStream("Mileage.txt");
 		PrintWriter writer = new PrintWriter(write);
-
-
+		
 		// Update Data
 		lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
 		lastDateSS = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();

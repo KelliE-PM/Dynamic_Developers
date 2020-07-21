@@ -34,13 +34,11 @@ public class AddNotePopup extends JPanel{
 		
 		JButton btnSave = new JButton("SAVE");
 	    JButton btnClear = new JButton("CLEAR");
-	    
 		
 		lblNoteDate.setBounds(10, 15, 80, 20);
 		lblRemindDate.setBounds(10, 55, 80, 20);
 		lblNoteTitle.setBounds(10, 95, 80, 20);
 		lblNoteText.setBounds(10, 135, 80, 20);
-		
 		
 		tfNoteDate.setBounds(100, 10, 100, 30);
 		tfRemindDate.setBounds(100, 50, 100, 30);
@@ -49,7 +47,6 @@ public class AddNotePopup extends JPanel{
 		
 		btnSave.setBounds(100, 300, 140, 45);
 	    btnClear.setBounds(300, 300, 140, 45);
-	    
 	    
 	    if (note != null) {
 	    	MainNotes mn = new MainNotes();
