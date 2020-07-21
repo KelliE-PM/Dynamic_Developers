@@ -91,8 +91,9 @@ public class AddCarMethods {
 		Scanner ready = new Scanner(fis);
 		deleteAllCars();
 		while (ready.hasNextLine()) {
-			tempCar = new Car();
+			
 			tempArr = ready.nextLine().split(",");
+			tempCar = new Car();
 			tempCar.setName(tempArr[0]);
 			tempCar.setYear(tempArr[1]);
 			tempCar.setMake(tempArr[2]);

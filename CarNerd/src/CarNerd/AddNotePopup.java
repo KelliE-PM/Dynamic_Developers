@@ -19,8 +19,8 @@ import javax.swing.JTextField;
 
 public class AddNotePopup extends JPanel{
 	private static final long serialVersionUID = 1L;
-
-	public AddNotePopup(JPanel nPanel, JDialog nDialog) throws ParseException {
+	MainNotes mn = new MainNotes();
+	public AddNotePopup(JPanel nPanel, JDialog nDialog, Note note) throws ParseException {
 		setBackground(new Color(191,136,255));
 		
 		JLabel lblNoteDate = new JLabel("Current Date (MM/DD/YYYY");
@@ -32,7 +32,7 @@ public class AddNotePopup extends JPanel{
 		JTextField tfRemindDate = new JTextField("");
 		JTextField tfNoteTitle = new JTextField("");
 		
-		JTextArea taNoteText = new JTextArea();
+		JTextArea taNoteText = new JTextArea("");
 		taNoteText.setLineWrap(true);
 		
 		JButton btnSave = new JButton("SAVE");
@@ -53,7 +53,14 @@ public class AddNotePopup extends JPanel{
 		btnSave.setBounds(100, 300, 140, 45);
 	    btnClear.setBounds(300, 300, 140, 45);
 	    
-		
+	    
+	    if (note != null) {
+	    	tfNoteDate.setText(note.getCurrentDate().toString());
+			tfRemindDate.setText(note.getRemindDate().toString());
+			tfNoteTitle.setText(note.getNoteTitle());
+			taNoteText.setText(note.getNoteText());
+	    }
+	    
 		nPanel.add(lblNoteDate);
 		nPanel.add(lblRemindDate);
 		nPanel.add(lblNoteTitle);
@@ -70,26 +77,7 @@ public class AddNotePopup extends JPanel{
 	    btnSave.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){
 	    	  if(isValidDate(nDialog, tfNoteDate.getText()) && isValidDate(nDialog, tfRemindDate.getText())) {
-		    	  
-		    	  try {
-		  			FileWriter fw = new FileWriter("notes.txt", true);
-		  			PrintWriter pw = new PrintWriter(fw);
-		  			
-		  			pw.print(tfNoteDate.getText());
-		  			pw.println();
-		  			pw.print(tfRemindDate.getText());
-		  			pw.println();
-		  			pw.print(tfNoteTitle.getText());
-		  			pw.println();
-		  			pw.print(taNoteText.getText());
-		  			pw.println();
-		  			
-		  			pw.close();
-		  			
-		  		} catch (IOException e1) {
-		  			// TODO Auto-generated catch block
-		  			e1.printStackTrace();
-		  		}
+					mn.writeNotesFile(NerdList.theCar.getName(), tfNoteDate.getText(),tfRemindDate.getText(),tfNoteTitle.getText(),taNoteText.getText());
 	    	  }
 	      }
 	      
@@ -101,7 +89,6 @@ public class AddNotePopup extends JPanel{
 				@SuppressWarnings("unused")
 				LocalDate date = LocalDate.parse(text, f);
 				
-				
 				} catch (DateTimeParseException e) {
 					
 				return false;
@@ -110,9 +97,7 @@ public class AddNotePopup extends JPanel{
 				nDialog.dispose();
 				MainUI.reload();
 				return true;
-				
 			}
-	      
 	    });
 	          
 	    btnClear.addActionListener(new ActionListener(){

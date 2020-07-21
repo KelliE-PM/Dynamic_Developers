@@ -20,5 +20,6 @@ public class MainUI {
     	
     	try { CarNerdMainPage.createAndShowGUI(); } 
         catch (ParseException | IOException e1) { e1.printStackTrace(); }
+    	
 	}
 }
