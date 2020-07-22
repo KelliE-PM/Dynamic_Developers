@@ -316,7 +316,7 @@ public class AddMileagePopup extends JPanel {
 					System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 					
 					try {
-						mm.writeMileage(newReg, false;
+						mm.writeMileage(newReg, false);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
