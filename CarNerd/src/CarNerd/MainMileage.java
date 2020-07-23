@@ -36,6 +36,15 @@ public class MainMileage {
 
 		writer.close();
 	}
+	public void deleteAllMileage() {
+		while(!NerdList.listMiles.isEmpty()) {
+			NerdList.listMiles.remove(0);
+		}
+		while(!NerdList.listChange.isEmpty()) {
+			NerdList.listChange.remove(0);
+		}
+		
+	}
 	public void readMileage() throws IOException {
 		FileInputStream readMile = new FileInputStream("Mileage.txt");
 		Scanner reader = new Scanner(readMile);
@@ -63,7 +72,7 @@ public class MainMileage {
 		readMile.close();
 	}
 	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
-
+		deleteAllMileage();
 		readMileage();
 		
 		//writeMileage();
