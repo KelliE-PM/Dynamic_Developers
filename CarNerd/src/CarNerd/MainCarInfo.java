@@ -150,7 +150,7 @@ public class MainCarInfo {
 		//lblCarMake.setBounds(250, 40, 100, 20);
 		//lblCarModel.setBounds(350, 40, 100, 20);
 		//lblCarTrim.setBounds(450, 40, 100, 20);
-		lblCarVIN.setBounds(200, 70, 150, 20);
+		lblCarVIN.setBounds(200, 70, 200, 20);
 		lblPlateNum.setBounds(400, 70, 150, 20);
 		btnEdit.setBounds(550, 40, 100, 30);
 
