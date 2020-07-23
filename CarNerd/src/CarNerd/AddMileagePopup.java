@@ -77,8 +77,8 @@ public class AddMileagePopup extends JPanel {
 	boolean lastSyn;
 	
 	AddMileagePopup(JPanel mPanel, JDialog mDialog) throws IOException {
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
-		PrintWriter writer = new PrintWriter(write);
+		//FileOutputStream write = new FileOutputStream("Mileage.txt");
+		//PrintWriter writer = new PrintWriter(write);
 
 
 		// Update Data
@@ -315,7 +315,12 @@ public class AddMileagePopup extends JPanel {
 				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				}
 				MainMileage mm = new MainMileage();
-				
+				try {
+					mm.writeMileage();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				/*
 				for (int index = 0; index < NerdList.listMiles.size(); index++) {
 					writer.println(NerdList.listMiles.get(index).getType() + " " 
 							+ NerdList.listMiles.get(index).getCurrentMiles() + " "
@@ -328,9 +333,9 @@ public class AddMileagePopup extends JPanel {
 							+ NerdList.listChange.get(index).getChangeDate() + " "
 							+ NerdList.listChange.get(index).getSynthetic());
 				}
-				
+				*/
 				mDialog.dispose();
-				writer.close();
+				//writer.close();
 				MainUI.reload();
 			}});
 

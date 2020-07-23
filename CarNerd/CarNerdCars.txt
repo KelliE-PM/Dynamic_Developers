@@ -2,3 +2,4 @@ BumbleBee,2009,Jeep,Wrangler,X,1J4FA24*X9L7*****,H0NPLT
 Vera,2006,Nissan,350z,Coupe,JN1AZ34E*6M3*****,2BA96F
 Mira,2000,Mazda,MX-5,SE,JM1NB353*Y01*****,PH1C5M
 New Car,2020,Lambo,Lambo,the DOPE kind,,123abc
+TestCar,2006,Nissan,Sentra,SE-R SpecV,12345678913456,PH1C5M
