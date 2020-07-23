@@ -61,8 +61,8 @@ public class MainNotes {
 		JScrollPane scrollPane = new JScrollPane(titles);
 		//lblNote.setBounds(10, 560, 700, 20);
 		scrollPane.setBounds(10, 150, 170, 400);
-		btnNewNote.setBounds(10, 590, 150, 30);
-		btnViewNote.setBounds(10, 620, 150, 30);
+		btnNewNote.setBounds(10, 590, 100, 30);
+		btnViewNote.setBounds(10, 620, 100, 30);
 		
 		//mainFrame.add(lblNote);
 		mainFrame.add(btnNewNote);
@@ -245,12 +245,10 @@ public class MainNotes {
 					}
 
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}*/
   			
@@ -258,7 +256,6 @@ public class MainNotes {
 		
 	}
 	/*
-	// TODO why is this saying it is not being called locally?  comment out and see if it is needed.
 	private static boolean isValidDate(String text) {
 
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");

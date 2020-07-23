@@ -26,7 +26,7 @@ public class AddNotePopup extends JPanel{
 		JLabel lblNoteText = new JLabel("Note: ");
 		
 		JTextField tfNoteDate = new JTextField("");
-		JTextField tfRemindDate = new JTextField("");
+		JTextField tfRemindDate = new JTextField("1/1/2020");
 		JTextField tfNoteTitle = new JTextField("");
 		
 		JTextArea taNoteText = new JTextArea("");
@@ -36,17 +36,25 @@ public class AddNotePopup extends JPanel{
 	    JButton btnClear = new JButton("CLEAR");
 		
 		lblNoteDate.setBounds(10, 15, 80, 20);
-		lblRemindDate.setBounds(10, 55, 80, 20);
-		lblNoteTitle.setBounds(10, 95, 80, 20);
-		lblNoteText.setBounds(10, 135, 80, 20);
 		
+		/*
+		 * Currently not utilizing Remind Date.
+		 * Use bounds below if utilizing Remind Date properly.
+		 * lblRemindDate.setBounds(10, 55, 80, 20);
+		 * lblNoteTitle.setBounds(10, 95, 80, 20);
+		 * lblNoteText.setBounds(10, 135, 80, 20);
+		 * tfRemindDate.setBounds(100, 50, 100, 30);
+		 * tfNoteTitle.setBounds(100, 90, 100, 30);
+		 * taNoteText.setBounds(100, 130, 150, 150);
+		 */
+		
+		lblNoteTitle.setBounds(10, 55, 80, 20);
+		lblNoteText.setBounds(10, 95, 80, 20);
 		tfNoteDate.setBounds(100, 10, 100, 30);
-		tfRemindDate.setBounds(100, 50, 100, 30);
-		tfNoteTitle.setBounds(100, 90, 100, 30);
-		taNoteText.setBounds(100, 130, 150, 150);
-		
-		btnSave.setBounds(100, 300, 140, 45);
-	    btnClear.setBounds(300, 300, 140, 45);
+		tfNoteTitle.setBounds(100, 50, 100, 30);
+		taNoteText.setBounds(100, 90, 150, 150);
+		btnSave.setBounds(100, 300, 100, 30);
+	    btnClear.setBounds(300, 300, 100, 30);
 	    
 	    if (note != null) {
 	    	MainNotes mn = new MainNotes();
@@ -57,7 +65,7 @@ public class AddNotePopup extends JPanel{
 	    }
 	    
 		nPanel.add(lblNoteDate);
-		nPanel.add(lblRemindDate);
+		//nPanel.add(lblRemindDate);
 		nPanel.add(lblNoteTitle);
 		nPanel.add(lblNoteText);
 		
@@ -98,7 +106,7 @@ public class AddNotePopup extends JPanel{
 	    btnClear.addActionListener(new ActionListener(){
 	      public void actionPerformed(ActionEvent e){ 
 	    	  tfNoteDate.setText("");
-	    	  tfRemindDate.setText("");
+	    	  tfRemindDate.setText("1/11/2020");
 	    	  tfNoteTitle.setText("");
 	    	  taNoteText.setText("");
 	      }
