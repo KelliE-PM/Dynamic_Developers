@@ -115,7 +115,7 @@ public class MainNotes {
 	
 	public void writeNotesFile(String name, String noteDate, String remindDate, String noteTitle, String noteText) {
 		try {
-  			FileWriter fw = new FileWriter("notes.txt", true);
+  			FileWriter fw = new FileWriter("CarNerdFiles\\Notes.txt", true);
   			PrintWriter pw = new PrintWriter(fw);
   			
   			pw.printf("%s~%s~%s~%s~%s%n", name, noteDate, remindDate, noteTitle, noteText);
@@ -127,7 +127,7 @@ public class MainNotes {
 
 	public void readNotesFile() {
 		try {
-			FileReader fr = new FileReader("notes.txt");
+			FileReader fr = new FileReader("CarNerdFiles\\Notes.txt");
 			BufferedReader br = new BufferedReader(fr);
 
 			String nextLine;

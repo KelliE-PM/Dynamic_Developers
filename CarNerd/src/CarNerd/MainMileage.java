@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMileage {
-	String milePathFile = "Mileage_" + NerdList.theCar.getName() + ".txt";
+	String milePathFile = "CarNerdFiles\\Mileage_" + NerdList.theCar.getName() + ".txt";
 	public void writeMileage() throws IOException {
 		FileOutputStream write = new FileOutputStream(milePathFile);
 		PrintWriter writer = new PrintWriter(write);
