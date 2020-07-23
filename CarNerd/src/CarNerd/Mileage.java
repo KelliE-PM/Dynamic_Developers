@@ -1,12 +1,16 @@
 package CarNerd;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Optional;
 
 public class Mileage {
 	
-	DateTimeFormatter formater = DateTimeFormatter.ofPattern("M/d/yyyy");
-	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+	SimpleDateFormat simpleDateFormatter = new SimpleDateFormat("M/d/yyyy");
 	private int currentMiles;
 	private String currentDate;
 	private int changeMiles;
@@ -19,38 +23,26 @@ public class Mileage {
 	private LocalDate changeDateLD;
 	private int mile;
 	private String oil = "regular";
-	
-	
-	// Two variables is normal new mileage
-	public Mileage(int currentMiles, String currentDate) {
-		type = "Normal";
-		this.currentMiles = currentMiles;
-		this.currentDate = currentDate;
-	}
 		
 	// Three variables is an oil change
-	public Mileage(int changeMiles, String changeDate, boolean synthetic) {
-		type = "Change";
-		this.changeMiles = changeMiles;
-		this.changeDate = changeDate;
-		this.synthetic = synthetic;
-		
-		changeDateLD = LocalDate.parse(changeDate, formater);
-		
-		if (synthetic == false) {
-			mile = 3000;
-			nextChangeMiles = changeMiles + mile; 
-			nextChangeDateLD = changeDateLD.plusMonths(6);
-			nextChangeDate = nextChangeDateLD.format(formater);
+	public Mileage(int updateMiles, String updateDate, boolean synthetic, boolean isChange) {
+		int monthsUntilChange = synthetic ? 9 : 6;
+		type = isChange ? "Change" : "Normal";
+		changeDateLD = LocalDate.parse(updateDate, formatter);
+
+		if(isChange) {
+			this.currentMiles = updateMiles;
+			this.currentDate = Optional.ofNullable(updateDate).orElseGet(() -> simpleDateFormatter.format(Date.from(Instant.now())));
+			mile = synthetic ? 5000 : 3000;
+			nextChangeMiles = updateMiles + mile;
+			nextChangeDateLD = changeDateLD.plusMonths(monthsUntilChange);
+			nextChangeDate = nextChangeDateLD.format(formatter);
+		} else {
+			this.currentDate = Optional.ofNullable(updateDate).orElseGet(() -> simpleDateFormatter.format(Date.from(Instant.now())));
+			this.changeMiles = updateMiles;
 		}
 
-		if (synthetic == true) {
-			mile = 5000;
-			nextChangeMiles = changeMiles + mile; 
-			nextChangeDateLD = changeDateLD.plusMonths(9);
-			nextChangeDate = nextChangeDateLD.format(formater);
-		}
-		
+		this.synthetic = synthetic;
 	}
 	
 	public void setType(String cType) {type = cType;}
@@ -59,23 +51,23 @@ public class Mileage {
 	public void setCurrentMiles(int cMiles) {currentMiles = cMiles;}
 	public int getCurrentMiles() {return currentMiles;}
 	public void setCurrentDate(String cDate) {currentDate = cDate;}
-	public String getCurrentDate() {return currentDate;}
+	public String getCurrentDate() {return Optional.ofNullable(currentDate).orElseGet(() -> NerdList.DEFAULT_DATE);}
 	
 	public void setChangeMiles(int cgMiles) {changeMiles = cgMiles;}
 	public int getChangeMiles() {return changeMiles;}
 	public void setChangeDate(String cgDate) {changeDate = cgDate;}
-	public String getChangeDate() {return changeDate;}
+	public String getChangeDate() {return Optional.ofNullable(changeDate).orElseGet(() -> NerdList.DEFAULT_DATE);}
 	public void setSynthetic(boolean syn) {synthetic = syn;}
 	public boolean getSynthetic() {return synthetic;}
 	
 	public void setNexChangeMiles(int ncgMiles) {nextChangeMiles = ncgMiles;}
 	public int getNextChangeMiles() {return nextChangeMiles;}
 	public void setNextChangeDate(String ncgDate) {nextChangeDate = ncgDate;}
-	public String getNextChangeDate() {return nextChangeDate;}
+	public String getNextChangeDate() {return Optional.ofNullable(nextChangeDate).orElseGet(() -> NerdList.DEFAULT_DATE);}
 	
 	public String toString() {
-		if (synthetic == true) {oil = "Synthetic";}
-		if (type == "Normal") {return "" + currentMiles + " miles on " + currentDate;} 
+		oil = synthetic ? "Synthetic" : "Regular";
+		if (type.equals("Normal")) {return "" + currentMiles + " miles on " + currentDate;}
 		return "Oil change at " + changeMiles + " miles on " + changeDate + " with " + oil + " oil";
 	}
 

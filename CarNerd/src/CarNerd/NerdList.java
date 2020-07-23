@@ -8,6 +8,6 @@ public class NerdList {
 	static ArrayList<Mileage> listChange = new ArrayList<Mileage>();
 	static ArrayList<Note> carNotes = new ArrayList<Note>();
 	static Car theCar = new Car();
-  
+  	static String DEFAULT_DATE = "1/11/1111";
 	NerdList(){}
 }
