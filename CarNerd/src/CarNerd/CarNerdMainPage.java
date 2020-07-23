@@ -46,7 +46,7 @@ public class CarNerdMainPage extends JPanel {
     	MainMileage mm = new MainMileage();
     	MainSettings ms = new MainSettings();
     	mci.selectCar(mainFrame);
-        mci.loadCarInfo(mainFrame, "", "", "", "", "", "", "");
+        mci.loadCarInfo(mainFrame);
         mn.loadNotes(mainFrame);
         ms.loadSettings(mainFrame);
         mm.loadMileage(mainFrame);
