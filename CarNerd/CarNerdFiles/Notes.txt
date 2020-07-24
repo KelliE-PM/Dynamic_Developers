@@ -9,3 +9,5 @@ Vera~01/07/2020~01/08/2020~V Title 3~this is a test note.
 New Car~01/07/2020~01/08/2020~NC Title 1~this is a note
 BumbleBee~01/07/2020~01/08/2020~BB Title 4~testing notes
 BumbleBee~7/22/2020~1/11/2020~This is a note~this is a test note.
+Test Car~7/25/2020~1/11/2020~Spark Plug Replacement~Replaced sparkplugs at 151237.
+Test Car~7/25/2020~1/11/2020~Leaky Tire~Noticed a low tire again, aired it up for the second time this week, but don't see a nail or any damage.  Keeping an eye on it.
