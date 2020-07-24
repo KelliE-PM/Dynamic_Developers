@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class AddCarMethods {
@@ -90,6 +91,7 @@ public class AddCarMethods {
 			}
 		}
 			fileCSV.close();
+			Collections.sort(carMakeList);
 			return carMakeList;
 	}
 	
@@ -106,6 +108,7 @@ public class AddCarMethods {
 			}
 		}
 			fileCSV.close();
+			Collections.sort(carModelList);
 			return carModelList;
 	}
 	
@@ -122,6 +125,7 @@ public class AddCarMethods {
 			}
 		}
 			fileCSV.close();
+			Collections.sort(carTrimList);
 			return carTrimList;
 	}
 		

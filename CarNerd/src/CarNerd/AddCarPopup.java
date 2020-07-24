@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 public class AddCarPopup extends JPanel{
 	public JTextField tfCarName = new JTextField();
+	public JTextField tfCarTrim = new JTextField();
 	public JTextField tfCarVIN = new JTextField("");
 	public JTextField tfCarPlate = new JTextField("");
 	public JButton btnUpdate = new JButton();
@@ -124,7 +125,7 @@ public class AddCarPopup extends JPanel{
 				}
 			}
 		});
-        
+        /*
 		cbCarModel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cbCarTrim.removeAllItems();
@@ -144,7 +145,7 @@ public class AddCarPopup extends JPanel{
 				}
 			}
 		});
-        
+        */
         btnUpdate.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
