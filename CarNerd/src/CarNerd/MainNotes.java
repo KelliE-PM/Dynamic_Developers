@@ -16,19 +16,13 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-//import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class MainNotes {
-	
-	//static DefaultListModel listModel = new DefaultListModel();  TODO
-	//static JList notes = new JList(listModel);   TODO
 	public String returningDateString(String date) {
-		System.out.println(date);
 		String fixedDate = date.substring(5,7) + "/" + date.substring(8,10) + "/" + date.substring(0,4);
-		System.out.println(fixedDate);
 		return fixedDate;
 	}
 	
@@ -43,8 +37,8 @@ public class MainNotes {
 			readNotesFile();
 		}
 		
-		DefaultListModel<String> listModel2 = new DefaultListModel<String>();  //TODO this may not be right.  If error, remove <String>
-		JList<String> titles = new JList<String>(listModel2);  // TODO this may not be right. If error, remove <String>
+		DefaultListModel<String> listModel2 = new DefaultListModel<String>(); 
+		JList<String> titles = new JList<String>(listModel2);  
 		
 		ArrayList<Note> tempNotes = NerdList.theCar.getNotes();
 		if (tempNotes != null) {
@@ -54,17 +48,15 @@ public class MainNotes {
 	
 				listModel2.addElement(theNote.getNoteTitle());
 			}
-			//JLabel lblNote = new JLabel("Any Notes marked with ** have reminders.");
 		}
 		JButton btnNewNote = new JButton("Add Note");
 		JButton btnViewNote = new JButton("View Note");
 		JScrollPane scrollPane = new JScrollPane(titles);
-		//lblNote.setBounds(10, 560, 700, 20);
-		scrollPane.setBounds(10, 150, 170, 400);
-		btnNewNote.setBounds(10, 590, 150, 30);
-		btnViewNote.setBounds(10, 620, 150, 30);
 		
-		//mainFrame.add(lblNote);
+		scrollPane.setBounds(10, 150, 170, 400);
+		btnNewNote.setBounds(10, 560, 100, 30);
+		btnViewNote.setBounds(10, 600, 100, 30);
+		
 		mainFrame.add(btnNewNote);
 		mainFrame.add(scrollPane, BorderLayout.WEST);
 		mainFrame.add(btnViewNote);
@@ -73,7 +65,7 @@ public class MainNotes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JDialog nDialog = new JDialog(mainFrame, "Click a button", true);
-				nDialog.setSize(400, 400);
+				nDialog.setSize(400, 350);
 
 				JPanel nPanel = new JPanel(new BorderLayout());
 				try {
@@ -92,7 +84,7 @@ public class MainNotes {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Note theNote = new Note();
-				//TODO check to see if this causes an error if full.  Always pull new in case of delete;
+				//check to see if this causes an error if full.  Always pull new in case of delete;
 				//tempNotes = null;
 				ArrayList<Note> tempNotes = NerdList.theCar.getNotes();
 				for (int i = 0; i < tempNotes.size(); i++) {
@@ -123,20 +115,19 @@ public class MainNotes {
 	
 	public void writeNotesFile(String name, String noteDate, String remindDate, String noteTitle, String noteText) {
 		try {
-  			FileWriter fw = new FileWriter("notes.txt", true);
+  			FileWriter fw = new FileWriter("CarNerdFiles\\Notes.txt", true);
   			PrintWriter pw = new PrintWriter(fw);
   			
   			pw.printf("%s~%s~%s~%s~%s%n", name, noteDate, remindDate, noteTitle, noteText);
   			pw.close();
   		} catch (IOException e1) {
-  			// TODO Auto-generated catch block
   			e1.printStackTrace();
   		}
 	}
+
 	public void readNotesFile() {
-		// TODO only read theCar note files.
 		try {
-			FileReader fr = new FileReader("notes.txt");
+			FileReader fr = new FileReader("CarNerdFiles\\Notes.txt");
 			BufferedReader br = new BufferedReader(fr);
 
 			String nextLine;
@@ -146,7 +137,7 @@ public class MainNotes {
 			String text = "";
 			String car = "";
 
-			//int lineCounter = 0;
+			// int lineCounter = 0;
 
 			Note currentNote;
 
@@ -178,112 +169,22 @@ public class MainNotes {
 							}
 						}
 					}
-					// NerdList.theCar.setNote(currentNote);
-					// break;
-
-					// default:
-					// break;
-
-					// }// end switch
-
-					// lineCounter++;
-
-					}
 
 				}
-				br.close();
+
+			}
+			br.close();
 		} catch (IOException e2) {
-			//FileWriter fw;
-			
-			/*try {
-				fw = new FileWriter("Notes.txt", true);
-				PrintWriter pw = new PrintWriter(fw);
-				
-				pw.close();
-				
-				FileReader fr = new FileReader("Notes.txt");
-				BufferedReader br = new BufferedReader(fr);
-				
-				String nextLine;
-				String currentDate = "";
-				String remindDate = "";
-				String title = "";
-				String text = "";
-				
-				int lineCounter = 0;
-				
-				Note currentNote;
-				
-				try {
-					while((nextLine = br.readLine()) != null) {
-						
-						if(!nextLine.trim().isEmpty()) {
-						
-					switch (lineCounter % 4) {
-						case 0:
-							currentDate = nextLine;
-							break;
-						case 1:
-							remindDate = nextLine;
-							break;
-						case 2:
-							title = nextLine;
-							break;
-						case 3:
-							text = nextLine;
-							currentNote = new Note(toDate(currentDate), toDate(remindDate), title, text);
-							NerdList.theCar.setNote(currentNote);
-							break;
-						default:
-							break;
-						
-						}//end switch
-						
-						lineCounter++;
-						
-						}
-						
-					}
 
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}*/
-  			
 		}
-		
+
 	}
-	/*
-	// TODO why is this saying it is not being called locally?  comment out and see if it is needed.
-	private static boolean isValidDate(String text) {
-
-		DateTimeFormatter f = DateTimeFormatter.ofPattern("d-MM-yyyy");
-		try {
-
-			LocalDate date = LocalDate.parse(text, f);
-
-		} catch (DateTimeParseException e) {
-
-			return false;
-		}
-		return true;
-	}*/
 
 	public LocalDate toDate(String text) {
 		String strDate = text;
-		//if (text != "") {
-			//String dateFormatChange[] = text.split("/");
-			//strDate = dateFormatChange[1].toString() + "-" + dateFormatChange[0].toString() + "-" + dateFormatChange[2].toString();
-		//}
 		DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
 
 		LocalDate date = LocalDate.parse(strDate, f);
-		// TODO Auto-generated method stub
 		return date;
 	}
 }

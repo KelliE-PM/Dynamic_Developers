@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMileage {
+	String milePathFile = "CarNerdFiles\\Mileage_" + NerdList.theCar.getName() + ".txt";
 	public void writeMileage() throws IOException {
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
+		FileOutputStream write = new FileOutputStream(milePathFile);
 		PrintWriter writer = new PrintWriter(write);
 
 		for (int index = 0; index < NerdList.listMiles.size(); index++) {
@@ -36,10 +38,33 @@ public class MainMileage {
 
 		writer.close();
 	}
+	public void deleteAllMileage() {
+		while(!NerdList.listMiles.isEmpty()) {
+			NerdList.listMiles.remove(0);
+		}
+		while(!NerdList.listChange.isEmpty()) {
+			NerdList.listChange.remove(0);
+		}
+		
+	}
 	public void readMileage() throws IOException {
-		FileInputStream readMile = new FileInputStream("Mileage.txt");
-		Scanner reader = new Scanner(readMile);
+		FileInputStream readMile = null;
+		try{
+			readMile = new FileInputStream(milePathFile);
+		}
+		catch (FileNotFoundException e2) {
+			FileOutputStream fos = new FileOutputStream(milePathFile);
+			PrintWriter printyist = new PrintWriter(fos);
+			
+			printyist.println("Normal -1 1/11/1111");
+			printyist.println("Change -1 1/11/1111 false");
+			
+			printyist.close();
 
+			readMile = new FileInputStream(milePathFile);
+		}
+		
+			Scanner reader = new Scanner(readMile);
 		while (reader.hasNext()) {
 			String type = reader.next();
 
@@ -63,11 +88,11 @@ public class MainMileage {
 		readMile.close();
 	}
 	public void loadMileage(JFrame mainFrame) throws ParseException, IOException {
-
+		deleteAllMileage();
 		readMileage();
 		
 		//writeMileage();
-
+		
 		int lastMiles = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentMiles();
 		String lastDate = NerdList.listMiles.get(NerdList.listMiles.size() - 1).getCurrentDate();
 		int changeMiles = NerdList.listChange.get(NerdList.listChange.size() - 1).getChangeMiles();

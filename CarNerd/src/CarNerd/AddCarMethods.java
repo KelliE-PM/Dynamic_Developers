@@ -1,5 +1,6 @@
 package CarNerd;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,7 +16,7 @@ public class AddCarMethods {
 	public void writeToFile() {
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("CarNerdCars.txt");
+			fos = new FileOutputStream("CarNerdFiles\\CarNerdCars.txt");
 			PrintWriter printy = new PrintWriter(fos);
 			for (int print = 0; print < NerdList.listCars.size(); print++) {
 				printy.printf("%s,%s,%s,%s,%s,%s,%s%n", NerdList.listCars.get(print).getName(), NerdList.listCars.get(print).getYear(), 
@@ -80,12 +81,15 @@ public class AddCarMethods {
 		FileInputStream fis = null;
 		
 		try{
-			fis = new FileInputStream("CarNerdCars.txt");
+			fis = new FileInputStream("CarNerdFiles\\CarNerdCars.txt");
 		}
 		catch (FileNotFoundException e2) {
-			FileOutputStream fos = new FileOutputStream("CarNerdCars.txt");
+			String path = "CarNerdFiles\\";
+			File file = new File(path);
+			file.mkdir();
+			FileOutputStream fos = new FileOutputStream("CarNerdFiles\\CarNerdCars.txt");
 			fos.close();
-			fis = new FileInputStream("CarNerdCars.txt");
+			fis = new FileInputStream("CarNerdFiles\\CarNerdCars.txt");
 		}
 		@SuppressWarnings("resource")
 		Scanner ready = new Scanner(fis);

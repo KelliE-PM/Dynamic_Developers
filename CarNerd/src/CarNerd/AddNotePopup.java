@@ -3,9 +3,6 @@ package CarNerd;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,13 +20,13 @@ public class AddNotePopup extends JPanel{
 	public AddNotePopup(JPanel nPanel, JDialog nDialog, Note note) throws ParseException {
 		setBackground(new Color(191,136,255));
 		
-		JLabel lblNoteDate = new JLabel("Current Date (M/DD/YYYY");
-		JLabel lblRemindDate = new JLabel("Reminder Date (M/DD/YYYY");
+		JLabel lblNoteDate = new JLabel("Current Date");
+		//JLabel lblRemindDate = new JLabel("Reminder Date (M/DD/YYYY");
 		JLabel lblNoteTitle = new JLabel("Title");
 		JLabel lblNoteText = new JLabel("Note: ");
 		
-		JTextField tfNoteDate = new JTextField("");
-		JTextField tfRemindDate = new JTextField("");
+		JTextField tfNoteDate = new JTextField("M/DD/YYYY");
+		JTextField tfRemindDate = new JTextField("1/11/2020");
 		JTextField tfNoteTitle = new JTextField("");
 		
 		JTextArea taNoteText = new JTextArea("");
@@ -37,22 +34,28 @@ public class AddNotePopup extends JPanel{
 		
 		JButton btnSave = new JButton("SAVE");
 	    JButton btnClear = new JButton("CLEAR");
-	    
 		
 		lblNoteDate.setBounds(10, 15, 80, 20);
-		lblRemindDate.setBounds(10, 55, 80, 20);
-		lblNoteTitle.setBounds(10, 95, 80, 20);
-		lblNoteText.setBounds(10, 135, 80, 20);
 		
+		/*
+		 * Currently not utilizing Remind Date.
+		 * Use bounds below if utilizing Remind Date properly.
+		 * lblRemindDate.setBounds(10, 55, 80, 20);
+		 * lblNoteTitle.setBounds(10, 95, 80, 20);
+		 * lblNoteText.setBounds(10, 135, 80, 20);
+		 * tfRemindDate.setBounds(100, 50, 100, 30);
+		 * tfNoteTitle.setBounds(100, 90, 100, 30);
+		 * taNoteText.setBounds(100, 130, 150, 150);
+		 */
 		
-		tfNoteDate.setBounds(100, 10, 100, 30);
-		tfRemindDate.setBounds(100, 50, 100, 30);
-		tfNoteTitle.setBounds(100, 90, 100, 30);
-		taNoteText.setBounds(100, 130, 150, 150);
+		lblNoteTitle.setBounds(10, 55, 80, 20);
+		lblNoteText.setBounds(10, 95, 80, 20);
+		tfNoteDate.setBounds(90, 10, 250, 30);
+		tfNoteTitle.setBounds(90, 50, 250, 30);
+		taNoteText.setBounds(90, 90, 250, 150);
 		
-		btnSave.setBounds(100, 300, 140, 45);
-	    btnClear.setBounds(300, 300, 140, 45);
-	    
+		btnSave.setBounds(90, 250, 100, 30);
+	    btnClear.setBounds(240, 250, 100, 30);
 	    
 	    if (note != null) {
 	    	MainNotes mn = new MainNotes();
@@ -63,7 +66,7 @@ public class AddNotePopup extends JPanel{
 	    }
 	    
 		nPanel.add(lblNoteDate);
-		nPanel.add(lblRemindDate);
+		//nPanel.add(lblRemindDate);
 		nPanel.add(lblNoteTitle);
 		nPanel.add(lblNoteText);
 		
@@ -76,13 +79,28 @@ public class AddNotePopup extends JPanel{
 		nPanel.add(btnClear);
 		
 	    btnSave.addActionListener(new ActionListener(){
+	    	
 	      public void actionPerformed(ActionEvent e){
-	    	  if(isValidDate(nDialog, tfNoteDate.getText()) && isValidDate(nDialog, tfRemindDate.getText())) {
+	    	  if(isValidDate(nDialog, tfNoteDate.getText())) { //&& isValidDate(nDialog, tfRemindDate.getText())) {
 					mn.writeNotesFile(NerdList.theCar.getName(), tfNoteDate.getText(),tfRemindDate.getText(),tfNoteTitle.getText(),taNoteText.getText());
 	    	  }
+	    	  
+	    	  nDialog.dispose();
+	    	  MainUI.reload();
 	      }
-	      
-	      private boolean isValidDate(JDialog frame, String text) {
+	    });
+	          
+	    btnClear.addActionListener(new ActionListener(){
+	      public void actionPerformed(ActionEvent e){ 
+	    	  tfNoteDate.setText("");
+	    	  tfRemindDate.setText("1/11/2020");
+	    	  tfNoteTitle.setText("");
+	    	  taNoteText.setText("");
+	      }
+	    });
+	}
+	
+	private boolean isValidDate(JDialog frame, String text) {
 				
 				DateTimeFormatter f = DateTimeFormatter.ofPattern("M/dd/yyyy");
 				try {
@@ -93,21 +111,9 @@ public class AddNotePopup extends JPanel{
 				} catch (DateTimeParseException e) {
 					
 				return false;
-					
 				}
-				nDialog.dispose();
-				MainUI.reload();
 				return true;
 			}
-	    });
-	          
-	    btnClear.addActionListener(new ActionListener(){
-	      public void actionPerformed(ActionEvent e){ 
-	    	  tfNoteDate.setText("");
-	    	  tfRemindDate.setText("");
-	    	  tfNoteTitle.setText("");
-	    	  taNoteText.setText("");
-	      }
-	    });
-	}
 }
+
+

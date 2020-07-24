@@ -11,9 +11,7 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -77,8 +75,8 @@ public class AddMileagePopup extends JPanel {
 	boolean lastSyn;
 	
 	AddMileagePopup(JPanel mPanel, JDialog mDialog) throws IOException {
-		FileOutputStream write = new FileOutputStream("Mileage.txt");
-		PrintWriter writer = new PrintWriter(write);
+		//FileOutputStream write = new FileOutputStream("Mileage.txt");
+		//PrintWriter writer = new PrintWriter(write);
 
 
 		// Update Data
@@ -307,6 +305,8 @@ public class AddMileagePopup extends JPanel {
 				if (change == true) {
 				Mileage newOil = new Mileage(setMile, setDateSS, synthetic);
 				NerdList.listChange.add(newOil);	
+				Mileage newReg = new Mileage(setMile, setDateSS);
+				NerdList.listMiles.add(newReg);
 				System.out.println(Arrays.toString(NerdList.listChange.toArray()).replaceAll("[\\[\\]]", ""));
 				
 				} else {
@@ -315,22 +315,12 @@ public class AddMileagePopup extends JPanel {
 				System.out.println(Arrays.toString(NerdList.listMiles.toArray()).replaceAll("[\\[\\]]", ""));
 				}
 				MainMileage mm = new MainMileage();
-				
-				for (int index = 0; index < NerdList.listMiles.size(); index++) {
-					writer.println(NerdList.listMiles.get(index).getType() + " " 
-							+ NerdList.listMiles.get(index).getCurrentMiles() + " "
-							+ NerdList.listMiles.get(index).getCurrentDate());
+				try {
+					mm.writeMileage();
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
-
-				for (int index = 0; index < NerdList.listChange.size(); index++) {
-					writer.println(NerdList.listChange.get(index).getType() + " " 
-							+ NerdList.listChange.get(index).getChangeMiles() + " "
-							+ NerdList.listChange.get(index).getChangeDate() + " "
-							+ NerdList.listChange.get(index).getSynthetic());
-				}
-				
 				mDialog.dispose();
-				writer.close();
 				MainUI.reload();
 			}});
 

@@ -121,47 +121,44 @@ public class MainCarInfo {
 		SwingUtilities.updateComponentTreeUI(mainFrame);
 	}
 
-//TODO find a better way to pass this many arguments.  Map maybe? 
 	public void setCarInfo(String name, String year, String make, String model, String trim, String vin, String plate) {
 		// changes the labels to the currently selected car
 		lblCarName.setText(name);
-		lblCarYear.setText(year);
-		lblCarMake.setText(make);
-		lblCarModel.setText(model);
-		lblCarTrim.setText(trim);
+		lblCarYear.setText(year + " " +  make + " " +  model + " " +  trim);
 		lblCarVIN.setText("VIN: " + vin);
 		lblPlateNum.setText("Plate: " + plate);
-		
 	}
 
-// TODO take out unnecessary arguments
-	public void loadCarInfo(JFrame mainFrame, String name, String year, String make, String model, String trim, String vin,
-			String plate) {
+	public void loadCarInfo(JFrame mainFrame) {
 		// initial car information loading
+		String ymmtLabelText = NerdList.theCar.getYear()+ " " + NerdList.theCar.getMake()+ " " + NerdList.theCar.getModel()+ " " + NerdList.theCar.getTrim();
+		String vinLabelText = NerdList.theCar.getVIN() + " ";
+		String plateLabelText = NerdList.theCar.getPlate() + " ";
+		
+		ymmtLabelText = ymmtLabelText.equals("null null null null") ? "" : ymmtLabelText;
+		vinLabelText = vinLabelText.equals("null ") ? "" : vinLabelText;
+		plateLabelText = plateLabelText.equals("null ") ? "" : plateLabelText;
 		
 		lblCarName = new JLabel(NerdList.theCar.getName());
-		lblCarYear = new JLabel(NerdList.theCar.getYear());
-		lblCarMake = new JLabel(NerdList.theCar.getMake());
-		lblCarModel = new JLabel(NerdList.theCar.getModel());
-		lblCarTrim = new JLabel(NerdList.theCar.getTrim());
-		lblCarVIN = new JLabel("VIN: " + NerdList.theCar.getVIN());
-		lblPlateNum = new JLabel("Plate: " + NerdList.theCar.getPlate());
+		lblCarYear = new JLabel(ymmtLabelText);
+		lblCarVIN = new JLabel("VIN: " + vinLabelText);
+		lblPlateNum = new JLabel("Plate: " + plateLabelText);
 		JButton btnEdit = new JButton("Edit");
 
-		lblCarName.setBounds(180, 10, 100, 20);
-		lblCarYear.setBounds(180, 40, 100, 20);
-		lblCarMake.setBounds(250, 40, 100, 20);
-		lblCarModel.setBounds(350, 40, 100, 20);
-		lblCarTrim.setBounds(450, 40, 100, 20);
-		lblCarVIN.setBounds(200, 70, 150, 20);
-		lblPlateNum.setBounds(350, 70, 150, 20);
+		lblCarName.setBounds(200, 10, 600, 20);
+		lblCarYear.setBounds(200, 40, 600, 20);
+		//lblCarMake.setBounds(250, 40, 100, 20);
+		//lblCarModel.setBounds(350, 40, 100, 20);
+		//lblCarTrim.setBounds(450, 40, 100, 20);
+		lblCarVIN.setBounds(200, 70, 200, 20);
+		lblPlateNum.setBounds(400, 70, 150, 20);
 		btnEdit.setBounds(550, 40, 100, 30);
 
 		mainFrame.add(lblCarName);
 		mainFrame.add(lblCarYear);
-		mainFrame.add(lblCarMake);
-		mainFrame.add(lblCarModel);
-		mainFrame.add(lblCarTrim);
+		//mainFrame.add(lblCarMake);
+		//mainFrame.add(lblCarModel);
+		//mainFrame.add(lblCarTrim);
 		mainFrame.add(lblCarVIN);
 		mainFrame.add(lblPlateNum);
 		mainFrame.add(btnEdit);
