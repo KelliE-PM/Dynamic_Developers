@@ -68,8 +68,8 @@ public class MainCarInfo {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				JDialog aDialog = new JDialog(mainFrame, "Click a button", true);
-				aDialog.setSize(400, 400);
+				JDialog aDialog = new JDialog(mainFrame, "Add A Car", true);
+				aDialog.setSize(430, 300);
 
 				JPanel aPanel = new JPanel(new BorderLayout());
 				aPanel.add(new AddCarPopup("Add", aPanel, aDialog, "", "", "", "", "", "", ""));
@@ -147,18 +147,12 @@ public class MainCarInfo {
 
 		lblCarName.setBounds(200, 10, 600, 20);
 		lblCarYear.setBounds(200, 40, 600, 20);
-		//lblCarMake.setBounds(250, 40, 100, 20);
-		//lblCarModel.setBounds(350, 40, 100, 20);
-		//lblCarTrim.setBounds(450, 40, 100, 20);
 		lblCarVIN.setBounds(200, 70, 200, 20);
 		lblPlateNum.setBounds(400, 70, 150, 20);
 		btnEdit.setBounds(550, 40, 100, 30);
 
 		mainFrame.add(lblCarName);
 		mainFrame.add(lblCarYear);
-		//mainFrame.add(lblCarMake);
-		//mainFrame.add(lblCarModel);
-		//mainFrame.add(lblCarTrim);
 		mainFrame.add(lblCarVIN);
 		mainFrame.add(lblPlateNum);
 		mainFrame.add(btnEdit);
@@ -171,7 +165,7 @@ public class MainCarInfo {
 
 				final JDialog dialog = new JDialog(mainFrame, "Click a button", true);
 
-				dialog.setSize(400, 400);
+				dialog.setSize(430, 300);
 
 				JPanel panel = new JPanel(new BorderLayout());
 				panel.add(new AddCarPopup("Edit", panel, dialog, NerdList.theCar.getName(), NerdList.theCar.getYear(), NerdList.theCar.getMake(),

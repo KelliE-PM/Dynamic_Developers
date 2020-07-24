@@ -6,10 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddCarMethods {
 	Car car = new Car();
+	String carsFilePath = "CarNerdFiles\\CarNerdCars.csv";
+	String carDbPath = "CarDatabase.csv";
 	
 	public AddCarMethods() { /* Constructor Method*/ }
 	
@@ -73,6 +76,55 @@ public class AddCarMethods {
 			}
 		}
 	}
+	
+	public ArrayList<String> readCarMake(String selectedYear) throws IOException{
+		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		@SuppressWarnings("resource")
+		Scanner fileRead = new Scanner(fileCSV);
+		ArrayList<String> carMakeList = new ArrayList<String>();
+		
+		while (fileRead.hasNextLine()) {
+			String[] tempLine = fileRead.nextLine().split(",");
+			if (tempLine[0].equals(selectedYear) && !carMakeList.contains(tempLine[1])) {
+				carMakeList.add(tempLine[1]);
+			}
+		}
+			fileCSV.close();
+			return carMakeList;
+	}
+	
+	public ArrayList<String> readCarModel(String selectedMake) throws IOException{
+		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		@SuppressWarnings("resource")
+		Scanner fileRead = new Scanner(fileCSV);
+		ArrayList<String> carModelList = new ArrayList<String>();
+		
+		while (fileRead.hasNextLine()) {
+			String[] tempLine = fileRead.nextLine().split(",");
+			if (tempLine[1].equals(selectedMake) && !carModelList.contains(tempLine[2])) {
+				carModelList.add(tempLine[2]);
+			}
+		}
+			fileCSV.close();
+			return carModelList;
+	}
+	
+	public ArrayList<String> readCarTrim(String selectedMake) throws IOException{
+		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		@SuppressWarnings("resource")
+		Scanner fileRead = new Scanner(fileCSV);
+		ArrayList<String> carTrimList = new ArrayList<String>();
+		
+		while (fileRead.hasNextLine()) {
+			String[] tempLine = fileRead.nextLine().split(",");
+			if (tempLine[2].equals(selectedMake) && !carTrimList.contains(tempLine[3])) {
+				carTrimList.add(tempLine[3]);
+			}
+		}
+			fileCSV.close();
+			return carTrimList;
+	}
+		
 	public void readFile() throws IOException {
 // adds the cars to an ArrayList for the spinner to generate
 		MainCarInfo mci = new MainCarInfo();
@@ -81,15 +133,15 @@ public class AddCarMethods {
 		FileInputStream fis = null;
 		
 		try{
-			fis = new FileInputStream("CarNerdFiles\\CarNerdCars.txt");
+			fis = new FileInputStream(carsFilePath);
 		}
 		catch (FileNotFoundException e2) {
 			String path = "CarNerdFiles\\";
 			File file = new File(path);
 			file.mkdir();
-			FileOutputStream fos = new FileOutputStream("CarNerdFiles\\CarNerdCars.txt");
+			FileOutputStream fos = new FileOutputStream(carsFilePath);
 			fos.close();
-			fis = new FileInputStream("CarNerdFiles\\CarNerdCars.txt");
+			fis = new FileInputStream(carsFilePath);
 		}
 		@SuppressWarnings("resource")
 		Scanner ready = new Scanner(fis);

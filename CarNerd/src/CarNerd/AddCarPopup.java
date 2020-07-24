@@ -1,10 +1,13 @@
 package CarNerd;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -13,75 +16,139 @@ import javax.swing.JTextField;
 
 public class AddCarPopup extends JPanel{
 	public JTextField tfCarName = new JTextField();
-	public JTextField tfCarYear = new JTextField("");
-	public JTextField tfCarMake = new JTextField("");
-	public JTextField tfCarModel = new JTextField("");
-	public JTextField tfCarTrim = new JTextField("");
 	public JTextField tfCarVIN = new JTextField("");
 	public JTextField tfCarPlate = new JTextField("");
 	public JButton btnUpdate = new JButton();
 	public JLabel lblCarName = new JLabel("Name");
-	public JLabel lblCarYear = new JLabel("Year");
-	public JLabel lblCarMake = new JLabel("Make");
-	public JLabel lblCarModel = new JLabel("Model");
-	public JLabel lblCarTrim = new JLabel("Trim");
+	
+	ArrayList<String> yearList = new ArrayList<String>();
+	ArrayList<String> makeList = new ArrayList<String>();
+	ArrayList<String> modelList = new ArrayList<String>();
+	ArrayList<String> trimList = new ArrayList<String>();
+	
+	public JComboBox<String> cbCarYear = new JComboBox<String>();
+	public JComboBox<String> cbCarMake = new JComboBox<String>();
+	public JComboBox<String> cbCarModel = new JComboBox<String>();
+	public JComboBox<String> cbCarTrim = new JComboBox<String>();
+	
 	public JLabel lblCarVIN = new JLabel("VIN");
 	public JLabel lblCarPlate = new JLabel("Plate");
 	
 	private static final long serialVersionUID = 1L;
+	
+	public AddCarPopup() { }
+	
 	AddCarPopup(String btnTxt, JPanel aPanel, JDialog aDialog, String name, String year, String make, String model, String trim, String vin, String plate) {
-// ****SIZE OF POPUP WINDOW******       
-		int x = 400, y = 400;
-      aPanel.setPreferredSize(new Dimension(x, y));
+		AddCarMethods addCar = new AddCarMethods();
     	setBackground(new Color(191,136,255));
 
     	tfCarName.setText(name);
-    	tfCarYear.setText(year);
-    	tfCarMake.setText(make);
-    	tfCarModel.setText(model);
-    	tfCarTrim.setText(trim);
+    	cbCarYear.setSelectedItem(year);
+    	cbCarMake.setSelectedItem(make);
+    	cbCarModel.setSelectedItem(model);
+    	cbCarTrim.setSelectedItem(trim);
     	tfCarVIN.setText(vin);
     	tfCarPlate.setText(plate);
     	btnUpdate.setText(btnTxt);
     	
         lblCarName.setBounds(10, 10, 100, 30);
-		lblCarYear.setBounds(10, 50, 100, 30);
-        lblCarMake.setBounds(10, 90, 100, 30);
-        lblCarModel.setBounds(10, 130, 100, 30);
-		lblCarTrim.setBounds(10, 170, 100, 30);
-        lblCarVIN.setBounds(10, 210, 150, 30);
-        lblCarPlate.setBounds(10, 250, 150, 30);
+        cbCarYear.setBounds(10, 50, 70, 30);
+        cbCarMake.setBounds(90, 50, 90, 30);
+        cbCarModel.setBounds(190, 50, 110, 30);
+        cbCarTrim.setBounds(310, 50, 90, 30);
+        
+        lblCarVIN.setBounds(10, 100, 150, 30);
+        lblCarPlate.setBounds(10, 140, 150, 30);
         
         tfCarName.setBounds(75, 10, 100, 30);
-		tfCarYear.setBounds(75, 50, 100, 30);
-        tfCarMake.setBounds(75, 90, 100, 30);
-        tfCarModel.setBounds(75, 130, 100, 30);
-		tfCarTrim.setBounds(75, 170, 100, 30);
-        tfCarVIN.setBounds(75, 210, 150, 30);
-        tfCarPlate.setBounds(75, 250, 150, 30);
-        btnUpdate.setBounds(150, 290, 100, 30);
+        tfCarVIN.setBounds(75, 100, 150, 30);
+        tfCarPlate.setBounds(75, 140, 150, 30);
+        btnUpdate.setBounds(150, 190, 100, 30);
 
         aPanel.add(tfCarName);
-		aPanel.add(tfCarYear);
-		aPanel.add(tfCarMake);
-		aPanel.add(tfCarModel);
-		aPanel.add(tfCarTrim);
 		aPanel.add(tfCarVIN);
 		aPanel.add(tfCarPlate);
-		
         aPanel.add(lblCarName);
-        aPanel.add(lblCarYear);
-        aPanel.add(lblCarMake);
-        aPanel.add(lblCarModel);
-        aPanel.add(lblCarTrim);
+        aPanel.add(cbCarYear);
+        aPanel.add(cbCarMake);
+        aPanel.add(cbCarModel);
+        aPanel.add(cbCarTrim);
         aPanel.add(lblCarVIN);
         aPanel.add(lblCarPlate);
         aPanel.add(btnUpdate);
         
+        cbCarYear.addItem("Select");
+		//set 25 years of car years
+		//TODO fix it that 2020 is a variable that is this year.
+        for (int y = 0; y < 25; y++) {
+    		cbCarYear.addItem(Integer.toString(2020 - y));
+    	}
+        
+		cbCarYear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbCarMake.removeAllItems();
+				
+				cbCarMake.addItem("Select");
+				
+				if (cbCarYear.getSelectedItem() != null && !cbCarYear.getSelectedItem().equals("Select")) {
+					try {
+						makeList = addCar.readCarMake(cbCarYear.getSelectedItem().toString());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+					for (int mk = 0; mk < makeList.size(); mk++) {
+						cbCarMake.addItem(makeList.get(mk).toString());
+					}
+				}
+			}
+
+		});
+        
+        cbCarMake.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbCarModel.removeAllItems();
+				
+				cbCarModel.addItem("Select");
+				
+				if (cbCarMake.getSelectedItem() != null && !cbCarMake.getSelectedItem().equals("Select")) {
+					try {
+						modelList = addCar.readCarModel(cbCarMake.getSelectedItem().toString());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+					for (int md = 0; md < modelList.size(); md++) {
+						cbCarModel.addItem(modelList.get(md).toString());
+					}
+				}
+			}
+		});
+        
+		cbCarModel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cbCarTrim.removeAllItems();
+
+				cbCarTrim.addItem("Select");
+
+				if (cbCarModel.getSelectedItem() != null && !cbCarModel.getSelectedItem().equals("Select")) {
+					try {
+						trimList = addCar.readCarTrim(cbCarModel.getSelectedItem().toString());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+
+					for (int md = 0; md < trimList.size(); md++) {
+						cbCarTrim.addItem(trimList.get(md).toString());
+					}
+				}
+			}
+		});
+        
         btnUpdate.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	        	AddCarMethods addCar = new AddCarMethods();
+	        	
 	        	String newVIN = vin;
 	        	
 		        // ERROR HANDLING cannot have "," ANYWHERE in the car inputs.
@@ -89,22 +156,7 @@ public class AddCarPopup extends JPanel{
 		        	
 		        	tfCarName.setText(tfCarName.getText().replaceAll(",", "")); 
 		        	}
-		        if (tfCarYear.getText().contains(",") == true) {
-		        	
-		        	tfCarYear.setText(tfCarYear.getText().replaceAll(",", "")); 
-		        }
-		        if (tfCarMake.getText().contains(",") == true) { 
-		        	
-		        	tfCarMake.setText(tfCarMake.getText().replaceAll(",", ""));
-		        	}
-		        if (tfCarModel.getText().contains(",") == true) { 
-		        	
-		        	tfCarModel.setText(tfCarModel.getText().replaceAll(",", "")); 
-		        	}
-		        if (tfCarTrim.getText().contains(",") == true) { 
-		        	
-		        	tfCarTrim.setText(tfCarTrim.getText().replaceAll(",", "")); 
-		        	}
+
 		        if (tfCarVIN.getText().contains(",") == true) { 
 		        	
 		        	tfCarVIN.setText(tfCarVIN.getText().replaceAll(",", "")); 
@@ -125,10 +177,15 @@ public class AddCarPopup extends JPanel{
 					else if (result == JOptionPane.NO_OPTION){ }
 	        	}
 	        	if (btnTxt == "Add") {
-	        		addCar.addNewCar(tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), tfCarVIN.getText(), tfCarPlate.getText());
+	        		addCar.addNewCar(tfCarName.getText(), cbCarYear.getSelectedItem().toString(), 
+	        				cbCarMake.getSelectedItem().toString(), cbCarModel.getSelectedItem().toString(), 
+	        				cbCarTrim.getSelectedItem().toString(), tfCarVIN.getText(), 
+	        				tfCarPlate.getText());
 	        	}
 	        	else if(btnTxt =="Edit") {
-	        		addCar.editCar(name, tfCarName.getText(), tfCarYear.getText(), tfCarMake.getText(), tfCarModel.getText(), tfCarTrim.getText(), newVIN, tfCarPlate.getText());
+	        		addCar.editCar(name, tfCarName.getText(), cbCarYear.getSelectedItem().toString(), 
+	        				cbCarMake.getSelectedItem().toString(), cbCarModel.getSelectedItem().toString(), 
+	        				cbCarTrim.getSelectedItem().toString(), newVIN, tfCarPlate.getText());
 	        	}
 	        	addCar.writeToFile();
 
@@ -138,4 +195,5 @@ public class AddCarPopup extends JPanel{
 // TODO popup that car has been loaded
 	    }});
 	}
+
 }
