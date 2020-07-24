@@ -20,7 +20,7 @@ public class AddCarMethods {
 	public void writeToFile() {
 		FileOutputStream fos;
 		try {
-			fos = new FileOutputStream("CarNerdFiles\\CarNerdCars.txt");
+			fos = new FileOutputStream(carsFilePath);
 			PrintWriter printy = new PrintWriter(fos);
 			for (int print = 0; print < NerdList.listCars.size(); print++) {
 				printy.printf("%s,%s,%s,%s,%s,%s,%s%n", NerdList.listCars.get(print).getName(), NerdList.listCars.get(print).getYear(), 
@@ -79,52 +79,52 @@ public class AddCarMethods {
 	}
 	
 	public ArrayList<String> readCarMake(String selectedYear) throws IOException{
-		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		FileInputStream fileCSVrcmk = new FileInputStream(carDbPath);
 		@SuppressWarnings("resource")
-		Scanner fileRead = new Scanner(fileCSV);
+		Scanner readyRCMK = new Scanner(fileCSVrcmk);
 		ArrayList<String> carMakeList = new ArrayList<String>();
 		
-		while (fileRead.hasNextLine()) {
-			String[] tempLine = fileRead.nextLine().split(",");
+		while (readyRCMK.hasNextLine()) {
+			String[] tempLine = readyRCMK.nextLine().split(",");
 			if (tempLine[0].equals(selectedYear) && !carMakeList.contains(tempLine[1])) {
 				carMakeList.add(tempLine[1]);
 			}
 		}
-			fileCSV.close();
+			fileCSVrcmk.close();
 			Collections.sort(carMakeList);
 			return carMakeList;
 	}
 	
 	public ArrayList<String> readCarModel(String selectedMake) throws IOException{
-		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		FileInputStream fileCSVrcm = new FileInputStream(carDbPath);
 		@SuppressWarnings("resource")
-		Scanner fileRead = new Scanner(fileCSV);
+		Scanner readyRCM = new Scanner(fileCSVrcm);
 		ArrayList<String> carModelList = new ArrayList<String>();
 		
-		while (fileRead.hasNextLine()) {
-			String[] tempLine = fileRead.nextLine().split(",");
+		while (readyRCM.hasNextLine()) {
+			String[] tempLine = readyRCM.nextLine().split(",");
 			if (tempLine[1].equals(selectedMake) && !carModelList.contains(tempLine[2])) {
 				carModelList.add(tempLine[2]);
 			}
 		}
-			fileCSV.close();
+			fileCSVrcm.close();
 			Collections.sort(carModelList);
 			return carModelList;
 	}
 	
 	public ArrayList<String> readCarTrim(String selectedMake) throws IOException{
-		FileInputStream fileCSV = new FileInputStream(carDbPath);
+		FileInputStream fileCSVrct = new FileInputStream(carDbPath);
 		@SuppressWarnings("resource")
-		Scanner fileRead = new Scanner(fileCSV);
+		Scanner readyRCT = new Scanner(fileCSVrct);
 		ArrayList<String> carTrimList = new ArrayList<String>();
 		
-		while (fileRead.hasNextLine()) {
-			String[] tempLine = fileRead.nextLine().split(",");
+		while (readyRCT.hasNextLine()) {
+			String[] tempLine = readyRCT.nextLine().split(",");
 			if (tempLine[2].equals(selectedMake) && !carTrimList.contains(tempLine[3])) {
 				carTrimList.add(tempLine[3]);
 			}
 		}
-			fileCSV.close();
+			fileCSVrct.close();
 			Collections.sort(carTrimList);
 			return carTrimList;
 	}
@@ -148,11 +148,11 @@ public class AddCarMethods {
 			fis = new FileInputStream(carsFilePath);
 		}
 		@SuppressWarnings("resource")
-		Scanner ready = new Scanner(fis);
+		Scanner readyRF = new Scanner(fis);
 		deleteAllCars();
-		while (ready.hasNextLine()) {
+		while (readyRF.hasNextLine()) {
 			
-			tempArr = ready.nextLine().split(",");
+			tempArr = readyRF.nextLine().split(",");
 			tempCar = new Car();
 			tempCar.setName(tempArr[0]);
 			tempCar.setYear(tempArr[1]);
