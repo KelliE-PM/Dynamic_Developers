@@ -19,11 +19,13 @@ The Car-Nerd desktop application is supported for the following versions of the 
 
 # Technologies
 - Eclipse 4.6.2
+- Google Suite
+- Adobe Premiere Pro
 
 # Using Car-Nerd
 To use Car-Nerd, please follow these steps:
 
-- Download the application from here:
+- Download the application from the executable Car-Nerd.jar file located in the Master branch.
 - To add a car, select Add Car button, and enter any details you want to be associated with your vehicle.
 - Use Edit Car button to edit details of a vehicle at any time.
 - Add Mileage button allows user to enter mileage for tracking purposes. An option also exist to track mileage when oil changes are performed. User can also specify is synthetic oil was used for oil change.
